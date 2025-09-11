@@ -6,14 +6,23 @@ const routes = require('./Routes');
 const path = require('path');
 require('dotenv').config();
 const connectDb = require('./config/db');
+const expressLayouts = require('express-ejs-layouts');
+const session = require("express-session");
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+app.use(session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(expressLayouts);
+app.set('layout', 'layouts/main');
 routes(app);
 
 
