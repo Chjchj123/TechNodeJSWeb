@@ -1,4 +1,4 @@
-
+const user = require("../Models/user");
 class AdminController {
     homepage(req, res) {
         res.render('admin/index', { layout: false });
@@ -6,7 +6,7 @@ class AdminController {
 
     async userList(req, res, next) {
         try {
-            const user = require("../Models/user");
+
             const users = await user.find();
             res.render('admin/userList', { layout: false, users });
         } catch (error) {

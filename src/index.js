@@ -8,7 +8,11 @@ require('dotenv').config();
 const connectDb = require('./config/db');
 const expressLayouts = require('express-ejs-layouts');
 const session = require("express-session");
+const authMiddleware = require('./Middlewares/auth');
+var cookieParser = require('cookie-parser')
 
+app.use(cookieParser());
+app.use(authMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({
@@ -24,7 +28,6 @@ app.set("views", path.join(__dirname, "views"));
 app.use(expressLayouts);
 app.set('layout', 'layouts/main');
 routes(app);
-
 
 app.listen(PORT, () => {
     console.log('Connecting to Database...');

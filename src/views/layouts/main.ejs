@@ -59,5 +59,28 @@
     <script src="asset/js/custom.js"></script>
 
     </body>
+    <% if (typeof toastMessage !=='undefined' ) { %>
+        <div id="toast" style="
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #38a169;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 9999;
+            font-size: 16px;
+            display: none;
+        ">
+            <%= toastMessage %>
+        </div>
+        <script>
+            document.getElementById('toast').style.display = 'block';
+            setTimeout(function () {
+                document.getElementById('toast').style.display = 'none';
+            }, 5000);
+        </script>
+        <% } %>
 
 </html>

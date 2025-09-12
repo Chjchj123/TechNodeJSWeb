@@ -14,6 +14,10 @@ class Login {
 
     async registerSubmit(req, res, next) {
         try {
+            const existingUser = await user.findOne({ email: req.body.email });
+            if (existingUser) {
+                return res.render('auth/signUp', { toastMessage: 'Email đã tồn tại!', layout: false });
+            }
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
             const newUser = new user({ ...req.body, password: hashedPassword });
