@@ -45,6 +45,7 @@ class UserController {
                     name: req.body.name,
                     phone_number: req.body.phone,
                     email: req.body.email,
+                    city: req.body.city
                 },
                 { new: true }
             );

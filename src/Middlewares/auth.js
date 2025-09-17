@@ -12,6 +12,10 @@ const authMiddleware = async (req, res, next) => {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET);
                 const getUser = await user.findOne({ _id: decoded.id }).lean();
                 res.locals.existingUser = getUser;
+                if (!res.locals.existingUser || res.locals.existingUser.deleted === true) {
+                    res.clearCookie('token');
+                    return res.redirect('/auth/login');
+                }
                 next();
             } catch (error) {
                 res.clearCookie('token');
