@@ -16,27 +16,38 @@ class UserController {
 
     async updateProfile(req, res, next) {
         try {
-            if (!req.file) {
-                return res.status(400).json({ error: "No file uploaded" });
+            let result = res.locals.existingUser.avatar;
+            if (req.file) {
+                if (result?.public_id) {
+                    await cloudinary.uploader.destroy(result.public_id);
+                }
+                const uploadResult = await new Promise((resolve, reject) => {
+                    const stream = cloudinary.uploader.upload_stream(
+                        { folder: "avatar_users", resource_type: "image" },
+                        (error, result) => {
+                            if (error) return reject(error);
+                            resolve(result);
+                        }
+                    );
+                    stream.end(req.file.buffer);
+                });
+
+                result = {
+                    url: uploadResult.secure_url,
+                    public_id: uploadResult.public_id,
+                };
             }
 
-            const result = await new Promise((resolve, reject) => {
-                const stream = cloudinary.uploader.upload_stream(
-                    { folder: "avatar_users", resource_type: "image" },
-                    (error, result) => {
-                        if (error) return reject(error);
-                        resolve(result);
-                    }
-                );
-                stream.end(req.file.buffer);
-            });
-
-            // res.json({
-            //     url: result.secure_url,
-            //     public_id: result.public_id,
-            // });
-            res.locals.existingUser.avatar = result.secure_url;
-            const getUser = await userModel.findOneAndUpdate({ _id: res.locals.existingUser._id }, { avatar: result.secure_url });
+            const getUser = await userModel.findByIdAndUpdate(
+                res.locals.existingUser._id,
+                {
+                    avatar: result,
+                    name: req.body.name,
+                    phone_number: req.body.phone,
+                    email: req.body.email,
+                },
+                { new: true }
+            );
             await getUser.save();
             res.redirect('/user');
         } catch (err) {

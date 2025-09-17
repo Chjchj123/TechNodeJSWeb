@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
     integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
 <link rel="stylesheet" href="asset/css/userProfiles.css">
 
 <div class="container">
@@ -7,54 +8,36 @@
         <div class="col-12">
             <!-- Page title -->
             <div class="my-5">
-                <h3>My Profile</h3>
+                <h3 style="color: white;">My Profile</h3>
                 <hr>
             </div>
             <!-- Form START -->
             <form class="file-upload" action="/user/update-profile?_method=PUT" method="POST"
                 enctype="multipart/form-data">
-                <div class="row mb-5 gx-5">
+                <div class="row mb-5 gx-5 backgound-white p-4 rounded-3">
                     <!-- Contact detail -->
                     <div class="col-xxl-8 mb-5 mb-xxl-0">
 
                         <div class="bg-secondary-soft px-4 py-5 rounded">
                             <div class="row g-3">
                                 <h4 class="mb-4 mt-0">Contact detail</h4>
-                                <!-- First Name -->
+                                <!-- Name -->
                                 <div class="col-md-6">
-                                    <label class="form-label">First Name *</label>
-                                    <input type="text" class="form-control" placeholder="" aria-label="First name"
-                                        value="Scaralet">
-                                </div>
-                                <!-- Last name -->
-                                <div class="col-md-6">
-                                    <label class="form-label">Last Name *</label>
-                                    <input type="text" class="form-control" placeholder="" aria-label="Last name"
-                                        value="Doe">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="name" class="form-control" placeholder="" aria-label="name"
+                                        value="<%= existingUser.name %>">
                                 </div>
                                 <!-- Phone number -->
                                 <div class="col-md-6">
                                     <label class="form-label">Phone number *</label>
-                                    <input type="text" class="form-control" placeholder="" aria-label="Phone number"
-                                        value="(333) 000 555">
-                                </div>
-                                <!-- Mobile number -->
-                                <div class="col-md-6">
-                                    <label class="form-label">Mobile number *</label>
-                                    <input type="text" class="form-control" placeholder="" aria-label="Phone number"
-                                        value="+91 9852 8855 252">
+                                    <input type="text" name="phone" class="form-control" placeholder=""
+                                        aria-label="Phone number" value="<%= existingUser.phone_number %>">
                                 </div>
                                 <!-- Email -->
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">Email *</label>
-                                    <input type="email" class="form-control" id="inputEmail4"
-                                        value="example@homerealty.com">
-                                </div>
-                                <!-- Skype -->
-                                <div class="col-md-6">
-                                    <label class="form-label">Skype *</label>
-                                    <input type="text" class="form-control" placeholder="" aria-label="Phone number"
-                                        value="Scaralet D">
+                                    <input type="email" name="email" class="form-control" id="inputEmail4"
+                                        value="<%= existingUser.email %>">
                                 </div>
                             </div> <!-- Row END -->
                         </div>
@@ -67,7 +50,7 @@
                                 <div class="text-center">
                                     <!-- Image upload -->
                                     <div class="square position-relative display-2 mb-3">
-                                        <img src="<%= existingUser.avatar %>" alt="" class=""></img>
+                                        <img src="<%= existingUser.avatar.url %>" alt="" class=""></img>
                                     </div>
                                     <!-- Button -->
                                     <input type="file" id="customFile" name="file" hidden="" />
