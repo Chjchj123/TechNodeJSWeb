@@ -6,7 +6,6 @@ class AdminController {
 
     async userList(req, res, next) {
         try {
-
             const users = await user.find();
             res.render('admin/userList', { layout: false, users });
         } catch (error) {

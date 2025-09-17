@@ -38,16 +38,25 @@ class Login {
             }
             const payload = {
                 id: existingUser._id,
-                email: existingUser.email
+                email: existingUser.email,
+                name: existingUser.name
             };
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
             res.cookie('token', token, { httpOnly: true });
-            req.session.existingUser = existingUser;
             res.redirect('/');
         } catch (error) {
             next(error);
         }
     }
-};
+
+    async logout(req, res, next) {
+        try {
+            res.clearCookie('token');
+            res.redirect('/auth/login');
+        } catch (error) {
+            next(error);
+        }
+    }
+}
 
 module.exports = new Login();

@@ -10,7 +10,9 @@ const expressLayouts = require('express-ejs-layouts');
 const session = require("express-session");
 const authMiddleware = require('./Middlewares/auth');
 var cookieParser = require('cookie-parser')
+var methodOverride = require('method-override')
 
+app.use(methodOverride('_method'))
 app.use(cookieParser());
 app.use(authMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
