@@ -27,4 +27,14 @@ const authMiddleware = async (req, res, next) => {
     }
 }
 
-module.exports = authMiddleware;
+const adminMiddleware = (req, res, next) => {
+    if (res.locals.existingUser.role !== 'Admin') {
+        return res.status(403).send('Access denied. Admins only.');
+    }
+    next();
+}
+
+module.exports = {
+    authMiddleware,
+    adminMiddleware
+};

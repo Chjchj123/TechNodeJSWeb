@@ -23,5 +23,83 @@ class AdminController {
             next(error);
         }
     }
+
+    async recycleBin(req, res, next) {
+        try {
+            const deletedUsers = await user.find({ deleted: true });
+            res.render('admin/recycleBin', { layout: false, users: deletedUsers });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async restoreUser(req, res, next) {
+        try {
+            const userToRestore = await user.findOne({ _id: req.params.id });
+            userToRestore.deleted = false;
+            await userToRestore.save();
+            console.log(req.params.id);
+            res.redirect('/admin/recycle-bin');
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async restoreAllUsers(req, res, next) {
+        let userIds = req.body.userId;
+        try {
+            await user.updateMany(
+                { _id: { $in: userIds } },
+                { $set: { deleted: false } }
+            );
+            res.redirect("/admin/recycle-bin");
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async deleteAllUsers(req, res, next) {
+        try {
+            let userIds = req.body.userId;
+            await user.updateMany(
+                { _id: { $in: userIds } },
+                { $set: { deleted: true } }
+            );
+            res.redirect("/admin/user-list");
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async hardDeleteUser(req, res, next) {
+        try {
+            await user.deleteOne({ _id: req.params.id });
+            res.redirect('/admin/recycle-bin');
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async hardDeleteAllUsers(req, res, next) {
+        try {
+            let userIds = req.body.userId;
+
+            if (!Array.isArray(userIds)) {
+                userIds = userIds ? [userIds] : [];
+            }
+
+            console.log("Danh sách userIds:", userIds);
+
+            if (userIds.length === 0) {
+                return res.status(400).json({ message: "Không có user nào được chọn" });
+            }
+            await user.deleteMany({ _id: { $in: userIds } });
+
+            res.redirect("/admin/recycle-bin");
+        } catch (err) {
+            next(err);
+        }
+    }
+
 }
 module.exports = new AdminController();

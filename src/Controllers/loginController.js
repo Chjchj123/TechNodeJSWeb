@@ -20,9 +20,9 @@ class Login {
             }
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
-            const newUser = new user({ ...req.body, password: hashedPassword });
+            const newUser = new user({ ...req.body, password: hashedPassword, phone_number: req.body.phone_number });
             await newUser.save();
-            res.render('auth/login', { toastMessage: 'Đăng ký thành công!', layout: false });
+            res.redirect('auth/login');
         } catch (error) {
             next(error);
         }

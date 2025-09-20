@@ -8,7 +8,7 @@ require('dotenv').config();
 const connectDb = require('./config/db');
 const expressLayouts = require('express-ejs-layouts');
 const session = require("express-session");
-const authMiddleware = require('./Middlewares/auth');
+const authMiddleware = require('./Middlewares/auth').authMiddleware;
 var cookieParser = require('cookie-parser')
 var methodOverride = require('method-override')
 

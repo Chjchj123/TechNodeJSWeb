@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
         url: { type: String, default: "/asset/images/default-profile-picture1.jpg" },
         public_id: { type: String }
     },
-    city: { type: String },
+    city: { type: String, default: "None" },
     role: { type: String, enum: ['Admin', 'User'], default: 'User' },
     deleted: { type: Boolean, default: false }
 }, { timestamps: true });
