@@ -123,6 +123,68 @@ class ProductsController {
             next(error);
         }
     }
+
+    async getListDeletedProduct(req, res) {
+        const products = await product.find({ deleted: true });
+        res.render('admin/productDeleted', { layout: false, products });
+    }
+
+    async deleteProduct(req, res, next) {
+        try {
+            await product.findOneAndUpdate({ _id: req.params.id }, { deleted: true });
+            res.redirect('/admin/product-list');
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async hardDelete(req, res, next) {
+        try {
+            const foundProduct = await product.findOne({ _id: req.params.id });
+            if (foundProduct) {
+                const folderName = "products/" + foundProduct.name;
+                await cloudinary.api.delete_resources_by_prefix(folderName);
+                await cloudinary.api.delete_folder(folderName);
+            }
+            await product.findOneAndDelete({ _id: foundProduct._id });
+            res.redirect('/admin/deleted-products');
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async hardDeleteSelected(req, res, next) {
+        try {
+            const getProducts = await product.find({ _id: { $in: req.body.productIds } });
+            for (const element of getProducts) {
+                let folderName = "products/" + element.name;
+                await cloudinary.api.delete_resources_by_prefix(folderName);
+                await cloudinary.api.delete_folder(folderName);
+            }
+            await product.deleteMany({ _id: { $in: req.body.productIds } });
+            res.redirect('/admin/deleted-products');
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async restoreProduct(req, res, next) {
+        try {
+            await product.findOneAndUpdate({ _id: req.params.id }, { deleted: false });
+            res.redirect('/admin/deleted-products');
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async restoreAllSelected(req, res, next) {
+        try {
+            await product.updateMany({ _id: { $in: req.body.productIds } }, { $set: { deleted: false } });
+            res.redirect('/admin/deleted-products');
+        } catch (error) {
+            next(error);
+        }
+    }
 };
 
 module.exports = new ProductsController();

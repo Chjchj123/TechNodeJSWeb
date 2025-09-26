@@ -24,6 +24,12 @@ routers.get('/product-list', ProductsController.productList);
 routers.post('/add-product', upload.array("images"), ProductsController.addProduct);
 routers.post('/get-product/:id', ProductsController.getProduct);
 routers.put('/update-product/:id', upload.any("images"), ProductsController.updateProduct);
+routers.get('/deleted-products', ProductsController.getListDeletedProduct);
+routers.delete('/delete-product/:id', ProductsController.deleteProduct);
+routers.patch('/restore-product/:id', ProductsController.restoreProduct);
+routers.patch('/restore-all-selected-product', ProductsController.restoreAllSelected);
+routers.delete('/product/hard-delete/:id', ProductsController.hardDelete);
+routers.delete('/products/hard-delete-selected', ProductsController.hardDeleteSelected);
 routers.get('/', adminController.homepage);
 
 module.exports = routers;

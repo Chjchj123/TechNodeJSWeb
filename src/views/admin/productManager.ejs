@@ -283,7 +283,7 @@
                                                 clip-rule="evenodd"></path>
                                         </svg>
                                     </a>
-                                    <a href="/admin/recycle-bin"
+                                    <a href="/admin/deleted-products"
                                         class="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center">
                                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -356,7 +356,7 @@
                                             </th>
                                             <th scope="col"
                                                 class="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                                                Stock
+                                                In Stock
                                             </th>
                                             <th scope="col" class="p-4">
                                             </th>
@@ -378,7 +378,7 @@
                                                     <td
                                                         class="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                                                         <img class="h-10 w-10 rounded-full"
-                                                            src="<%= product.images[4].url %>"
+                                                            src="<%= product.images[0].url %>"
                                                             alt="<%= product.name %>">
                                                         <div class="text-sm font-normal text-gray-500">
                                                             <div class="text-base font-semibold text-gray-900">
@@ -849,15 +849,17 @@
                         getAllUserForm.submit();
                     });
                 });
+
+                //delete
                 var deleteUserForm = document.getElementById('delete-user-form');
                 var deleteButtons = document.querySelectorAll('button[data-modal-toggle="delete-user-modal"]');
                 deleteButtons.forEach(function (button) {
                     button.addEventListener('click', function () {
-                        var userId = this.getAttribute('data-_id');
+                        var productId = this.getAttribute('data-_id');
                         var confirmButton = document.querySelector('#delete-user-modal a.bg-red-600');
                         confirmButton.addEventListener('click', function (event) {
                             event.preventDefault();
-                            deleteUserForm.action = '/admin/delete-user/' + userId + '?_method=DELETE';
+                            deleteUserForm.action = '/admin/delete-product/' + productId + '?_method=DELETE';
                             deleteUserForm.submit();
                         });
                     });
