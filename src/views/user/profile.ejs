@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
     integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="asset/css/userProfiles.css">
+<link rel="stylesheet" href="/asset/css/userProfiles.css">
 
 <div class="container">
     <div class="row">
@@ -12,7 +12,7 @@
                 <hr>
             </div>
             <!-- Form START -->
-            <form class="file-upload" action="/user/update-profile?_method=PUT" method="POST"
+            <form class="file-upload" action="/user/update-profile/<%= existingUser._id %>?_method=PUT" method="POST"
                 enctype="multipart/form-data">
                 <div class="row mb-5 gx-5 backgound-white p-4 rounded-3">
                     <!-- Contact detail -->
@@ -37,13 +37,19 @@
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">Email *</label>
                                     <input type="email" name="email" class="form-control" id="inputEmail4"
-                                        value="<%= existingUser.email %>">
+                                        value="<%= existingUser.email %>" readonly>
                                 </div>
                                 <!-- Place -->
                                 <div class="col-md-6">
                                     <label class="form-label">City</label>
                                     <input type="text" name="city" class="form-control" placeholder="" aria-label="city"
                                         value="<%= existingUser.city %>">
+                                </div>
+                                <!-- Address -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" name="address" class="form-control" placeholder=""
+                                        aria-label="address" value="<%= existingUser.address %>">
                                 </div>
                             </div> <!-- Row END -->
                         </div>

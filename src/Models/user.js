@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
         public_id: { type: String }
     },
     city: { type: String, default: "None" },
+    address: { type: String, default: "None" },
     role: { type: String, enum: ['Admin', 'User'], default: 'User' },
     deleted: { type: Boolean, default: false }
 }, { timestamps: true });

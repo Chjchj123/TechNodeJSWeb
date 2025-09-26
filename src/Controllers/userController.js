@@ -45,12 +45,13 @@ class UserController {
                     name: req.body.name,
                     phone_number: req.body.phone,
                     email: req.body.email,
-                    city: req.body.city
+                    city: req.body.city,
+                    address: req.body.address
                 },
                 { new: true }
             );
             await getUser.save();
-            res.redirect('/user');
+            res.redirect('/user/' + res.locals.existingUser._id);
         } catch (err) {
             console.error(err);
             res.status(500).json({ error: "Upload failed" });

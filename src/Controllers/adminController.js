@@ -1,4 +1,5 @@
 const user = require("../Models/user");
+
 class AdminController {
     homepage(req, res) {
         res.render('admin/index', { layout: false });
@@ -7,6 +8,7 @@ class AdminController {
     async userList(req, res, next) {
         try {
             const users = await user.find({ deleted: false });
+            console.log();
             res.render('admin/userList', { layout: false, users });
         } catch (error) {
             next(error);
@@ -38,7 +40,6 @@ class AdminController {
             const userToRestore = await user.findOne({ _id: req.params.id });
             userToRestore.deleted = false;
             await userToRestore.save();
-            console.log(req.params.id);
             res.redirect('/admin/recycle-bin');
         } catch (error) {
             next(error);
@@ -88,8 +89,6 @@ class AdminController {
                 userIds = userIds ? [userIds] : [];
             }
 
-            console.log("Danh sách userIds:", userIds);
-
             if (userIds.length === 0) {
                 return res.status(400).json({ message: "Không có user nào được chọn" });
             }
@@ -101,5 +100,22 @@ class AdminController {
         }
     }
 
+    async editUser(req, res, next) {
+        try {
+            const userToEdit = await user.findOne({ _id: req.body.userId });
+            res.json(userToEdit);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async updateUser(req, res, next) {
+        try {
+            await user.findOneAndUpdate({ _id: req.params._id }, { phone_number: req.body.phone_number, name: req.body.name, city: req.body.city, address: req.body.address });
+            res.redirect('/admin/user-list');
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 module.exports = new AdminController();
