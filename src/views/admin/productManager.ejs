@@ -568,6 +568,27 @@
                                                 placeholder="100" required>
                                         </div>
 
+                                        <!-- Discount -->
+                                        <div class="col-span-6 sm:col-span-3">
+                                            <label for="discount"
+                                                class="text-sm font-medium text-gray-900 block mb-2">Discount
+                                                (%)</label>
+                                            <input type="number" name="discount" id="discount" min="0"
+                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                value="0">
+                                        </div>
+                                        <!-- Trending -->
+                                        <div class="col-span-6 sm:col-span-3">
+                                            <label for="trending"
+                                                class="text-sm font-medium text-gray-900 block mb-2">Trending</label>
+                                            <select
+                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                name="action" required="required" id="trending">
+                                                <option value="true">Yes</option>
+                                                <option value="false">No</option>
+                                            </select>
+                                        </div>
+
                                         <!-- Details -->
                                         <div class="col-span-full">
                                             <label for="details"
@@ -888,6 +909,7 @@
                 const stockInput = document.getElementById("stock");
                 const detailsInput = document.getElementById("details");
                 const specificationsInput = document.getElementById("specifications");
+                const discountInput = document.getElementById("discount");
                 const getId = document.getElementById("ID");
                 let getImages;
                 editProducts.forEach(btn => {
@@ -907,27 +929,25 @@
                         stockInput.value = getProduct.stock;
                         detailsInput.value = getProduct.details.description;
                         specificationsInput.value = getProduct.details.specifications;
+                        discountInput.value = getProduct.discountPercent;
                         const currentImagesDiv = document.getElementById("current-images");
                         getImages = getProduct.images;
                         const imgEl = document.getElementsByClassName("w-20 h-20 object-cover rounded");
                         while (imgEl.length < getImages.length) {
-                            currentImagesDiv.innerHTML = ""; // reset trước khi render
+                            currentImagesDiv.innerHTML = "";
                             getImages.forEach((img, index) => {
                                 const wrapper = document.createElement("div");
                                 wrapper.className = "relative inline-block mr-2";
 
-                                // ảnh hiện tại
                                 const imgElement = document.createElement("img");
                                 imgElement.src = img.url;
                                 imgElement.className = "w-20 h-20 object-cover rounded cursor-pointer";
 
-                                // input file ẩn để thay thế ảnh
                                 const fileInput = document.createElement("input");
                                 fileInput.type = "file";
-                                fileInput.name = `images[${index}]`; // gửi về backend giữ đúng vị trí
+                                fileInput.name = `images[${index}]`;
                                 fileInput.className = "hidden";
 
-                                // Khi chọn ảnh mới từ máy → đổi preview luôn
                                 fileInput.addEventListener("change", (e) => {
                                     if (e.target.files && e.target.files[0]) {
                                         const newUrl = URL.createObjectURL(e.target.files[0]);

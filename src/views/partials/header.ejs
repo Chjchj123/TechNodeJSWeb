@@ -1,32 +1,39 @@
-<!-- ***** Header Area Start ***** -->
-<header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="/" class="logo">
-                        <img src="/assets/images/logo.png" alt="" style="width: 158px;">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li><a href="/" class="active">Home</a></li>
-                        <li><a href="shop.html">Our Shop</a></li>
-                        <li><a href="product-details.html">Product Details</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="/user/">Xin Chào <%= existingUser.name %></a></li>
-                        <form action="/auth/logout" method="POST" style="display:inline;">
-                            <button type="submit">Logout</button>
-                        </form>
-                    </ul>
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
+<div class="top-bar">
+    <p>Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%! <a href="#"
+            style="color: #fff; text-decoration: underline;">Shop Now</a></p>
+</div>
+<div class="container">
+    <div class="nav-container">
+        <div class="logo">QA TECH</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#">Contact</a>
+            <a href="#">About</a>
+            <a href="#">Sign Up</a>
+        </div>
+        <div class="nav-icons">
+            <div class="search-bar">
+                <input type="text" placeholder="What are you looking for?">
+                <button><i class="fas fa-search"></i></button>
             </div>
+            <a href="#"><i class="fas fa-heart"></i></a>
+            <a href="#"><i class="fas fa-shopping-cart"></i></a>
+            <a href="/user"><i class="fas fa-user"></i></a>
         </div>
     </div>
-</header>
-<!-- ***** Header Area End ***** -->
+</div>
+<div class="category-nav">
+    <div class="container">
+        <div class="category-list">
+            <a href="#">Graphics Card</a>
+            <a href="#">CPU</a>
+            <a href="#">Mainboards</a>
+            <a href="#">PSU</a>
+            <a href="#">RAM</a>
+            <a href="#">HDD</a>
+            <a href="#">Monitors</a>
+            <a href="#">SSD</a>
+            <a href="#">Case PC</a>
+        </div>
+    </div>
+</div>

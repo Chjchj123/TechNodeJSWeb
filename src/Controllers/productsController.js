@@ -81,11 +81,23 @@ class ProductsController {
             if (typeof getProduct.details !== 'object' || getProduct.details === null) {
                 getProduct.details = {};
             }
+            switch (req.body.action) {
+                case "true":
+                    getProduct.isTrending = true;
+                    break;
+                case "false":
+                    getProduct.isTrending = false;
+                    break;
+                default:
+                    getProduct.isTrending = false;
+                    break;
+            }
             getProduct.name = req.body.name;
             getProduct.category = req.body.category;
             getProduct.brand = req.body.brand;
             getProduct.price = req.body.price;
             getProduct.stock = req.body.stock;
+            getProduct.discountPercent = req.body.discount;
             getProduct.details = {
                 description: req.body.details,
                 specifications: req.body.specifications

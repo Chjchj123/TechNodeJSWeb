@@ -1,331 +1,685 @@
-<div class="main-banner">
+<!-- Hero Section -->
+<section class="hero">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-6 align-self-center">
-                <div class="caption header-text">
-                    <h6>Welcome to lugx</h6>
-                    <h2>BEST GAMING SITE EVER!</h2>
-                    <p>LUGX Gaming is free Bootstrap 5 HTML CSS website template for your gaming websites. You can
-                        download and use this layout for commercial purposes. Please tell your friends about TemplateMo.
-                    </p>
-                    <div class="search-input">
-                        <form id="search" action="#">
-                            <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword"
-                                onkeypress="handle" />
-                            <button role="button">Search Now</button>
-                        </form>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>
+                    <%= bannerProducts.name %>
+                </h1>
+                <p>Up to <%= bannerProducts.discountPercent %>% off Voucher</p>
+                <a href="#" class="shop-now-btn">Shop Now <i class="fas fa-arrow-right"></i></a>
+                <div class="timer">
+                    <div class="timer-item">
+                        <div class="timer-value">03</div>
+                        <div class="timer-label">Days</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-value">23</div>
+                        <div class="timer-label">Hours</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-value">19</div>
+                        <div class="timer-label">Minutes</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-value">56</div>
+                        <div class="timer-label">Seconds</div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 offset-lg-2">
-                <div class="right-image">
-                    <img src="assets/images/banner-image.jpg" alt="">
-                    <span class="price">$22</span>
-                    <span class="offer">-40%</span>
-                </div>
+            <div class="hero-image">
+                <!-- Placeholder for hero image -->
+                <img src="<%= bannerProducts.images[0].url %>"
+                    style="width: 400px; height: 400px; background-color: #333; border-radius: 9%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="features">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <a href="#">
-                    <div class="item">
-                        <div class="image">
-                            <img src="assets/images/featured-01.png" alt="" style="max-width: 44px;">
+<!-- Categories Section -->
+<section class="container">
+    <h2 class="section-title">All Category</h2>
+    <div class="categories">
+        <div class="category-card">
+            <div class="category-icon"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="40"
+                    fill="currentColor" class="bi bi-gpu-card" viewBox="0 0 16 16">
+                    <path d="M4 8a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0m7.5-1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" />
+                    <path
+                        d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 .5.5V4h13.5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H2v2.5a.5.5 0 0 1-1 0V2H.5a.5.5 0 0 1-.5-.5m5.5 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M9 8a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0" />
+                    <path
+                        d="M3 12.5h3.5v1a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5zm4 1v-1h4v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5" />
+                </svg></div>
+            <h3>Graphics Card</h3>
+        </div>
+        <div class="category-card">
+            <div class="category-icon"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="40"
+                    fill="currentColor" class="bi bi-cpu" viewBox="0 0 16 16">
+                    <path
+                        d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0m-.5 3A1.5 1.5 0 0 0 3 4.5v7A1.5 1.5 0 0 0 4.5 13h7a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 11.5 3zM5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5zM6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
+                </svg></div>
+            <h3>CPU</h3>
+        </div>
+        <div class="category-card">
+            <div class="category-icon"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="40"
+                    fill="currentColor" class="bi bi-motherboard" viewBox="0 0 16 16">
+                    <path
+                        d="M11.5 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5m-10 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zM5 3a1 1 0 0 0-1 1h-.5a.5.5 0 0 0 0 1H4v1h-.5a.5.5 0 0 0 0 1H4a1 1 0 0 0 1 1v.5a.5.5 0 0 0 1 0V8h1v.5a.5.5 0 0 0 1 0V8a1 1 0 0 0 1-1h.5a.5.5 0 0 0 0-1H9V5h.5a.5.5 0 0 0 0-1H9a1 1 0 0 0-1-1v-.5a.5.5 0 0 0-1 0V3H6v-.5a.5.5 0 0 0-1 0zm0 1h3v3H5zm6.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
+                    <path
+                        d="M1 2a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-2H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 9H1V8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6H1V5H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 2zm1 11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z" />
+                </svg></div>
+            <h3>Mainboards</h3>
+        </div>
+        <div class="category-card">
+            <div class="category-icon"><i class="fa-solid fa-bolt"></i></div>
+            <h3>PSU</h3>
+        </div>
+        <div class="category-card">
+            <div class="category-icon"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="40"
+                    fill="currentColor" class="bi bi-memory" viewBox="0 0 16 16">
+                    <path
+                        d="M1 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.586a1 1 0 0 0 .707-.293l.353-.353a.5.5 0 0 1 .708 0l.353.353a1 1 0 0 0 .707.293H15a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm.5 1h3a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5m5 0h3a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5m4.5.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5zM2 10v2H1v-2zm2 0v2H3v-2zm2 0v2H5v-2zm3 0v2H8v-2zm2 0v2h-1v-2zm2 0v2h-1v-2zm2 0v2h-1v-2z" />
+                </svg></div>
+            <h3>RAM</h3>
+        </div>
+        <div class="category-card">
+            <div class="category-icon"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="40"
+                    fill="currentColor" class="bi bi-hdd" viewBox="0 0 16 16">
+                    <path d="M4.5 11a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1M3 10.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0" />
+                    <path
+                        d="M16 11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.51c0-.418.105-.83.305-1.197l2.472-4.531A1.5 1.5 0 0 1 4.094 3h7.812a1.5 1.5 0 0 1 1.317.782l2.472 4.53c.2.368.305.78.305 1.198zM3.655 4.26 1.592 8.043Q1.79 8 2 8h12q.21 0 .408.042L12.345 4.26a.5.5 0 0 0-.439-.26H4.094a.5.5 0 0 0-.44.26zM1 10v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1" />
+                </svg></div>
+            <h3>HDD - SSD</h3>
+        </div>
+        <div class="category-card">
+            <div class="category-icon"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="40"
+                    fill="currentColor" class="bi bi-display" viewBox="0 0 16 16">
+                    <path
+                        d="M0 4s0-2 2-2h12s2 0 2 2v6s0 2-2 2h-4q0 1 .25 1.5H11a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1h.75Q6 13 6 12H2s-2 0-2-2zm1.398-.855a.76.76 0 0 0-.254.302A1.5 1.5 0 0 0 1 4.01V10c0 .325.078.502.145.602q.105.156.302.254a1.5 1.5 0 0 0 .538.143L2.01 11H14c.325 0 .502-.078.602-.145a.76.76 0 0 0 .254-.302 1.5 1.5 0 0 0 .143-.538L15 9.99V4c0-.325-.078-.502-.145-.602a.76.76 0 0 0-.302-.254A1.5 1.5 0 0 0 13.99 3H2c-.325 0-.502.078-.602.145" />
+                </svg></div>
+            <h3>Monitors</h3>
+        </div>
+        <div class="category-card">
+            <div class="category-icon"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="40"
+                    fill="currentColor" class="bi bi-pc" viewBox="0 0 16 16">
+                    <path
+                        d="M5 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm.5 14a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1m2 0a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1M5 1.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5M5.5 3h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1" />
+                </svg></div>
+            <h3>Case</h3>
+        </div>
+    </div>
+</section>
+
+<!-- Best Selling Products -->
+<section class="products-section container">
+    <h2 class="section-title">Best Discount Products</h2>
+    <div class="products-grid">
+        <% bestDiscountProducts.forEach(function(product){ %>
+            <!-- Product 1 -->
+            <a href="product-details.html" class="product-card">
+                <div class="product-image">
+                    <div class="discount-badge">
+                        <%= product.discountPercent %>%
+                    </div>
+                    <img src="<%= product.images[0].url %>"
+                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">
+                        <%= product.name %>
+                    </h3>
+                    <div class="product-price">
+                        <% let discount=product.discountPercent || 0; let originalPrice=product.price || 0; let
+                            finalPrice=originalPrice * (1 - discount / 100); finalPrice=finalPrice.toFixed(2); %>
+                            <span class="current-price">
+                                <%= finalPrice %>$
+                            </span>
+                            <span class="original-price">
+                                <%= product.price %>$
+                            </span>
+                    </div>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(65)</span>
+                    </div>
+                </div>
+            </a>
+            <% }); %>
+    </div>
+</section>
+
+<!-- New Arrival Section -->
+<section class="container">
+    <div class="new-arrival">
+        <div class="new-arrival-content">
+            <h2>
+                <%= newProduct.name %>
+            </h2>
+            <p>Is Coming Out Now!</p>
+            <a href="#" class="shop-now-btn">Shop Now</a>
+        </div>
+        <div class="new-arrival-image">
+            <img src="<%= newProduct.images[0].url %>"
+                style="width: 300px; height: 300px; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="container">
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-truck"></i></div>
+            <h3>FREE AND FAST DELIVERY</h3>
+            <p>Free delivery for all orders over $140</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-headset"></i></div>
+            <h3>24/7 CUSTOMER SERVICE</h3>
+            <p>Friendly 24/7 customer support</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>MONEY BACK GUARANTEE</h3>
+            <p>We return money within 30 days</p>
+        </div>
+    </div>
+</section>
+<!-- VGA -->
+<section class="container">
+    <div class="new-arrival">
+
+        <div class="new-arrival-image">
+            <img src="/asset/images/banners/gpu-banner.jpeg"
+                style="width: 100%; height: auto; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+        </div>
+    </div>
+</section>
+<section class="products-section container">
+    <h2 class="section-title">VGA - Card Màn Hình</h2>
+    <% if (!vga || vga.length===0) { %>
+        <h3 class="section-title">Hiện Tại Đã Hết Hàng</h3>
+        <% } else { %>
+            <div class="products-grid">
+                <% vga.forEach(function(VGA){ %>
+                    <!-- Product 1 -->
+                    <a href="product-details.html" class="product-card">
+                        <div class="product-image">
+                            <% if (VGA.discountPercent && VGA.discountPercent> 0) { %>
+                                <div class="discount-badge">
+                                    <%= VGA.discountPercent %>%
+                                </div>
+                                <% } %>
+                                    <img src="<%= VGA.images[0].url %>"
+                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
                         </div>
-                        <h4>Free Storage</h4>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <a href="#">
-                    <div class="item">
-                        <div class="image">
-                            <img src="assets/images/featured-02.png" alt="" style="max-width: 44px;">
-                        </div>
-                        <h4>User More</h4>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <a href="#">
-                    <div class="item">
-                        <div class="image">
-                            <img src="assets/images/featured-03.png" alt="" style="max-width: 44px;">
-                        </div>
-                        <h4>Reply Ready</h4>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <a href="#">
-                    <div class="item">
-                        <div class="image">
-                            <img src="assets/images/featured-04.png" alt="" style="max-width: 44px;">
-                        </div>
-                        <h4>Easy Layout</h4>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="section trending">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="section-heading">
-                    <h6>Trending</h6>
-                    <h2>Trending Games</h2>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="main-button">
-                    <a href="shop.html">View All</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/trending-01.jpg" alt=""></a>
-                        <span class="price"><em>$28</em>$20</span>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Action</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html"><i class="fa fa-shopping-bag"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/trending-02.jpg" alt=""></a>
-                        <span class="price">$44</span>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Action</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html"><i class="fa fa-shopping-bag"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/trending-03.jpg" alt=""></a>
-                        <span class="price"><em>$64</em>$44</span>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Action</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html"><i class="fa fa-shopping-bag"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/trending-04.jpg" alt=""></a>
-                        <span class="price">$32</span>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Action</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html"><i class="fa fa-shopping-bag"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="section most-played">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="section-heading">
-                    <h6>TOP GAMES</h6>
-                    <h2>Most Played</h2>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="main-button">
-                    <a href="shop.html">View All</a>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/top-game-01.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/top-game-02.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/top-game-03.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/top-game-04.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/top-game-05.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/top-game-06.jpg" alt=""></a>
-                    </div>
-                    <div class="down-content">
-                        <span class="category">Adventure</span>
-                        <h4>Assasin Creed</h4>
-                        <a href="product-details.html">Explore</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="section categories">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="section-heading">
-                    <h6>Categories</h6>
-                    <h2>Top Categories</h2>
-                </div>
-            </div>
-            <div class="col-lg col-sm-6 col-xs-12">
-                <div class="item">
-                    <h4>Action</h4>
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/categories-01.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg col-sm-6 col-xs-12">
-                <div class="item">
-                    <h4>Action</h4>
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/categories-05.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg col-sm-6 col-xs-12">
-                <div class="item">
-                    <h4>Action</h4>
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/categories-03.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg col-sm-6 col-xs-12">
-                <div class="item">
-                    <h4>Action</h4>
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/categories-04.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg col-sm-6 col-xs-12">
-                <div class="item">
-                    <h4>Action</h4>
-                    <div class="thumb">
-                        <a href="product-details.html"><img src="assets/images/categories-05.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="section cta">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5">
-                <div class="shop">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="section-heading">
-                                <h6>Our Shop</h6>
-                                <h2>Go Pre-Order Buy & Get Best <em>Prices</em> For You!</h2>
+                        <div class="product-info">
+                            <h3 class="product-title">
+                                <%= VGA.name %>
+                            </h3>
+                            <div class="product-price">
+                                <% let discount=VGA.discountPercent || 0; let originalPrice=VGA.price || 0; let
+                                    finalPrice=originalPrice * (1 - discount / 100); finalPrice=finalPrice.toFixed(2);
+                                    %>
+                                    <span class="current-price">
+                                        <%= finalPrice %>$
+                                    </span>
+                                    <% if (discount> 0) { %>
+                                        <span class="original-price">
+                                            <%= VGA.price %>$
+                                        </span>
+                                        <% } %>
                             </div>
-                            <p>Lorem ipsum dolor consectetur adipiscing, sed do eiusmod tempor incididunt.</p>
-                            <div class="main-button">
-                                <a href="shop.html">Shop Now</a>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(65)</span>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </a>
+                    <% }) %>
+                        <% } %>
+
             </div>
-            <div class="col-lg-5 offset-lg-2 align-self-end">
-                <div class="subscribe">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="section-heading">
-                                <h6>NEWSLETTER</h6>
-                                <h2>Get Up To $100 Off Just Buy <em>Subscribe</em> Newsletter!</h2>
-                            </div>
-                            <div class="search-input">
-                                <form id="subscribe" action="#">
-                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" placeholder="Your email...">
-                                    <button type="submit">Subscribe Now</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+</section>
+<!--  -->
+
+<!-- CPU -->
+<section class="container">
+    <div class="new-arrival">
+
+        <div class="new-arrival-image">
+            <img src="/asset/images/banners/cpu-banner.jpeg"
+                style="width: 100%; height: auto; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
         </div>
     </div>
-</div>
+</section>
+<section class="products-section container">
+    <h2 class="section-title">CPU - Vi Xử Lý</h2>
+    <% if (!cpu || cpu.length===0) { %>
+        <h3 class="section-title">Hiện Tại Đã Hết Hàng</h3>
+        <% } else { %>
+            <div class="products-grid">
+                <% cpu.forEach(function(CPU){ %>
+                    <!-- Product 1 -->
+                    <a href="product-details.html" class="product-card">
+                        <div class="product-image">
+                            <% if (CPU.discountPercent && CPU.discountPercent> 0) { %>
+                                <div class="discount-badge">
+                                    <%= CPU.discountPercent %>%
+                                </div>
+                                <% } %>
+                                    <img src="<%= CPU.images[0].url %>"
+                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">
+                                <%= CPU.name %>
+                            </h3>
+                            <div class="product-price">
+                                <% let discount=CPU.discountPercent || 0; let originalPrice=CPU.price || 0; let
+                                    finalPrice=originalPrice * (1 - discount / 100); finalPrice=finalPrice.toFixed(2);
+                                    %>
+                                    <span class="current-price">
+                                        <%= finalPrice %>$
+                                    </span>
+                                    <% if (discount> 0) { %>
+                                        <span class="original-price">
+                                            <%= CPU.price %>$
+                                        </span>
+                                        <% } %>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(65)</span>
+                            </div>
+                        </div>
+                    </a>
+                    <% }) %>
+                        <% } %>
+
+            </div>
+</section>
+<!--  -->
+
+<!-- Motherboards -->
+<section class="container">
+    <div class="new-arrival">
+
+        <div class="new-arrival-image">
+            <img src="/asset/images/banners/mainboards-banner.jpeg"
+                style="width: 100%; height: auto; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+        </div>
+    </div>
+</section>
+<section class="products-section container">
+    <h2 class="section-title">Mainboards - Bo Mạch Chủ</h2>
+    <% if (!mainboards || mainboards.length===0) { %>
+        <h3 class="section-title">Hiện Tại Đã Hết Hàng</h3>
+        <% } else { %>
+            <div class="products-grid">
+                <% mainboards.forEach(function(main){ %>
+                    <!-- Product 1 -->
+                    <a href="product-details.html" class="product-card">
+                        <div class="product-image">
+                            <% if (main.discountPercent && main.discountPercent> 0) { %>
+                                <div class="discount-badge">
+                                    <%= main.discountPercent %>%
+                                </div>
+                                <% } %>
+                                    <img src="<%= main.images[0].url %>"
+                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">
+                                <%= main.name %>
+                            </h3>
+                            <div class="product-price">
+                                <% let discount=main.discountPercent || 0; let originalPrice=main.price || 0; let
+                                    finalPrice=originalPrice * (1 - discount / 100); finalPrice=finalPrice.toFixed(2);
+                                    %>
+                                    <span class="current-price">
+                                        <%= finalPrice %>$
+                                    </span>
+                                    <% if (discount> 0) { %>
+                                        <span class="original-price">
+                                            <%= main.price %>$
+                                        </span>
+                                        <% } %>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(65)</span>
+                            </div>
+                        </div>
+                    </a>
+                    <% }) %>
+                        <% } %>
+
+            </div>
+</section>
+<!--  -->
+
+<!-- RAM -->
+<section class="container">
+    <div class="new-arrival">
+
+        <div class="new-arrival-image">
+            <img src="/asset/images/banners/ram-banner.jpeg"
+                style="width: 100%; height: auto; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+        </div>
+    </div>
+</section>
+<section class="products-section container">
+    <h2 class="section-title">RAM - Memory</h2>
+    <% if (!ram || ram.length===0) { %>
+        <h3 class="section-title">Hiện Tại Đã Hết Hàng</h3>
+        <% } else { %>
+            <div class="products-grid">
+                <% ram.forEach(function(RAM){ %>
+                    <!-- Product 1 -->
+                    <a href="product-details.html" class="product-card">
+                        <div class="product-image">
+                            <% if (RAM.discountPercent && RAM.discountPercent> 0) { %>
+                                <div class="discount-badge">
+                                    <%= RAM.discountPercent %>%
+                                </div>
+                                <% } %>
+                                    <img src="<%= RAM.images[0].url %>"
+                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">
+                                <%= RAM.name %>
+                            </h3>
+                            <div class="product-price">
+                                <% let discount=RAM.discountPercent || 0; let originalPrice=RAM.price || 0; let
+                                    finalPrice=originalPrice * (1 - discount / 100); finalPrice=finalPrice.toFixed(2);
+                                    %>
+                                    <span class="current-price">
+                                        <%= finalPrice %>$
+                                    </span>
+                                    <% if (discount> 0) { %>
+                                        <span class="original-price">
+                                            <%= RAM.price %>$
+                                        </span>
+                                        <% } %>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(65)</span>
+                            </div>
+                        </div>
+                    </a>
+                    <% }) %>
+                        <% } %>
+
+            </div>
+</section>
+<!--  -->
+
+<!-- HDD -->
+<section class="container">
+    <div class="new-arrival">
+
+        <div class="new-arrival-image">
+            <img src="/asset/images/banners/hdd-banner.jpeg"
+                style="width: 100%; height: auto; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+        </div>
+    </div>
+</section>
+<section class="products-section container">
+    <h2 class="section-title">HDD - Hard Disk</h2>
+    <% if (!hdd || hdd.length===0) { %>
+        <h3 class="section-title">Hiện Tại Đã Hết Hàng</h3>
+        <% } else { %>
+            <div class="products-grid">
+                <% hdd.forEach(function(HDD){ %>
+                    <!-- Product 1 -->
+                    <a href="product-details.html" class="product-card">
+                        <div class="product-image">
+                            <% if (HDD.discountPercent && HDD.discountPercent> 0) { %>
+                                <div class="discount-badge">
+                                    <%= HDD.discountPercent %>%
+                                </div>
+                                <% } %>
+                                    <img src="<%= HDD.images[0].url %>"
+                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">
+                                <%= HDD.name %>
+                            </h3>
+                            <div class="product-price">
+                                <% let discount=HDD.discountPercent || 0; let originalPrice=HDD.price || 0; let
+                                    finalPrice=originalPrice * (1 - discount / 100); finalPrice=finalPrice.toFixed(2);
+                                    %>
+                                    <span class="current-price">
+                                        <%= finalPrice %>$
+                                    </span>
+                                    <% if (discount> 0) { %>
+                                        <span class="original-price">
+                                            <%= HDD.price %>$
+                                        </span>
+                                        <% } %>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(65)</span>
+                            </div>
+                        </div>
+                    </a>
+                    <% }) %>
+                        <% } %>
+
+            </div>
+</section>
+<!--  -->
+
+<!-- SSD -->
+<section class="container">
+    <div class="new-arrival">
+
+        <div class="new-arrival-image">
+            <img src="/asset/images/banners/ssd-banner.jpeg"
+                style="width: 100%; height: auto; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+        </div>
+    </div>
+</section>
+<section class="products-section container">
+    <h2 class="section-title">SSD - Hard Disk</h2>
+    <% if (!ssd || ssd.length===0) { %>
+        <h3 class="section-title">Hiện Tại Đã Hết Hàng</h3>
+        <% } else { %>
+            <div class="products-grid">
+                <% ssd.forEach(function(SSD){ %>
+                    <!-- Product 1 -->
+                    <a href="product-details.html" class="product-card">
+                        <div class="product-image">
+                            <% if (SSD.discountPercent && SSD.discountPercent> 0) { %>
+                                <div class="discount-badge">
+                                    <%= SSD.discountPercent %>%
+                                </div>
+                                <% } %>
+                                    <img src="<%= SSD.images[0].url %>"
+                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">
+                                <%= SSD.name %>
+                            </h3>
+                            <div class="product-price">
+                                <% let discount=SSD.discountPercent || 0; let originalPrice=SSD.price || 0; let
+                                    finalPrice=originalPrice * (1 - discount / 100); finalPrice=finalPrice.toFixed(2);
+                                    %>
+                                    <span class="current-price">
+                                        <%= finalPrice %>$
+                                    </span>
+                                    <% if (discount> 0) { %>
+                                        <span class="original-price">
+                                            <%= SSD.price %>$
+                                        </span>
+                                        <% } %>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(65)</span>
+                            </div>
+                        </div>
+                    </a>
+                    <% }) %>
+                        <% } %>
+
+            </div>
+</section>
+<!--  -->
+
+<!-- Case -->
+<section class="container">
+    <div class="new-arrival">
+
+        <div class="new-arrival-image">
+            <img src="/asset/images/banners/case-banner.jpeg"
+                style="width: 100%; height: auto; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+        </div>
+    </div>
+</section>
+<section class="products-section container">
+    <h2 class="section-title">Case - Vỏ Máy Tính</h2>
+    <% if (!casePC || casePC.length===0) { %>
+        <h3 class="section-title">Hiện Tại Đã Hết Hàng</h3>
+        <% } else { %>
+            <div class="products-grid">
+                <% casePC.forEach(function(CASE){ %>
+                    <!-- Product 1 -->
+                    <a href="product-details.html" class="product-card">
+                        <div class="product-image">
+                            <% if (CASE.discountPercent && CASE.discountPercent> 0) { %>
+                                <div class="discount-badge">
+                                    <%= CASE.discountPercent %>%
+                                </div>
+                                <% } %>
+                                    <img src="<%= CASE.images[0].url %>"
+                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">
+                                <%= CASE.name %>
+                            </h3>
+                            <div class="product-price">
+                                <% let discount=CASE.discountPercent || 0; let originalPrice=CASE.price || 0; let
+                                    finalPrice=originalPrice * (1 - discount / 100); finalPrice=finalPrice.toFixed(2);
+                                    %>
+                                    <span class="current-price">
+                                        <%= finalPrice %>$
+                                    </span>
+                                    <% if (discount> 0) { %>
+                                        <span class="original-price">
+                                            <%= CASE.price %>$
+                                        </span>
+                                        <% } %>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(65)</span>
+                            </div>
+                        </div>
+                    </a>
+                    <% }) %>
+                        <% } %>
+
+            </div>
+</section>
+<!--  -->
+
+<!-- PSU -->
+<section class="container">
+    <div class="new-arrival">
+
+        <div class="new-arrival-image">
+            <img src="/asset/images/banners/psu-banner.jpeg"
+                style="width: 100%; height: auto; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+        </div>
+    </div>
+</section>
+<section class="products-section container">
+    <h2 class="section-title">PSU - Nguồn</h2>
+    <% if (!psu || psu.length===0) { %>
+        <h3 class="section-title">Hiện Tại Đã Hết Hàng</h3>
+        <% } else { %>
+            <div class="products-grid">
+                <% psu.forEach(function(PSU){ %>
+                    <!-- Product 1 -->
+                    <a href="product-details.html" class="product-card">
+                        <div class="product-image">
+                            <% if (PSU.discountPercent && PSU.discountPercent> 0) { %>
+                                <div class="discount-badge">
+                                    <%= PSU.discountPercent %>%
+                                </div>
+                                <% } %>
+                                    <img src="<%= PSU.images[0].url %>"
+                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">
+                                <%= PSU.name %>
+                            </h3>
+                            <div class="product-price">
+                                <% let discount=PSU.discountPercent || 0; let originalPrice=PSU.price || 0; let
+                                    finalPrice=originalPrice * (1 - discount / 100); finalPrice=finalPrice.toFixed(2);
+                                    %>
+                                    <span class="current-price">
+                                        <%= finalPrice %>$
+                                    </span>
+                                    <% if (discount> 0) { %>
+                                        <span class="original-price">
+                                            <%= PSU.price %>$
+                                        </span>
+                                        <% } %>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(65)</span>
+                            </div>
+                        </div>
+                    </a>
+                    <% }) %>
+                        <% } %>
+
+            </div>
+</section>
+<!--  -->

@@ -2,85 +2,72 @@
 <html lang="en">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
-    <title>QA TẾCH</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="/asset/css/fontawesome.css">
-    <link rel="stylesheet" href="/asset/css/templatemo-lugx-gaming.css">
-    <link rel="stylesheet" href="/asset/css/owl.css">
-    <link rel="stylesheet" href="/asset/css/animate.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-    <!--
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Tech - E-Commerce Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/asset/css/style.css">
 </head>
 
 <body>
-
-    <!-- ***** Preloader Start ***** -->
-    <div id="js-preloader" class="js-preloader">
-        <div class="preloader-inner">
-            <span class="dot"></span>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </div>
-    <!-- ***** Preloader End ***** -->
-    <div class="header">
-
+    <!-- Header -->
+    <header>
         <%- include("../partials/header") %>
-    </div>
-    <div class="content">
+    </header>
+
+    <!-- Main Content - Homepage -->
+    <main>
         <%- body %>
-    </div>
+    </main>
 
-    <div class="footer">
+    <!-- Footer -->
+    <footer>
         <%- include("../partials/footer") %>
-    </div>
-    <!-- Scripts -->
-    <!-- Bootstrap core JavaScript -->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/asset/js/isotope.min.js"></script>
-    <script src="/asset/js/owl-carousel.js"></script>
-    <script src="/asset/js/counter.js"></script>
-    <script src="/asset/js/custom.js"></script>
+    </footer>
 
-    </body>
-    <% if (typeof toastMessage !=='undefined' ) { %>
-        <div id="toast" style="
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #38a169;
-            color: white;
-            padding: 16px 24px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 9999;
-            font-size: 16px;
-            display: none;
-        ">
-            <%= toastMessage %>
-        </div>
-        <script>
-            document.getElementById('toast').style.display = 'block';
-            setTimeout(function () {
-                document.getElementById('toast').style.display = 'none';
-            }, 5000);
-        </script>
-        <% } %>
+    <script>
+        // Timer functionality
+        function updateTimer() {
+            const daysElement = document.querySelector('.timer-item:first-child .timer-value');
+            const hoursElement = document.querySelector('.timer-item:nth-child(2) .timer-value');
+            const minutesElement = document.querySelector('.timer-item:nth-child(3) .timer-value');
+            const secondsElement = document.querySelector('.timer-item:last-child .timer-value');
+
+            // Set a target date (3 days from now)
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 3);
+
+            function update() {
+                const now = new Date();
+                const difference = targetDate - now;
+
+                if (difference <= 0) {
+                    // Timer expired
+                    daysElement.textContent = '00';
+                    hoursElement.textContent = '00';
+                    minutesElement.textContent = '00';
+                    secondsElement.textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                daysElement.textContent = days.toString().padStart(2, '0');
+                hoursElement.textContent = hours.toString().padStart(2, '0');
+                minutesElement.textContent = minutes.toString().padStart(2, '0');
+                secondsElement.textContent = seconds.toString().padStart(2, '0');
+            }
+
+            // Update immediately and then every second
+            update();
+            setInterval(update, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', updateTimer);
+    </script>
+</body>
 
 </html>

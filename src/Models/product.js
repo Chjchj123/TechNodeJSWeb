@@ -14,6 +14,8 @@ const productSchema = new mongoose.Schema(
             }
         ],
         details: { type: Object, default: {} },
+        discountPercent: { type: Number, default: 0 },
+        isTrending: { type: Boolean, default: false },
         comment: { type: Array, default: [] },
         deleted: { type: Boolean, default: false },
     },
