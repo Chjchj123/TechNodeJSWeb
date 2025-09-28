@@ -1,0 +1,229 @@
+<link rel="stylesheet" href="/asset/css/product-details.css">
+<!-- Product Details Content -->
+<main>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="#">Account</a> / <a href="#">Gaming</a> /
+            <span>
+                <%= getProducts.name %>
+            </span>
+        </div>
+
+        <div class="product-details">
+            <!-- Gallery (ảnh bên trái) -->
+            <div class="product-gallery">
+                <div class="thumbnail-list">
+                    <% getProducts.images.forEach(function(img, index){ %>
+                        <img src="<%= img.url %>" class="thumbnail <%= index === 0 ? 'active' : '' %>"
+                            data-index="<%= index %>">
+                        <% }); %>
+                </div>
+
+                <div class="main-image">
+                    <img id="mainProductImage" src="<%= getProducts.images[0].url %>" alt="<%= getProducts.name %>">
+                </div>
+            </div>
+
+            <!-- Info + quantity + action buttons (bên phải) -->
+            <div class="product-info-details">
+                <h1 class="product-title-details">
+                    <%= getProducts.name %>
+                </h1>
+
+                <div class="product-rating-details">
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(150 Reviews)</span>
+                    </div>
+                    <span style="color: #00FF66;">In Stock</span>
+                </div>
+
+                <div class="product-price-details">$<%= getProducts.price %>
+                </div>
+
+                <p class="product-description">
+                    <%= getProducts.description %>
+                </p>
+
+                <!-- Quantity + Buy Now -->
+                <div class="quantity-selector">
+                    <button class="quantity-btn">-</button>
+                    <span class="quantity-value">1</span>
+                    <button class="quantity-btn">+</button>
+                    <button class="buy-now-btn">Buy Now</button>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="action-buttons">
+                    <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add To Cart</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="product-info-details">
+            <h1 class="product-title-details">
+                <%= getProducts.name %>
+            </h1>
+
+            <div class="product-rating-details">
+                <div class="product-rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <span>(150 Reviews)</span>
+                </div>
+                <span style="color: #00FF66;">In Stock</span>
+            </div>
+
+            <div class="product-price-details">$<%= getProducts.price %>
+            </div>
+
+            <p class="product-description">
+                <%= getProducts.details.description %>
+            </p>
+            <p class="product-specifications">
+                <%= getProducts.details.specifications %>
+            </p>
+
+            <!-- Delivery info -->
+            <div class="delivery-info">
+                <div class="delivery-item">
+                    <div class="delivery-icon"><i class="fas fa-truck"></i></div>
+                    <div>
+                        <div style="font-weight: 500;">Free Delivery</div>
+                        <div>Enter your postal code for Delivery Availability</div>
+                    </div>
+                </div>
+                <div class="delivery-item">
+                    <div class="delivery-icon"><i class="fas fa-undo"></i></div>
+                    <div>
+                        <div style="font-weight: 500;">Return Delivery</div>
+                        <div>Free 30 Days Delivery Returns, Details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="related-products">
+        <h2 class="section-title">Related Item</h2>
+        <div class="related-products-grid">
+            <!-- Related Product 1 -->
+            <a href="product-details.html" class="product-card">
+                <div class="product-image">
+                    <div class="discount-badge">-40%</div>
+                    <div
+                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        HAVIT HV-G92 Gamepad</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">HAVIT HV-G92 Gamepad</h3>
+                    <div class="product-price">
+                        <span class="current-price">$120</span>
+                        <span class="original-price">$160</span>
+                    </div>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(88)</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Related Product 2 -->
+            <a href="product-details.html" class="product-card">
+                <div class="product-image">
+                    <div class="discount-badge">-40%</div>
+                    <div
+                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        AK-900 Wired Keyboard</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">AK-900 Wired Keyboard</h3>
+                    <div class="product-price">
+                        <span class="current-price">$960</span>
+                        <span class="original-price">$1160</span>
+                    </div>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(75)</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Related Product 3 -->
+            <a href="product-details.html" class="product-card">
+                <div class="product-image">
+                    <div class="discount-badge">-35%</div>
+                    <div
+                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        IPS LCD Gaming Monitor</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">IPS LCD Gaming Monitor</h3>
+                    <div class="product-price">
+                        <span class="current-price">$370</span>
+                        <span class="original-price">$400</span>
+                    </div>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(99)</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Related Product 4 -->
+            <a href="product-details.html" class="product-card">
+                <div class="product-image">
+                    <div class="discount-badge">-15%</div>
+                    <div
+                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        RGB liquid CPU Cooler</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">RGB liquid CPU Cooler</h3>
+                    <div class="product-price">
+                        <span class="current-price">$160</span>
+                        <span class="original-price">$170</span>
+                    </div>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(65)</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+    </div>
+</main>
+<script>
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainImage = document.getElementById('mainProductImage');
+
+    thumbnails.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+            thumbnails.forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+            mainImage.src = thumb.src;
+        });
+    });
+</script>

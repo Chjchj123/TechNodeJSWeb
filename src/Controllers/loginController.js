@@ -52,7 +52,7 @@ class Login {
     async logout(req, res, next) {
         try {
             res.clearCookie('token');
-            res.redirect('/auth/login');
+            res.redirect('/');
         } catch (error) {
             next(error);
         }

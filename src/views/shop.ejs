@@ -1,0 +1,130 @@
+<link rel="stylesheet" href="/asset/css/shop.css">
+<!-- Shop Content -->
+<div class="container">
+    <div class="breadcrumb">
+        <a href="index.html">Home</a> / <span>Shop</span>
+    </div>
+
+    <div class="shop-content">
+        <!-- Sidebar with Filters -->
+        <div class="sidebar">
+            <h3>Filters</h3>
+            <div class="filter-section">
+                <div class="filter-title">
+                    <span>Price Range</span>
+                </div>
+                <div class="price-range">
+                    <div class="price-inputs">
+                        <input type="number" placeholder="Min" value="0">
+                        <input type="number" placeholder="Max" value="1000">
+                    </div>
+                    <button class="shop-now-btn" style="padding: 8px; font-size: 14px;">Apply</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">
+                    <span>Brand</span>
+                </div>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="brand1">
+                        <label for="brand1">Nike</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="brand2">
+                        <label for="brand2">Adidas</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="brand3">
+                        <label for="brand3">Apple</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="brand4">
+                        <label for="brand4">Samsung</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="brand5">
+                        <label for="brand5">Sony</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div class="products-section">
+            <div class="products-header">
+                <div>
+                    <h2>
+                        Products
+                    </h2>
+                    <p class="products-count">Showing 1-12 of <%= totalProduct%> products</p>
+                </div>
+                <div class="sort-options">
+                    <span>Sort by:</span>
+                    <select>
+                        <option>Newest</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Rating</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid">
+                <% if(!getProductByCategory || getProductByCategory.length===0) { %>
+                    <h2>Hiện Chưa Có Sản Phẩm Nào</h2>
+                    <% }else {%>
+                        <% getProductByCategory.forEach(function(product) { %>
+                            <!-- Product 1 -->
+                            <a href="/shop/<%= encodeURIComponent(product.category) %>/<%= product._id %>"
+                                class="product-card">
+                                <div class="product-image">
+                                    <div class="discount-badge">
+                                        <%= product.discountPercent %>%
+                                    </div>
+                                    <img src="<%= product.images[0].url %>"
+                                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-title">
+                                        <%= product.name %>
+                                    </h3>
+                                    <div class="product-price">
+                                        <% let discount=product.discountPercent; let price=product.price;let
+                                            finalPrice=price * (1 - discount / 100);finalPrice=finalPrice.toFixed(2); %>
+                                            <span class="current-price">
+                                                <%= finalPrice %>$
+                                            </span>
+                                            <span class="original-price">
+                                                <%= product.price %>$
+                                            </span>
+                                    </div>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span>(65)</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <% }) %>
+                                <% } %>
+
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button><i class="fas fa-chevron-left"></i></button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>5</button>
+                <button><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

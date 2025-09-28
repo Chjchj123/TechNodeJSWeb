@@ -30,6 +30,25 @@ class homeController {
             psu
         });
     }
+
+    async shopPage(req, res, next) {
+        try {
+            const getProductByCategory = await product.find({ category: req.params.category, deleted: false });
+            const totalProduct = await product.countDocuments({ category: req.params.category, deleted: false });
+            res.render("shop", { getProductByCategory, totalProduct });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async productDetails(req, res, next) {
+        try {
+            const getProducts = await product.findOne({ _id: req.params.id, deleted: false });
+            res.render('productDetails', { getProducts });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new homeController();

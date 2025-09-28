@@ -4,19 +4,24 @@
 </div>
 <div class="container">
     <div class="nav-container">
-        <div class="logo">QA TECH</div>
+        <div class="logo">QATECH</div>
         <div class="nav-links">
             <a href="/">Home</a>
             <a href="#">Contact</a>
             <a href="#">About</a>
-            <a href="#">Sign Up</a>
+            <% if (typeof existingUser !=="undefined" && existingUser) { %>
+                <a>Xin chào, <%= existingUser.name %>!</a>
+                <form action="/auth/logout" method="POST"><button type="submit"><a>Đăng xuất</a></button></form>
+                <% } else { %>
+                    <a href="/auth/login">Đăng nhập</a>
+                    <% } %>
+
         </div>
         <div class="nav-icons">
             <div class="search-bar">
                 <input type="text" placeholder="What are you looking for?">
                 <button><i class="fas fa-search"></i></button>
             </div>
-            <a href="#"><i class="fas fa-heart"></i></a>
             <a href="#"><i class="fas fa-shopping-cart"></i></a>
             <a href="/user"><i class="fas fa-user"></i></a>
         </div>
@@ -25,15 +30,15 @@
 <div class="category-nav">
     <div class="container">
         <div class="category-list">
-            <a href="#">Graphics Card</a>
-            <a href="#">CPU</a>
-            <a href="#">Mainboards</a>
-            <a href="#">PSU</a>
-            <a href="#">RAM</a>
-            <a href="#">HDD</a>
-            <a href="#">Monitors</a>
-            <a href="#">SSD</a>
-            <a href="#">Case PC</a>
+            <a href="/shop-page/GPU">Graphics Card</a>
+            <a href="/shop-page/CPU">CPU</a>
+            <a href="/shop-page/Mainboards">Mainboards</a>
+            <a href="/shop-page/PSU">PSU</a>
+            <a href="/shop-page/RAM">RAM</a>
+            <a href="/shop-page/HDD">HDD</a>
+            <a href="/shop-page/Monitors">Monitors</a>
+            <a href="/shop-page/SSD">SSD</a>
+            <a href="/shop-page/Case">Case PC</a>
         </div>
     </div>
 </div>

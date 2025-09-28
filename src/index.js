@@ -14,12 +14,12 @@ var methodOverride = require('method-override')
 
 app.use(methodOverride('_method'))
 app.use(cookieParser());
-app.use(authMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+app.use(authMiddleware);
 app.use(session({
     secret: process.env.JWT_SECRET,
     resave: false,
