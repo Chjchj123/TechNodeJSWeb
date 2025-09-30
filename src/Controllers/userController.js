@@ -51,7 +51,7 @@ class UserController {
                 { new: true }
             );
             await getUser.save();
-            res.redirect('/user/' + res.locals.existingUser._id);
+            res.redirect('/user/');
         } catch (err) {
             console.error(err);
             res.status(500).json({ error: "Upload failed" });

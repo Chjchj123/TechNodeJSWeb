@@ -8,6 +8,8 @@ routers.get('/cart/:id', homeController.showCart);
 routers.post('/add-cart/:id', homeController.addToCart);
 routers.post('/remove-cart/:id', homeController.removeCart);
 routers.patch('/update-quantity-cart/:id', homeController.updateQuantity);
+routers.get('/checkout/:id', homeController.checkOut);
+routers.post('/checkout-submit', homeController.checkOutSubmit)
 routers.get('/', homeController.homePage);
 
 module.exports = routers;

@@ -1,5 +1,6 @@
 const product = require('../Models/product');
 const user = require('../Models/user');
+const order = require('../Models/orders');
 
 class homeController {
     async homePage(req, res) {
@@ -96,6 +97,41 @@ class homeController {
             await res.locals.existingUser.save();
         } catch (error) {
             next(error)
+        }
+    }
+
+    async checkOut(req, res, next) {
+        try {
+            const usr = await user.findOne({ _id: res.locals.existingUser._id, deleted: false }).populate('cart.productId');
+            res.render('checkout', { usr });
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async checkOutSubmit(req, res, next) {
+        try {
+            const newOrder = new order({
+                user: res.locals.existingUser._id,
+                item: res.locals.existingUser.cart.map(product => ({
+                    productId: product.productId,
+                    name: product.name,
+                    price: product.price,
+                    quantity: product.quantity
+                })),
+                billDetails: {
+                    name: req.body.name,
+                    address: req.body.streetAddress,
+                    city: req.body.city,
+                    phoneNumber: req.body.phoneNumber,
+                    email: req.body.email
+                },
+                totalPrice: req.body.finalPrice,
+                paymentMethod: req.body.paymentMethod
+            });
+            await newOrder.save();
+        } catch (error) {
+            next(error);
         }
     }
 }

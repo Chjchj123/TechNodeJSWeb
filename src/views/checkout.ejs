@@ -1,0 +1,257 @@
+<link rel="stylesheet" href="/asset/css/checkout.css">
+<!-- Checkout Header -->
+<section class="checkout-header">
+    <div class="container">
+        <h1>Checkout</h1>
+    </div>
+</section>
+
+<!-- Checkout Content -->
+<div class="container">
+    <div class="breadcrumb">
+        <a href="/">Home</a> / <a href="/cart/<%= existingUser._id %>">Cart</a> /
+        <span>Checkout</span>
+    </div>
+
+    <div class="checkout-content">
+        <!-- Billing Details -->
+        <div class="billing-details">
+            <h2>Billing Details</h2>
+
+            <form id="checkout-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name" class="required">Họ Và Tên</label>
+                        <input type="text" id="name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="streetAddress" class="required">Địa Chỉ</label>
+                    <input type="text" id="streetAddress" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="city" class="required">Thành Phố</label>
+                    <input type="text" id="city" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="required">Số Điện Thoại</label>
+                    <input type="tel" id="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="required">Địa Chỉ Email</label>
+                    <input type="email" id="email" required>
+                </div>
+            </form>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="order-items">
+                <% usr.cart.forEach(product=>{ %>
+                    <div class="order-item">
+                        <div class="product-image">
+                            <img src="<%= product.productId.images[0].url %>">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title item-name">
+                                <%= product.productId.name %>
+                            </div>
+                            <% let discount=product.productId.discountPercent; let price=product.productId.price; let
+                                finalPrice=price * ( 1 - discount / 100); finalPrice *=product.quantity;
+                                finalPrice=finalPrice.toFixed(2)%>
+                                <div class="item-price">
+                                    <%= finalPrice %>$
+                                </div>
+                                <p>Số Lượng: <%= product.quantity %>
+                                </p>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+
+
+            <div class="order-totals">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0</span>
+                </div>
+                <div class="total-row">
+                    <span>Shipping:</span>
+                    <span id="shipping">Free</span>
+                </div>
+                <div class="total-row final">
+                    <span>Total:</span>
+                    <span id="total">$0</span>
+                </div>
+            </div>
+
+            <div class="payment-methods">
+                <h3>Payment Method</h3>
+
+                <div class="payment-method active">
+                    <div class="payment-method-header">
+                        <input type="radio" id="bank" name="payment" checked>
+                        <label for="bank">Bank Transfer</label>
+                    </div>
+                    <div class="bank-details">
+                        <p><strong>Bank Name:</strong> VP Bank</p>
+                        <p><strong>Account Number:</strong> 0353554244</p>
+                        <p><strong>Account Holder:</strong> DINH QUANG ANH</p>
+                    </div>
+                </div>
+
+                <div class="payment-method">
+                    <div class="payment-method-header">
+                        <input type="radio" id="cash" name="payment">
+                        <label for="cash">Cash on Delivery</label>
+                    </div>
+                    <p style="font-size: 14px; color: #666; margin-top: 5px;">Pay when you receive your order</p>
+                </div>
+            </div>
+
+            <div class="coupon-section">
+                <h3>Coupon Code</h3>
+                <div class="coupon-input">
+                    <input type="text" placeholder="Enter coupon code">
+                    <button class="btn btn-outline">Apply Coupon</button>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="place-order-btn">Place Order</button>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<section class="container">
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-truck"></i></div>
+            <h3>FREE AND FAST DELIVERY</h3>
+            <p>Free delivery for all orders over $140</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-headset"></i></div>
+            <h3>24/7 CUSTOMER SERVICE</h3>
+            <p>Friendly 24/7 customer support</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>MONEY BACK GUARANTEE</h3>
+            <p>We return money within 30 days</p>
+        </div>
+    </div>
+</section>
+<script>
+    // Checkout functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        updateOrderTotals();
+        // Payment method selection
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function () {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+
+                paymentMethods.forEach(m => m.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Apply coupon
+        const applyCouponBtn = document.querySelector('.coupon-input .btn');
+        applyCouponBtn.addEventListener('click', function () {
+            const couponInput = document.querySelector('.coupon-input input');
+            const couponCode = couponInput.value.trim();
+
+            if (couponCode === 'SAVE10') {
+                alert('Coupon applied! You saved 10%');
+                // Apply discount logic would go here
+            } else if (couponCode) {
+                alert('Invalid coupon code');
+            } else {
+                alert('Please enter a coupon code');
+            }
+        });
+        // update orders prices
+        function updateOrderTotals() {
+            let subtotal = 0;
+
+            document.querySelectorAll(".order-item .item-price").forEach(el => {
+                const priceText = el.textContent.replace("$", "").trim();
+                const price = parseFloat(priceText);
+                if (!isNaN(price)) subtotal += price;
+            });
+            const shipping = 0;
+
+            document.getElementById("subtotal").textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById("total").textContent = `$${(subtotal + shipping).toFixed(2)}`;
+        }
+
+        // Place order
+        const placeOrderBtn = document.getElementById('place-order-btn');
+        placeOrderBtn.addEventListener('click', function () {
+            const form = document.getElementById('checkout-form');
+            const requiredFields = form.querySelectorAll('input[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#DB4444';
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (isValid) {
+                const totalPrice = document.getElementById("total").textContent.replace("$", "");
+                let getPaymentMethod;
+                paymentMethods.forEach(method => {
+                    if (method.name === "bank" && method.checked === true) {
+                        getPaymentMethod = "Bank Transfer";
+                    } else {
+                        getPaymentMethod = "COD";
+                    };
+                })
+                const data = {
+                    name: document.getElementById("name").value,
+                    streetAddress: document.getElementById("streetAddress").value,
+                    city: document.getElementById("city").value,
+                    phoneNumber: document.getElementById("phone").value,
+                    email: document.getElementById("email").value,
+                    finalPrice: parseFloat(totalPrice),
+                    paymentMethod: getPaymentMethod
+                };
+                placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                placeOrderBtn.disabled = true;
+
+                setTimeout(() => {
+                    alert('Order placed successfully! Thank you for your purchase.');
+                    fetch("/checkout-submit", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(data)
+                    })
+                }, 2000);
+            } else {
+                alert('Please fill in all required fields');
+            }
+        });
+
+
+        document.querySelectorAll('input[name="payment"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                if (this.checked) {
+                    paymentMethods.forEach(m => m.classList.remove('active'));
+                    this.closest('.payment-method').classList.add('active');
+                }
+            });
+        });
+    });
+</script>
