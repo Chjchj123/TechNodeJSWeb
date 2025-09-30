@@ -280,7 +280,7 @@ header {
     color: #fff;
     padding: 5px 10px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 19px;
 }
 
 .product-info {
@@ -290,6 +290,11 @@ header {
 .product-title {
     font-weight: 500;
     margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .product-price {
@@ -307,7 +312,7 @@ header {
 .original-price {
     text-decoration: line-through;
     color: #999;
-    font-size: 14px;
+    font-size: 19px;
 }
 
 .product-rating {
@@ -352,6 +357,16 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.product-title-adminPage {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    max-width: 400px;
 }
 
 /* Features Section */

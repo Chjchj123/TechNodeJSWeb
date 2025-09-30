@@ -14,7 +14,8 @@ class ProductsController {
     async productList(req, res, next) {
         try {
             const products = await product.find({ deleted: false });
-            res.render('admin/productManager', { layout: false, products });
+            const countProducts = await product.countDocuments({ deleted: false });
+            res.render('admin/productManager', { layout: false, products, countProducts });
         } catch (error) {
             next(error);
         }

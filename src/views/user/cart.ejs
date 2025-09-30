@@ -1,0 +1,250 @@
+<link rel="stylesheet" href="/asset/css/cart.css">
+<!-- Cart Header -->
+<section class="cart-header">
+    <div class="container">
+        <h1>Cart</h1>
+    </div>
+</section>
+
+<!-- Cart Content -->
+<div class="container">
+    <div class="breadcrumb">
+        <a href="/">Home</a> / <span>Cart</span>
+    </div>
+
+    <div class="cart-content">
+        <!-- Cart Items -->
+        <div class="cart-items">
+            <% if(usr.cart.length !==0){ %>
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% usr.cart.forEach(product=>{ %>
+                            <tr>
+                                <td>
+                                    <div class="product-info">
+                                        <div class="product-image">
+                                            <img src="<%= product.productId.images[0].url %>"
+                                                style="width: 100%; height: 100%; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666;">
+                                        </div>
+                                        <div class="product-name">
+                                            <%= product.productId.name %>
+                                        </div>
+                                    </div>
+                                </td>
+                                <% let discount=product.productId.discountPercent; let price=product.productId.price;
+                                    let finalPrice=price *( 1- discount / 100); finalPrice=finalPrice.toFixed(2); %>
+                                    <td>
+                                        <%= finalPrice %>$
+                                    </td>
+                                    <td>
+                                        <div class="quantity-control">
+                                            <button data-id="<%= product.productId._id %>"
+                                                data-quantity="<%= product.quantity %>" class="quantity-btn">-</button>
+                                            <span class="quantity-value" data-id="<%= product.productId._id %>">
+                                                <%= product.quantity %>
+                                            </span>
+                                            <button data-id="<%= product.productId._id %>"
+                                                data-quantity="<%= product.quantity %>" class="quantity-btn">+</button>
+                                        </div>
+                                    </td>
+                                    <td>$650</td>
+                                    <td>
+                                        <button data-id="<%= product.productId._id %>" type="button" class="remove-btn">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+
+                <div class="cart-actions">
+                    <a href="/" class="btn btn-outline">Return To Shop</a>
+                </div>
+                <% }else { %>
+                    <h3 class="section-title">Chưa Có Sản Phẩm Nào</h3>
+                    <%} %>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <h3>Cart Total</h3>
+
+            <div class="coupon-section">
+                <h4>Coupon Code</h4>
+                <div class="coupon-input">
+                    <input type="text" placeholder="Enter coupon code">
+                    <button class="btn btn-primary">Apply Coupon</button>
+                </div>
+            </div>
+
+            <div class="cart-totals">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>$1750</span>
+                </div>
+                <div class="total-row">
+                    <span>Shipping:</span>
+                    <span>Free</span>
+                </div>
+                <div class="total-row final">
+                    <span>Total:</span>
+                    <span>$1750</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary checkout-btn">Process to checkout</button>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<section class="container">
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-truck"></i></div>
+            <h3>FREE AND FAST DELIVERY</h3>
+            <p>Free delivery for all orders over $140</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-headset"></i></div>
+            <h3>24/7 CUSTOMER SERVICE</h3>
+            <p>Friendly 24/7 customer support</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>MONEY BACK GUARANTEE</h3>
+            <p>We return money within 30 days</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Cart functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        // Quantity controls
+        const quantityBtns = document.querySelectorAll('.quantity-btn');
+        const quantityValues = document.querySelectorAll('.quantity-value');
+
+        quantityBtns.forEach((btn, index) => {
+            btn.addEventListener('click', function () {
+
+                let productId = btn.dataset.id;
+                const isMinus = this.textContent === '-';
+                const quantityValue = this.parentElement.querySelector('.quantity-value');
+                let value = parseInt(quantityValue.textContent);
+
+                if (isMinus && value > 1) {
+                    value--;
+                } else if (!isMinus) {
+                    value++;
+                }
+                updateCartQuantity(productId, parseInt(value));
+                quantityValue.textContent = value.toString().padStart(2);
+                updateCartTotals();
+            });
+        });
+
+        // Remove items
+        const removeBtns = document.querySelectorAll('.remove-btn');
+        removeBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                let productId = btn.dataset.id;
+                removeCart(productId);
+                const row = this.closest('tr');
+                row.style.opacity = '0';
+                setTimeout(() => {
+                    row.remove();
+                    updateCartTotals();
+                }, 300);
+            });
+        });
+        updateCartTotals()
+        // Update cart totals
+        function updateCartTotals() {
+            const subtotalElement = document.querySelector('.cart-totals .total-row:first-child span:last-child');
+            const totalElement = document.querySelector('.cart-totals .total-row.final span:last-child');
+
+            // Simple calculation for demo
+            let subtotal = 0;
+            document.querySelectorAll('.cart-table tbody tr').forEach(row => {
+                const price = parseFloat(row.querySelector('td:nth-child(2)').textContent.replace('$', ''));
+                const quantity = parseInt(row.querySelector('.quantity-value').textContent);
+                const rowTotal = price * quantity;
+
+                // Update row subtotal
+                row.querySelector('td:nth-child(4)').textContent = '$' + rowTotal.toFixed(2);
+
+                subtotal += rowTotal;
+            });
+            subtotalElement.textContent = '$' + subtotal.toFixed(2);
+            totalElement.textContent = '$' + subtotal.toFixed(2);
+        }
+
+        // remove cart api
+        function removeCart(productId) {
+            fetch(`/remove-cart/${productId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" }
+            }).then(data => {
+                if (data.success) {
+                    alert("Xóa Thành Công");
+                }
+            }).catch(err => {
+                console.log("Lỗi Khi Xóa Khỏi Cart: ", err);
+            })
+        }
+        //
+
+        // update quantity cart api
+        function updateCartQuantity(productId, quantity) {
+            fetch(`/update-quantity-cart/${productId}?_method=PATCH`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ quantity })
+            }).then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Xóa Thành Công");
+                    }
+                }).catch(err => {
+                    console.log("Lỗi Khi Xóa Khỏi Cart: ", err);
+                })
+        }
+        //
+
+
+
+        // Apply coupon
+        const applyCouponBtn = document.querySelector('.coupon-input .btn');
+        applyCouponBtn.addEventListener('click', function () {
+            const couponInput = document.querySelector('.coupon-input input');
+            const couponCode = couponInput.value.trim();
+
+            if (couponCode === 'SAVE10') {
+                alert('Coupon applied! You saved 10%');
+                // Apply discount logic would go here
+            } else if (couponCode) {
+                alert('Invalid coupon code');
+            } else {
+                alert('Please enter a coupon code');
+            }
+        });
+
+        // Checkout button
+        const checkoutBtn = document.querySelector('.checkout-btn');
+        checkoutBtn.addEventListener('click', function () {
+            alert('Proceeding to checkout...');
+            // Redirect to checkout page would go here
+        });
+    });
+</script>

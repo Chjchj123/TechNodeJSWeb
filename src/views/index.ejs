@@ -6,8 +6,9 @@
                 <h1>
                     <%= bannerProducts.name %>
                 </h1>
-                <p>Up to <%= bannerProducts.discountPercent %>% off Voucher</p>
-                <a href="#" class="shop-now-btn">Shop Now <i class="fas fa-arrow-right"></i></a>
+                <p style="font-size: 19px;">Up to <%= bannerProducts.discountPercent %>% off Voucher</p>
+                <a href="/shop/<%= bannerProducts.category%>/<%= bannerProducts._id %>" class="shop-now-btn">Shop Now <i
+                        class="fas fa-arrow-right"></i></a>
                 <div class="timer">
                     <div class="timer-item">
                         <div class="timer-value">03</div>
@@ -115,7 +116,7 @@
     <div class="products-grid">
         <% bestDiscountProducts.forEach(function(product){ %>
             <!-- Product 1 -->
-            <a href="product-details.html" class="product-card">
+            <a href="/shop/<%= product.category %>/<%= product._id%>" class="product-card">
                 <div class="product-image">
                     <div class="discount-badge">
                         <%= product.discountPercent %>%
@@ -155,15 +156,15 @@
 <section class="container">
     <div class="new-arrival">
         <div class="new-arrival-content">
-            <h2>
+            <h2 class="product-title">
                 <%= newProduct.name %>
             </h2>
             <p>Sản Phẩm Mới!</p>
-            <a href="#" class="shop-now-btn">Mua Ngay!</a>
+            <a href="/shop/<%= newProduct.category %>/<%= newProduct._id%>" class="shop-now-btn">Mua Ngay!</a>
         </div>
         <div class="new-arrival-image">
             <img src="<%= newProduct.images[0].url %>"
-                style="width: 300px; height: 300px; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+                style="width: 91%; height: 91%; background-color: #555; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
         </div>
     </div>
 </section>
@@ -206,7 +207,7 @@
             <div class="products-grid">
                 <% vga.forEach(function(VGA){ %>
                     <!-- Product 1 -->
-                    <a href="product-details.html" class="product-card">
+                    <a href="/shop/<%= VGA.category%>/<%= VGA._id %>" class="product-card">
                         <div class="product-image">
                             <% if (VGA.discountPercent && VGA.discountPercent> 0) { %>
                                 <div class="discount-badge">
@@ -268,7 +269,7 @@
             <div class="products-grid">
                 <% cpu.forEach(function(CPU){ %>
                     <!-- Product 1 -->
-                    <a href="product-details.html" class="product-card">
+                    <a href="/shop/<%= CPU.category%>/<%= CPU._id %>" class="product-card">
                         <div class="product-image">
                             <% if (CPU.discountPercent && CPU.discountPercent> 0) { %>
                                 <div class="discount-badge">
@@ -330,7 +331,7 @@
             <div class="products-grid">
                 <% mainboards.forEach(function(main){ %>
                     <!-- Product 1 -->
-                    <a href="product-details.html" class="product-card">
+                    <a href="/shop/<%= main.category%>/<%= main._id %>" class="product-card">
                         <div class="product-image">
                             <% if (main.discountPercent && main.discountPercent> 0) { %>
                                 <div class="discount-badge">
@@ -392,7 +393,7 @@
             <div class="products-grid">
                 <% ram.forEach(function(RAM){ %>
                     <!-- Product 1 -->
-                    <a href="product-details.html" class="product-card">
+                    <a href="/shop/<%= RAM.category%>/<%= RAM._id %>" class="product-card">
                         <div class="product-image">
                             <% if (RAM.discountPercent && RAM.discountPercent> 0) { %>
                                 <div class="discount-badge">
@@ -454,7 +455,7 @@
             <div class="products-grid">
                 <% hdd.forEach(function(HDD){ %>
                     <!-- Product 1 -->
-                    <a href="product-details.html" class="product-card">
+                    <a href="/shop/<%= HDD.category%>/<%= HDD._id %>" class="product-card">
                         <div class="product-image">
                             <% if (HDD.discountPercent && HDD.discountPercent> 0) { %>
                                 <div class="discount-badge">
@@ -516,7 +517,7 @@
             <div class="products-grid">
                 <% ssd.forEach(function(SSD){ %>
                     <!-- Product 1 -->
-                    <a href="product-details.html" class="product-card">
+                    <a href="/shop/<%= SSD.category%>/<%= SSD._id %>" class="product-card">
                         <div class="product-image">
                             <% if (SSD.discountPercent && SSD.discountPercent> 0) { %>
                                 <div class="discount-badge">
@@ -578,7 +579,7 @@
             <div class="products-grid">
                 <% casePC.forEach(function(CASE){ %>
                     <!-- Product 1 -->
-                    <a href="product-details.html" class="product-card">
+                    <a href="/shop/<%= CASE.category%>/<%= CASE._id %>" class="product-card">
                         <div class="product-image">
                             <% if (CASE.discountPercent && CASE.discountPercent> 0) { %>
                                 <div class="discount-badge">
@@ -640,7 +641,7 @@
             <div class="products-grid">
                 <% psu.forEach(function(PSU){ %>
                     <!-- Product 1 -->
-                    <a href="product-details.html" class="product-card">
+                    <a href="/shop/<%= PSU.category%>/<%= PSU._id %>" class="product-card">
                         <div class="product-image">
                             <% if (PSU.discountPercent && PSU.discountPercent> 0) { %>
                                 <div class="discount-badge">

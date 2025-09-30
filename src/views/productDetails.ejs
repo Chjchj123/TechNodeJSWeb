@@ -3,9 +3,11 @@
 <main>
     <div class="container">
         <div class="breadcrumb">
-            <a href="/">Home</a> / <a href="#">Account</a> / <a href="#">Gaming</a> /
+            <a href="/">Home</a> / <a href="/shop-page/<%= getProducts.category%>">
+                <%= getProducts.category%>
+            </a>
             <span>
-                <%= getProducts.name %>
+                / <%= getProducts.name %>
             </span>
         </div>
 
@@ -37,28 +39,39 @@
                         <i class="fas fa-star"></i>
                         <span>(150 Reviews)</span>
                     </div>
-                    <span style="color: #00FF66;">In Stock</span>
+                    <span>In Stock: <%=getProducts.stock %></span>
                 </div>
+                <% let discount=getProducts.discountPercent; let price=getProducts.price; let finalPrice=price * ( 1 -
+                    discount / 100 ); finalPrice=finalPrice.toFixed(2); %>
+                    <div class="product-price-details">$<%= finalPrice %>
+                    </div>
+                    <span class="original-price">
+                        <%= getProducts.price %>$
+                    </span>
 
-                <div class="product-price-details">$<%= getProducts.price %>
-                </div>
+                    <p class="product-description">
+                        <%= getProducts.description %>
+                    </p>
+                    <% if(getProducts.stock===0) { %>
+                        <h2>Sold Out!</h2>
+                        <% } else { %>
+                            <form action="/add-cart/<%= getProducts._id %>" method="POST" onsubmit="setQuantity()">
+                                <!-- Quantity + Buy Now -->
+                                <div class="quantity-selector">
+                                    <button type="button" class="quantity-btn">-</button>
+                                    <span id="qty" class="quantity-value">1</span>
+                                    <button type="button" class="quantity-btn">+</button>
+                                </div>
+                                <input type="hidden" name="quantity" class="quantityInput">
 
-                <p class="product-description">
-                    <%= getProducts.description %>
-                </p>
-
-                <!-- Quantity + Buy Now -->
-                <div class="quantity-selector">
-                    <button class="quantity-btn">-</button>
-                    <span class="quantity-value">1</span>
-                    <button class="quantity-btn">+</button>
-                    <button class="buy-now-btn">Buy Now</button>
-                </div>
-
-                <!-- Action buttons -->
-                <div class="action-buttons">
-                    <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add To Cart</button>
-                </div>
+                                <!-- Action buttons -->
+                                <div class="action-buttons">
+                                    <button type="submit" class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i>
+                                        Add To
+                                        Cart</button>
+                                </div>
+                            </form>
+                            <% } %>
             </div>
         </div>
 
@@ -69,16 +82,13 @@
             </h1>
 
             <div class="product-rating-details">
-                <div class="product-rating">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <span>(150 Reviews)</span>
-                </div>
-                <span style="color: #00FF66;">In Stock</span>
+                <% if(getProducts.stock===0) { %>
+                    <span style="color: #f02323;">Sold Out</span>
+                    <% } else { %>
+                        <span style="color: #00FF66;">In Stock</span>
+                        <% } %>
             </div>
-
-            <div class="product-price-details">$<%= getProducts.price %>
+            <div class="product-price-details">$<%= finalPrice %>
             </div>
 
             <p class="product-description">
@@ -111,107 +121,47 @@
 
     <section class="related-products">
         <h2 class="section-title">Related Item</h2>
-        <div class="related-products-grid">
-            <!-- Related Product 1 -->
-            <a href="product-details.html" class="product-card">
-                <div class="product-image">
-                    <div class="discount-badge">-40%</div>
-                    <div
-                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                        HAVIT HV-G92 Gamepad</div>
+        <% if(relatedProducts.length===0){ %>
+            <h2 class="section-title">Hiện Chưa Có Sản Phẩm Liên Quan</h2>
+            <% }else{ %>
+                <div class="related-products-grid">
+                    <!-- Related Product 1 -->
+                    <% relatedProducts.forEach(function(product) { %>
+                        <a href="/shop/<%= product.category%>/<%= product._id %>" class="product-card">
+                            <div class="product-image">
+                                <div class="discount-badge">
+                                    <%= product.discountPercent %>%
+                                </div>
+                                <img src="<%= product.images[0].url%>"
+                                    style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">
+                                    <%= product.name %>
+                                </h3>
+                                <% let discount=product.discountPercent; let price=product.price; let finalPrice=price *
+                                    ( 1 - discount/ 100); finalPrice=finalPrice.toFixed(2); %>
+                                    <div class="product-price">
+                                        <span class="current-price">
+                                            <%= finalPrice %>$
+                                        </span>
+                                        <span class="original-price">
+                                            <%= product.price %>$
+                                        </span>
+                                    </div>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span>(88)</span>
+                                    </div>
+                            </div>
+                        </a>
+                        <% }) %>
+                            <%} %>
                 </div>
-                <div class="product-info">
-                    <h3 class="product-title">HAVIT HV-G92 Gamepad</h3>
-                    <div class="product-price">
-                        <span class="current-price">$120</span>
-                        <span class="original-price">$160</span>
-                    </div>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <span>(88)</span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Related Product 2 -->
-            <a href="product-details.html" class="product-card">
-                <div class="product-image">
-                    <div class="discount-badge">-40%</div>
-                    <div
-                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                        AK-900 Wired Keyboard</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">AK-900 Wired Keyboard</h3>
-                    <div class="product-price">
-                        <span class="current-price">$960</span>
-                        <span class="original-price">$1160</span>
-                    </div>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <span>(75)</span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Related Product 3 -->
-            <a href="product-details.html" class="product-card">
-                <div class="product-image">
-                    <div class="discount-badge">-35%</div>
-                    <div
-                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                        IPS LCD Gaming Monitor</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">IPS LCD Gaming Monitor</h3>
-                    <div class="product-price">
-                        <span class="current-price">$370</span>
-                        <span class="original-price">$400</span>
-                    </div>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <span>(99)</span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Related Product 4 -->
-            <a href="product-details.html" class="product-card">
-                <div class="product-image">
-                    <div class="discount-badge">-15%</div>
-                    <div
-                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                        RGB liquid CPU Cooler</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">RGB liquid CPU Cooler</h3>
-                    <div class="product-price">
-                        <span class="current-price">$160</span>
-                        <span class="original-price">$170</span>
-                    </div>
-                    <div class="product-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <span>(65)</span>
-                    </div>
-                </div>
-            </a>
-        </div>
     </section>
     </div>
 </main>
@@ -226,4 +176,28 @@
             mainImage.src = thumb.src;
         });
     });
+
+    // Quantity selector
+    const quantityValue = document.querySelector('.quantity-value');
+    const minusBtn = document.querySelector('.quantity-btn:first-child');
+    const plusBtn = document.querySelector('.quantity-btn:last-child');
+
+    minusBtn.addEventListener('click', function () {
+        let value = parseInt(quantityValue.textContent);
+        if (value > 1) {
+            quantityValue.textContent = value - 1;
+        }
+    });
+    //
+    plusBtn.addEventListener('click', function () {
+        let value = parseInt(quantityValue.textContent);
+        quantityValue.textContent = value + 1;
+    });
+
+    function setQuantity() {
+        document.querySelector(".quantityInput").value =
+            document.getElementById("qty").innerText;
+    }
+
+
 </script>

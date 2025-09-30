@@ -327,7 +327,7 @@ header {
 }
 
 .product-image {
-    height: 200px;
+    height: auto;
     background-color: #f5f5f5;
     display: flex;
     align-items: center;
@@ -348,7 +348,7 @@ header {
     color: #fff;
     padding: 5px 10px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 19px;
 }
 
 .product-info {
@@ -375,7 +375,7 @@ header {
 .original-price {
     text-decoration: line-through;
     color: #999;
-    font-size: 14px;
+    font-size: 19px;
 }
 
 .product-rating {

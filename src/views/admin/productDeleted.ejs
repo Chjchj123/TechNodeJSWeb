@@ -48,7 +48,17 @@
 
 
 
-
+    <style>
+        .product-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            max-width: 50%;
+        }
+    </style>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141734189-6"></script>
     <script>
@@ -397,7 +407,8 @@
                                                             src="<%= product.images[0].url %>"
                                                             alt="<%= product.name %> img">
                                                         <div class="text-sm font-normal text-gray-500">
-                                                            <div class="text-base font-semibold text-gray-900">
+                                                            <div
+                                                                class="product-title text-base font-semibold text-gray-900">
                                                                 <%= product.name %>
                                                             </div>
                                                             <div class="text-sm font-normal text-gray-500">

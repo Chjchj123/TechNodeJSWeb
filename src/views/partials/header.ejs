@@ -22,8 +22,12 @@
                 <input type="text" placeholder="What are you looking for?">
                 <button><i class="fas fa-search"></i></button>
             </div>
-            <a href="#"><i class="fas fa-shopping-cart"></i></a>
-            <a href="/user"><i class="fas fa-user"></i></a>
+            <% if(existingUser) { %>
+                <a href="/cart/<%= existingUser._id %>"><i class="fas fa-shopping-cart"></i></a>
+                <% } else { %>
+                    <a href="/cart/"><i class="fas fa-shopping-cart"></i></a>
+                    <%} %>
+                        <a href="/user"><i class="fas fa-user"></i></a>
         </div>
     </div>
 </div>

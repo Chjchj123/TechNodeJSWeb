@@ -8,8 +8,8 @@ class AdminController {
     async userList(req, res, next) {
         try {
             const users = await user.find({ deleted: false });
-            console.log();
-            res.render('admin/userList', { layout: false, users });
+            const countUsers = await user.countDocuments({ deleted: false });
+            res.render('admin/userList', { layout: false, users, countUsers });
         } catch (error) {
             next(error);
         }

@@ -9,6 +9,16 @@ const userSchema = new mongoose.Schema({
         url: { type: String, default: "/asset/images/default-profile-picture1.jpg" },
         public_id: { type: String }
     },
+    cart: {
+        type: [
+            {
+                productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+                quantity: { type: Number, default: 1 },
+                addedAt: { type: Date, default: Date.now }
+            }
+        ],
+        default: []
+    },
     city: { type: String, default: "None" },
     address: { type: String, default: "None" },
     role: { type: String, enum: ['Admin', 'User'], default: 'User' },

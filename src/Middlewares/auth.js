@@ -19,7 +19,7 @@ const authMiddleware = async (req, res, next) => {
     if (req.cookies.token) {
         try {
             const decoded = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
-            const getUser = await user.findOne({ _id: decoded.id }).lean();
+            const getUser = await user.findOne({ _id: decoded.id });
             res.locals.existingUser = getUser;
 
             if (!res.locals.existingUser || res.locals.existingUser.deleted === true) {
