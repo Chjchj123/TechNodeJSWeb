@@ -10,6 +10,8 @@ routers.post('/remove-cart/:id', homeController.removeCart);
 routers.patch('/update-quantity-cart/:id', homeController.updateQuantity);
 routers.get('/checkout/:id', homeController.checkOut);
 routers.post('/checkout-submit', homeController.checkOutSubmit)
+routers.get('/user-orders/:id', homeController.showUsersOrders)
+routers.post('/orders-filter', homeController.ordersFilter);
 routers.get('/', homeController.homePage);
 
 module.exports = routers;

@@ -1,0 +1,282 @@
+<link rel="stylesheet" href="/asset/css/userOrders.css">
+<!-- Orders Header -->
+<section class="orders-header">
+    <div class="container">
+        <h1>Đơn Hàng Của Tôi</h1>
+    </div>
+</section>
+
+<!-- Orders Content -->
+<div class="container">
+    <div class="breadcrumb">
+        <a href="/">Home</a> / <a href="/user">Tài khoản</a> / <span>Đơn hàng của tôi</span>
+    </div>
+
+    <div class="orders-content">
+        <!-- User Sidebar -->
+        <div class="user-sidebar">
+            <div class="user-info">
+                <img class="user-avatar" src="<%= existingUser.avatar.url %>">
+                <div class="user-name">
+                    <%= existingUser.name %>
+                </div>
+                <div class="user-email">
+                    <%= existingUser.email %>
+                </div>
+            </div>
+
+            <div class="sidebar-menu">
+                <div class="menu-item active">
+                    <i class="fas fa-box"></i>
+                    <span>Đơn hàng của tôi</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Orders List -->
+        <div class="orders-list">
+            <div class="orders-header-bar">
+                <h2>Tất cả đơn hàng (<%= allOrders %>)
+                </h2>
+                <div class="orders-filter">
+                    <select class="filter-select" name="filerOrder" id="filterOrder">
+                        <option value="All">Tất cả trạng thái</option>
+                        <option value="Pending">Đang xử lý</option>
+                        <option value="Shipping">Đang giao hàng</option>
+                        <option value="Success">Đã giao hàng</option>
+                        <option value="Cancelled">Đã hủy</option>
+                    </select>
+                </div>
+            </div>
+            <div id="orders-list">
+                <% orders.forEach(ord=> { %>
+                    <!-- order-card hiện tại -->
+                    <% }) %>
+            </div>
+            <div class="order-container">
+                <% orders.forEach(ord=> { %>
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-info">
+                                <h3>Đơn hàng #<%= ord.orderId %>
+                                </h3>
+                                <div class="order-meta">
+                                    <span>Ngày đặt: <%= new Date(ord.createdAt).toLocaleDateString("vi-VN") %></span>
+                                    <span>Tổng tiền: <strong>
+                                            <%= ord.totalPrice %>$
+                                        </strong></span>
+                                    <% if(ord.paymentMethod==="COD" ) { %>
+                                        <span>Phương thức: Thanh Toán Khi Nhận Hàng</span>
+                                        <% }else{ %>
+                                            <span>Phương thức: Đã Chuyển Khoản</span>
+                                            <% } %>
+                                </div>
+                            </div>
+                            <% if(ord.status==="Pending" ) { %>
+                                <div class="order-status status-shipping">Đang Chờ Xác Nhận</div>
+                                <% }else if(ord.status==="Confirm" ){ %>
+                                    <div class="order-status status-processing">Đã Xác Nhận</div>
+                                    <% }else if(ord.status==="Shipping" ){ %>
+                                        <div class="order-status status-shipping">Đang Giao Hàng</div>
+                                        <% }else if(ord.status==="Success" ){ %>
+                                            <div class="order-status status-delivered">Đã Giao Hàng</div>
+                                            <% }else if(ord.status==="Cancelled" ){ %>
+                                                <div class="order-status status-cancelled">Đã Hủy</div>
+                                                <% } %>
+
+
+                        </div>
+                        <% ord.item.forEach(product=> { %>
+                            <% let discount=product.productId.discountPercent; let price=product.productId.price; let
+                                finalPrice=price * ( 1 - discount / 100); finalPrice=finalPrice.toFixed(2)%>
+                                <div class="order-items">
+                                    <div class="order-item">
+                                        <div class="product-image">
+                                            <img src="<%= product.productId.images[0].url %>" alt="LCD Monitor">
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="item-name">
+                                                <%= product.productId.name %>
+                                            </div>
+                                            <div class="item-price">
+                                                <%= finalPrice%>$ x <%= product.quantity %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%}) %>
+
+                                    <div class="order-footer">
+                                        <div class="order-total">
+                                            Tổng Giá Trị: <%= ord.totalPrice %>$
+                                        </div>
+
+                                    </div>
+                    </div>
+                    <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Orders page functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        // Menu item selection
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function () {
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Filter functionality
+        const filterSelects = document.querySelectorAll('.filter-select');
+        const ordersList = document.getElementById('orders-list'); // div chứa danh sách order
+        const orderCard = document.querySelector('.order-container');
+        filterSelects.forEach(select => {
+            select.addEventListener('change', function () {
+                const stt = this.value;
+                orderCard.innerHTML = "";
+
+                fetch("/orders-filter", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ status: stt })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        // Xóa danh sách cũ
+                        ordersList.innerHTML = "";
+
+                        // Render danh sách đơn hàng mới
+                        data.orders.forEach(ord => {
+                            const createdAt = new Date(ord.createdAt).toLocaleDateString("vi-VN");
+
+                            const itemsHTML = ord.item.map(p => {
+                                const discount = p.productId.discountPercent || 0;
+                                const price = p.productId.price;
+                                const finalPrice = (price * (1 - discount / 100)).toFixed(2);
+                                return `
+                            <div class="order-items">
+                                <div class="order-item">
+                                    <div class="product-image">
+                                        <img src="${p.productId.images[0].url}" alt="${p.productId.name}">
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="item-name">${p.productId.name}</div>
+                                        <div class="item-price">${finalPrice}$ x ${p.quantity}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                            }).join("");
+
+                            ordersList.insertAdjacentHTML("beforeend", `
+                        <div class="order-card">
+                            <div class="order-header">
+                                <div class="order-info">
+                                    <h3>Đơn hàng #${ord.orderId}</h3>
+                                    <div class="order-meta">
+                                        <span>Ngày đặt: ${createdAt}</span>
+                                        <span>Tổng tiền: <strong>${ord.totalPrice}$</strong></span>
+                                        <span>Phương thức: ${ord.paymentMethod === "COD"
+                                    ? "Thanh Toán Khi Nhận Hàng"
+                                    : "Đã Chuyển Khoản"}</span>
+                                    </div>
+                                </div>
+                                <div class="order-status ${getStatusClass(ord.status)}">
+                                    ${getStatusText(ord.status)}
+                                </div>
+                            </div>
+                            ${itemsHTML}
+                            <div class="order-footer">
+                                <div class="order-total">Tổng Giá Trị: ${ord.totalPrice}$</div>
+                            </div>
+                        </div>
+                    `);
+                        });
+                    })
+                    .catch(err => console.error(err));
+            });
+        });
+
+        function getStatusText(st) {
+            switch (st) {
+                case "Pending": return "Đang Chờ Xác Nhận";
+                case "Confirm": return "Đã Xác Nhận";
+                case "Shipping": return "Đang Giao Hàng";
+                case "Success": return "Đã Giao Hàng";
+                case "Cancelled": return "Đã Hủy";
+                default: return "";
+            }
+        }
+        function getStatusClass(st) {
+            return {
+                Pending: "status-shipping",
+                Confirm: "status-processing",
+                Shipping: "status-shipping",
+                Success: "status-delivered",
+                Cancelled: "status-cancelled"
+            }[st] || "";
+        }
+
+
+        // Order action buttons
+        const orderActions = document.querySelectorAll('.order-actions .btn');
+        orderActions.forEach(button => {
+            button.addEventListener('click', function () {
+                const action = this.textContent.trim();
+                const orderCard = this.closest('.order-card');
+                const orderId = orderCard.querySelector('.order-info h3').textContent;
+
+                switch (action) {
+                    case 'Xem chi tiết':
+                        window.location.href = `order-detail.html?id=${orderId.replace('#', '')}`;
+                        break;
+                    case 'Mua lại':
+                        if (confirm('Bạn có muốn thêm tất cả sản phẩm trong đơn hàng này vào giỏ hàng?')) {
+                            // Add to cart logic
+                            alert('Đã thêm sản phẩm vào giỏ hàng!');
+                        }
+                        break;
+                    case 'Đánh giá':
+                        window.location.href = 'review.html';
+                        break;
+                    case 'Theo dõi đơn hàng':
+                        window.location.href = 'tracking.html';
+                        break;
+                    case 'Hỗ trợ':
+                        window.location.href = 'contact.html';
+                        break;
+                    case 'Hủy đơn hàng':
+                        if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) {
+                            // Cancel order logic
+                            alert('Đã gửi yêu cầu hủy đơn hàng!');
+                        }
+                        break;
+                    case 'Liên hệ hỗ trợ':
+                        window.location.href = 'contact.html';
+                        break;
+                    case 'Xóa đơn hàng':
+                        if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này khỏi lịch sử?')) {
+                            orderCard.style.opacity = '0';
+                            setTimeout(() => {
+                                orderCard.remove();
+                                updateOrdersCount();
+                            }, 300);
+                        }
+                        break;
+                }
+            });
+        });
+
+        function updateOrdersCount() {
+            const orderCards = document.querySelectorAll('.order-card');
+            const ordersCount = document.querySelector('.orders-header-bar h2');
+            ordersCount.textContent = `Tất cả đơn hàng (${orderCards.length})`;
+        }
+    });
+</script>

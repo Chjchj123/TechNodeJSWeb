@@ -946,6 +946,7 @@
                         specificationsInput.value = getProduct.details.specifications;
                         discountInput.value = getProduct.discountPercent;
                         const currentImagesDiv = document.getElementById("current-images");
+                        currentImagesDiv.innerHTML = "";
                         getImages = getProduct.images;
                         const imgEl = document.getElementsByClassName("w-20 h-20 object-cover rounded");
                         while (imgEl.length < getImages.length) {

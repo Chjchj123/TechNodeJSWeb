@@ -1,6 +1,7 @@
 const product = require('../Models/product');
 const user = require('../Models/user');
 const order = require('../Models/orders');
+const randomString = require('randomstring');
 
 class homeController {
     async homePage(req, res) {
@@ -112,6 +113,7 @@ class homeController {
     async checkOutSubmit(req, res, next) {
         try {
             const newOrder = new order({
+                orderId: randomString.generate({ length: 9 }),
                 user: res.locals.existingUser._id,
                 item: res.locals.existingUser.cart.map(product => ({
                     productId: product.productId,
@@ -134,6 +136,32 @@ class homeController {
             next(error);
         }
     }
+
+    async showUsersOrders(req, res, next) {
+        try {
+            const orders = await order.find({ user: res.locals.existingUser._id }).populate("item.productId");
+            const allOrders = await order.countDocuments({ user: res.locals.existingUser._id });
+            res.render('user/userOrders', { orders, allOrders });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async ordersFilter(req, res, next) {
+        try {
+
+            let filter = req.body.status && req.body.status !== "Tất cả trạng thái"
+                ? { user: res.locals.existingUser._id, status: req.body.status }
+                : { user: res.locals.existingUser._id };
+            if (req.body.status === "All") {
+                filter = { user: res.locals.existingUser._id };
+            }
+
+            const orders = await order.find(filter).populate("item.productId");
+            res.json({ orders });
+        } catch (error) { next(error); }
+    }
+
 }
 
 module.exports = new homeController();

@@ -122,7 +122,8 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary" id="place-order-btn">Place Order</button>
+            <button data-userId="<% existingUser._id %>" class="btn btn-primary" id="place-order-btn">Place
+                Order</button>
         </div>
     </div>
 </div>
@@ -196,6 +197,7 @@
         // Place order
         const placeOrderBtn = document.getElementById('place-order-btn');
         placeOrderBtn.addEventListener('click', function () {
+            const userID = placeOrderBtn.dataset.userId;
             const form = document.getElementById('checkout-form');
             const requiredFields = form.querySelectorAll('input[required]');
             let isValid = true;
@@ -238,6 +240,7 @@
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(data)
                     })
+                    window.location.href = '/checkout/' + userID;
                 }, 2000);
             } else {
                 alert('Please fill in all required fields');
