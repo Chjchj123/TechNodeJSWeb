@@ -60,7 +60,8 @@
                                 <div class="quantity-selector">
                                     <button type="button" class="quantity-btn">-</button>
                                     <span id="qty" class="quantity-value">1</span>
-                                    <button type="button" class="quantity-btn">+</button>
+                                    <button data-stock="<%= getProducts.stock%>" type="button"
+                                        class="quantity-btn">+</button>
                                 </div>
                                 <input type="hidden" name="quantity" class="quantityInput">
 
@@ -190,8 +191,11 @@
     });
     //
     plusBtn.addEventListener('click', function () {
+        var stock = plusBtn.getAttribute("data-stock");
         let value = parseInt(quantityValue.textContent);
-        quantityValue.textContent = value + 1;
+        if (value < stock) {
+            quantityValue.textContent = value + 1;
+        }
     });
 
     function setQuantity() {

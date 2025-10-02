@@ -13,9 +13,13 @@ cloudinary.config({
 class ProductsController {
     async productList(req, res, next) {
         try {
-            const products = await product.find({ deleted: false });
+            const page = parseInt(req.query.page) || 1;
+            const limit = 20; // số user mỗi trang
+            const skip = (page - 1) * limit;
+            const products = await product.find({ deleted: false }).skip(skip).limit(limit);
             const countProducts = await product.countDocuments({ deleted: false });
-            res.render('admin/productManager', { layout: false, products, countProducts });
+            const totalPages = Math.ceil(countProducts / limit);
+            res.render('admin/productManager', { layout: false, currentPage: page, products, countProducts, totalPages });
         } catch (error) {
             next(error);
         }
@@ -138,8 +142,13 @@ class ProductsController {
     }
 
     async getListDeletedProduct(req, res) {
-        const products = await product.find({ deleted: true });
-        res.render('admin/productDeleted', { layout: false, products });
+        const page = parseInt(req.query.page) || 1;
+        const limit = 20; // số user mỗi trang
+        const skip = (page - 1) * limit;
+        const products = await product.find({ deleted: true }).skip(skip).limit(limit);
+        const countProducts = await product.countDocuments({ deleted: true });
+        const totalPages = Math.ceil(countProducts / limit);
+        res.render('admin/productDeleted', { layout: false, currentPage: page, products, countProducts, totalPages });
     }
 
     async deleteProduct(req, res, next) {

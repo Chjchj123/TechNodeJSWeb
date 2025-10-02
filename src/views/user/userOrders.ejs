@@ -43,6 +43,7 @@
                     <select class="filter-select" name="filerOrder" id="filterOrder">
                         <option value="All">Tất cả trạng thái</option>
                         <option value="Pending">Đang xử lý</option>
+                        <option value="Confirm">Đã Xác Nhận</option>
                         <option value="Shipping">Đang giao hàng</option>
                         <option value="Success">Đã giao hàng</option>
                         <option value="Cancelled">Đã hủy</option>
@@ -72,11 +73,14 @@
                                             <span>Phương thức: Đã Chuyển Khoản</span>
                                             <% } %>
                                 </div>
+                                <h4>Cập Nhật Lần Cuối: <%= new Date(ord.updatedAt).toLocaleString("vi-VN", { hour12:
+                                        false }) %>
+                                </h4>
                             </div>
                             <% if(ord.status==="Pending" ) { %>
                                 <div class="order-status status-shipping">Đang Chờ Xác Nhận</div>
                                 <% }else if(ord.status==="Confirm" ){ %>
-                                    <div class="order-status status-processing">Đã Xác Nhận</div>
+                                    <div class="order-status status-processing">Đã Xác Nhận, Đang Chờ Lấy Hàng</div>
                                     <% }else if(ord.status==="Shipping" ){ %>
                                         <div class="order-status status-shipping">Đang Giao Hàng</div>
                                         <% }else if(ord.status==="Success" ){ %>
@@ -206,7 +210,7 @@
         function getStatusText(st) {
             switch (st) {
                 case "Pending": return "Đang Chờ Xác Nhận";
-                case "Confirm": return "Đã Xác Nhận";
+                case "Confirm": return "Đã Xác Nhận, Đang Chờ Lấy Hàng";
                 case "Shipping": return "Đang Giao Hàng";
                 case "Success": return "Đã Giao Hàng";
                 case "Cancelled": return "Đã Hủy";

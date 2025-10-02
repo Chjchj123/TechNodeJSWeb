@@ -131,6 +131,9 @@ class homeController {
                 totalPrice: req.body.finalPrice,
                 paymentMethod: req.body.paymentMethod
             });
+            const getUser = await user.findOne({ _id: newOrder.user });
+            getUser.cart = [];
+            await getUser.save();
             await newOrder.save();
         } catch (error) {
             next(error);
@@ -139,7 +142,7 @@ class homeController {
 
     async showUsersOrders(req, res, next) {
         try {
-            const orders = await order.find({ user: res.locals.existingUser._id }).populate("item.productId");
+            const orders = await order.find({ user: res.locals.existingUser._id }).populate("item.productId").sort({ createdAt: -1 });
             const allOrders = await order.countDocuments({ user: res.locals.existingUser._id });
             res.render('user/userOrders', { orders, allOrders });
         } catch (error) {

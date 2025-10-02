@@ -7,11 +7,12 @@
         <div class="logo">QATECH</div>
         <div class="nav-links">
             <a href="/">Home</a>
-            <a href="#">Contact</a>
+
             <% if (typeof existingUser !=="undefined" && existingUser) { %>
                 <a>Xin chào, <%= existingUser.name %>!</a>
                 <a href="/user-orders/<%= existingUser._id %>">Đơn Hàng Của Tôi</a>
-                <form action="/auth/logout" method="POST"><button type="submit"><a>Đăng xuất</a></button></form>
+                <form action="/auth/logout" method="POST"><button class="btn btn-primary" type="submit"><a>Đăng
+                            xuất</a></button></form>
                 <% } else { %>
                     <a href="/auth/login">Đăng nhập</a>
                     <% } %>

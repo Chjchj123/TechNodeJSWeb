@@ -21,6 +21,23 @@ ul {
     list-style: none;
 }
 
+.btn-primary {
+    background-color: #DB4444;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #2c2b2b;
+    color: #fff;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
 button {
     cursor: pointer;
     border: none;
@@ -70,6 +87,7 @@ header {
 .nav-links {
     display: flex;
     gap: 30px;
+    align-items: center;
 }
 
 .nav-links a {

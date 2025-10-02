@@ -3,6 +3,7 @@ const routers = express.Router();
 const adminController = require('../Controllers/adminController');
 const adminMiddleware = require('../Middlewares/auth').adminMiddleware;
 const ProductsController = require('../Controllers/productsController');
+const orderController = require('../Controllers/orderControllers')
 
 const multer = require("multer");
 
@@ -30,6 +31,11 @@ routers.patch('/restore-product/:id', ProductsController.restoreProduct);
 routers.patch('/restore-all-selected-product', ProductsController.restoreAllSelected);
 routers.delete('/product/hard-delete/:id', ProductsController.hardDelete);
 routers.delete('/products/hard-delete-selected', ProductsController.hardDeleteSelected);
+routers.get('/orders-list', orderController.getOrderViews);
+routers.post('/info-order/:id', orderController.infoOrder);
+routers.post('/get-status/:id', orderController.getStatus);
+routers.patch('/update-status/:id', orderController.updateStatus);
+routers.delete('/delete-order/:id', orderController.deleteOrder);
 routers.get('/', adminController.homepage);
 
 module.exports = routers;

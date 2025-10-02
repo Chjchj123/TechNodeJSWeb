@@ -240,8 +240,7 @@
         const checkoutBtn = document.querySelector('.checkout-btn');
         checkoutBtn.addEventListener('click', function () {
             // Redirect to checkout page would go here
-            window.location.href = '/checkout/' + checkoutBtn.dataset.userId;
-
+            window.location.href = '/checkout/' + checkoutBtn.getAttribute("data-userId");
         });
     });
 </script>

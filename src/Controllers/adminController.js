@@ -7,9 +7,17 @@ class AdminController {
 
     async userList(req, res, next) {
         try {
-            const users = await user.find({ deleted: false });
-            const countUsers = await user.countDocuments({ deleted: false });
-            res.render('admin/userList', { layout: false, users, countUsers });
+            const page = parseInt(req.query.page) || 1;
+            const limit = 20; // số user mỗi trang
+            const skip = (page - 1) * limit;
+
+            const [users, countUsers] = await Promise.all([
+                user.find({ deleted: false }).skip(skip).limit(limit),
+                user.countDocuments({ deleted: false })
+            ]);
+
+            const totalPages = Math.ceil(countUsers / limit);
+            res.render("admin/userList", { users, currentPage: page, totalPages, countUsers, layout: false });
         } catch (error) {
             next(error);
         }
@@ -28,8 +36,17 @@ class AdminController {
 
     async recycleBin(req, res, next) {
         try {
-            const deletedUsers = await user.find({ deleted: true });
-            res.render('admin/recycleBin', { layout: false, users: deletedUsers });
+            const page = parseInt(req.query.page) || 1;
+            const limit = 20; // số user mỗi trang
+            const skip = (page - 1) * limit;
+
+            const [users, countUsers] = await Promise.all([
+                user.find({ deleted: true }).skip(skip).limit(limit),
+                user.countDocuments({ deleted: true })
+            ]);
+
+            const totalPages = Math.ceil(countUsers / limit);
+            res.render("admin/recycleBin", { users, currentPage: page, totalPages, countUsers, layout: false });
         } catch (error) {
             next(error);
         }
