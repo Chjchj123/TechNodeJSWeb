@@ -15,7 +15,7 @@ class ProductsController {
     async productList(req, res, next) {
         try {
             const page = parseInt(req.query.page) || 1;
-            const limit = 20; // số user mỗi trang
+            const limit = 20;
             const skip = (page - 1) * limit;
             const products = await product.find({ deleted: false }).skip(skip).limit(limit);
             const countProducts = await product.countDocuments({ deleted: false });

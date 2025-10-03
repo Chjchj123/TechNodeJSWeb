@@ -9,7 +9,8 @@ const authMiddleware = async (req, res, next) => {
         '/auth/login-submit',
         '/auth/sign-up-submit',
         '/',
-        ...category.map(c => `/shop-page/${c}`)
+        ...category.map(c => `/shop-page/${c}`),
+        ...category.map(c => `/sort-product/${c}`)
     ];
 
     res.locals.existingUser = null;

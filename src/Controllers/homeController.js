@@ -36,9 +36,13 @@ class homeController {
 
     async shopPage(req, res, next) {
         try {
-            const getProductByCategory = await product.find({ category: req.params.category, deleted: false });
+            const page = parseInt(req.query.page) || 1;
+            const limit = 18;
+            const skip = (page - 1) * limit;
             const totalProduct = await product.countDocuments({ category: req.params.category, deleted: false });
-            res.render("shop", { getProductByCategory, totalProduct });
+            const totalPages = Math.ceil(totalProduct / limit);
+            const getProductByCategory = await product.find({ category: req.params.category, deleted: false }).skip(skip).limit(limit);
+            res.render("shop", { getProductByCategory, totalProduct, currentPage: page, totalPages });
         } catch (error) {
             next(error);
         }
@@ -178,6 +182,24 @@ class homeController {
         } catch (error) { next(error); }
     }
 
+    async productFilter(req, res, next) {
+        try {
+            const { option } = req.body;
+            const { category } = req.params;
+            let products = await product.find({ category: category });
+
+            if (option === "lowToHigh") {
+                products.sort((a, b) => a.price - b.price);
+            } else if (option === "highToLow") {
+                products.sort((a, b) => b.price - a.price);
+            }
+
+            res.json({ products });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
 }
 
 module.exports = new homeController();
