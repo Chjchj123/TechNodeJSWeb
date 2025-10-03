@@ -1,8 +1,16 @@
 const user = require("../Models/user");
+const order = require("../Models/orders")
 
 class AdminController {
-    homepage(req, res) {
-        res.render('admin/index', { layout: false });
+    async homepage(req, res) {
+        const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+        let orders = await order.find({ status: "Pending" }).sort({ createdAt: -1 });
+        orders = orders.map(odr => {
+            odr = odr.toObject();
+            odr.isNew = odr.createdAt >= thirtyMinutesAgo;
+            return odr;
+        })
+        res.render('admin/index', { layout: false, orders });
     }
 
     async userList(req, res, next) {
@@ -15,9 +23,15 @@ class AdminController {
                 user.find({ deleted: false }).skip(skip).limit(limit),
                 user.countDocuments({ deleted: false })
             ]);
-
+            const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+            let orders = await order.find({ status: "Pending" }).sort({ createdAt: -1 }).skip(skip).limit(limit).populate('item.productId').populate('user');
+            orders = orders.map(odr => {
+                odr = odr.toObject();
+                odr.isNew = odr.createdAt >= thirtyMinutesAgo;
+                return odr;
+            })
             const totalPages = Math.ceil(countUsers / limit);
-            res.render("admin/userList", { users, currentPage: page, totalPages, countUsers, layout: false });
+            res.render("admin/userList", { users, currentPage: page, totalPages, countUsers, layout: false, orders });
         } catch (error) {
             next(error);
         }
@@ -44,9 +58,15 @@ class AdminController {
                 user.find({ deleted: true }).skip(skip).limit(limit),
                 user.countDocuments({ deleted: true })
             ]);
-
+            const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+            let orders = await order.find({ status: "Pending" }).sort({ createdAt: -1 }).skip(skip).limit(limit).populate('item.productId').populate('user');
+            orders = orders.map(odr => {
+                odr = odr.toObject();
+                odr.isNew = odr.createdAt >= thirtyMinutesAgo;
+                return odr;
+            })
             const totalPages = Math.ceil(countUsers / limit);
-            res.render("admin/recycleBin", { users, currentPage: page, totalPages, countUsers, layout: false });
+            res.render("admin/recycleBin", { users, currentPage: page, totalPages, countUsers, layout: false, orders });
         } catch (error) {
             next(error);
         }

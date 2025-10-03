@@ -131,6 +131,19 @@ class homeController {
                 totalPrice: req.body.finalPrice,
                 paymentMethod: req.body.paymentMethod
             });
+            const products = await product.find({
+                _id: { $in: res.locals.existingUser.cart.map(item => item.productId) }
+            });
+            for (let prd of products) {
+                const cartItem = res.locals.existingUser.cart.find(
+                    c => c.productId.toString() === prd._id.toString()
+                );
+                if (cartItem) {
+                    prd.stock -= cartItem.quantity;
+                    if (prd.stock < 0) prd.stock = 0;
+                    await prd.save();
+                }
+            }
             const getUser = await user.findOne({ _id: newOrder.user });
             getUser.cart = [];
             await getUser.save();

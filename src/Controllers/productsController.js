@@ -1,5 +1,6 @@
 const product = require("../Models/product");
 const user = require("../Models/user");
+const order = require("../Models/orders")
 require('dotenv').config();
 
 const cloudinary = require('cloudinary').v2;
@@ -19,7 +20,14 @@ class ProductsController {
             const products = await product.find({ deleted: false }).skip(skip).limit(limit);
             const countProducts = await product.countDocuments({ deleted: false });
             const totalPages = Math.ceil(countProducts / limit);
-            res.render('admin/productManager', { layout: false, currentPage: page, products, countProducts, totalPages });
+            const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+            let orders = await order.find({ status: "Pending" }).sort({ createdAt: -1 }).skip(skip).limit(limit).populate('item.productId').populate('user');
+            orders = orders.map(odr => {
+                odr = odr.toObject();
+                odr.isNew = odr.createdAt >= thirtyMinutesAgo;
+                return odr;
+            })
+            res.render('admin/productManager', { layout: false, currentPage: page, products, countProducts, totalPages, orders });
         } catch (error) {
             next(error);
         }
@@ -153,8 +161,15 @@ class ProductsController {
 
     async deleteProduct(req, res, next) {
         try {
+            const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+            let orders = await order.find({ status: "Pending" }).sort({ createdAt: -1 }).skip(skip).limit(limit).populate('item.productId').populate('user');
+            orders = orders.map(odr => {
+                odr = odr.toObject();
+                odr.isNew = odr.createdAt >= thirtyMinutesAgo;
+                return odr;
+            })
             await product.findOneAndUpdate({ _id: req.params.id }, { deleted: true });
-            res.redirect('/admin/product-list');
+            res.redirect('/admin/product-list', { orders });
         } catch (error) {
             next(error);
         }

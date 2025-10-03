@@ -36,6 +36,7 @@ routers.post('/info-order/:id', orderController.infoOrder);
 routers.post('/get-status/:id', orderController.getStatus);
 routers.patch('/update-status/:id', orderController.updateStatus);
 routers.delete('/delete-order/:id', orderController.deleteOrder);
+routers.get('/pending-order', orderController.getPendingOrder);
 routers.get('/', adminController.homepage);
 
 module.exports = routers;
