@@ -1,7 +1,7 @@
 const user = require("../Models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const passport = require("passport");
 
 class Login {
     loginview(req, res) {
@@ -56,6 +56,80 @@ class Login {
         } catch (error) {
             next(error);
         }
+    }
+
+    loginWithGoogle(req, res, next) {
+        passport.authenticate("google", { scope: ["profile", "email"] })(req, res, next);
+    }
+
+    loginGoogleCallBack(req, res, next) {
+        passport.authenticate("google", { failureRedirect: "/login" }, async (err, userProfile) => {
+            if (err) return next(err);
+
+            try {
+                let existingUser = await user.findOne({ email: userProfile.emails[0].value });
+
+                if (!existingUser) {
+                    existingUser = new user({
+                        name: userProfile.displayName,
+                        email: userProfile.emails[0].value,
+                        password: null,
+                        provider: "google"
+                    });
+                    await existingUser.save();
+                }
+
+                const payload = {
+                    id: existingUser._id,
+                    email: existingUser.email,
+                    name: existingUser.name
+                };
+
+                const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+                res.cookie("token", token, { httpOnly: true });
+
+                res.redirect("/");
+            } catch (error) {
+                next(error);
+            }
+        })(req, res, next);
+    }
+
+    loginWithFacebook(req, res, next) {
+        try {
+            passport.authenticate('facebook', { scope: ["email"] })(req, res, next);
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    loginWithFacebookCallBack(req, res, next) {
+        passport.authenticate("facebook", { failureRedirect: "/login" }, async (err, userProfile) => {
+            if (err) return next(err);
+            try {
+                const getUser = await user.findOne({ email: userProfile.emails[0].value });
+                if (!getUser) {
+                    getUser = new user({
+                        name: userProfile.displayName,
+                        email: userProfile.emails[0].value,
+                        password: null,
+                        provider: "facebook"
+                    })
+                    await getUser.save();
+                }
+
+                const payload = {
+                    id: getUser._id,
+                    email: getUser.email,
+                    name: getUser.name
+                }
+                const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+                res.cookie("token", token, { httpOnly: true })
+                res.redirect("/");
+            } catch (error) {
+                next(error)
+            }
+        })(req, res, next);
     }
 }
 

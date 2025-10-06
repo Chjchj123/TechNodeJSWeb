@@ -168,8 +168,8 @@
                         productList.innerHTML = "";
 
                         const html = data.products.map(prd => {
-                            const discount = prd.productId?.discountPercent || 0;
-                            const price = prd.productId?.price || 0;
+                            const discount = prd.discountPercent || 0;
+                            const price = prd.price || 0;
                             const finalPrice = (price * (1 - discount / 100)).toFixed(2);
 
                             return `

@@ -11,6 +11,9 @@ const session = require("express-session");
 const authMiddleware = require('./Middlewares/auth').authMiddleware;
 var cookieParser = require('cookie-parser')
 var methodOverride = require('method-override')
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const FacebookStrategy = require("passport-facebook").Strategy;
 
 app.use(methodOverride('_method'))
 app.use(cookieParser());
@@ -29,6 +32,25 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(expressLayouts);
 app.set('layout', 'layouts/main');
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "/auth/google/callback"
+}, (accessToken, refreshToken, profile, done) => {
+    return done(null, profile);
+}));
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "/auth/facebook/callback",
+    profileFields: ["id", "emails", "name"]
+},
+    function (accessToken, refreshToken, profile, cb) {
+        return cb(null, profile);
+    }
+));
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
 routes(app);
 
 app.listen(PORT, () => {
