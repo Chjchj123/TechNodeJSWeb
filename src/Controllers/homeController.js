@@ -200,6 +200,20 @@ class homeController {
             res.status(500).json({ error: "Internal Server Error" });
         }
     }
+
+    async searchProduct(req, res, next) {
+        try {
+            const { keywords } = req.query;
+
+            if (!keywords || keywords.trim() === "") {
+                return res.json([]);
+            }
+            const products = await product.find({ name: { $regex: keywords, $options: "i" } });
+            res.json(products);
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 module.exports = new homeController();

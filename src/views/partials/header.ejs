@@ -19,9 +19,13 @@
 
         </div>
         <div class="nav-icons">
-            <div class="search-bar">
-                <input type="text" placeholder="What are you looking for?">
-                <button><i class="fas fa-search"></i></button>
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="What are you looking for?"
+                        oninput="searchProducts(this.value)">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <ul id="searchResults" class="results-list"></ul>
             </div>
             <% if(existingUser) { %>
                 <a href="/cart/<%= existingUser._id %>"><i class="fas fa-shopping-cart"></i></a>
@@ -47,3 +51,44 @@
         </div>
     </div>
 </div>
+
+<script>
+    async function searchProducts(query) {
+        const list = document.getElementById("searchResults");
+        list.innerHTML = "";
+
+        if (!query.trim()) {
+            list.style.display = "none";
+            return;
+        }
+
+        const res = await fetch(`/search-product?keyword=${encodeURIComponent(query)}`);
+        const products = await res.json();
+
+        if (products.length === 0) {
+            list.innerHTML = `<li>Không tìm thấy sản phẩm</li>`;
+            list.style.display = "block";
+            return;
+        }
+
+        products.forEach(p => {
+            const li = document.createElement("li");
+            li.classList.add("search-item");
+
+            const img = document.createElement("img");
+            img.src = p.images[0].url;
+            img.alt = p.name;
+            const name = document.createElement("span");
+            name.textContent = p.name;
+
+            li.onclick = () => window.location.href = `/shop/${p.category}/${p._id}`;
+
+            li.appendChild(img);
+            li.appendChild(name);
+            list.appendChild(li);
+        });
+
+
+        list.style.display = "block";
+    }
+</script>

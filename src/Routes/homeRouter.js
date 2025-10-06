@@ -13,6 +13,7 @@ routers.post('/checkout-submit', homeController.checkOutSubmit)
 routers.get('/user-orders/:id', homeController.showUsersOrders)
 routers.post('/orders-filter', homeController.ordersFilter);
 routers.post('/sort-product/:category', homeController.productFilter);
+routers.get('/search-product', homeController.searchProduct);
 routers.get('/', homeController.homePage);
 
 module.exports = routers;
