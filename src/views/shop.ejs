@@ -27,26 +27,14 @@
                     <span>Brand</span>
                 </div>
                 <div class="filter-options">
-                    <div class="filter-option">
-                        <input type="checkbox" id="brand1">
-                        <label for="brand1">Nike</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="brand2">
-                        <label for="brand2">Adidas</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="brand3">
-                        <label for="brand3">Apple</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="brand4">
-                        <label for="brand4">Samsung</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="brand5">
-                        <label for="brand5">Sony</label>
-                    </div>
+                    <% categories.forEach(category=> { %>
+                        <div class="filter-option">
+                            <input value="<%= category.category %>" type="checkbox" id="brand1">
+                            <label for="brand1">
+                                <%= category %>
+                            </label>
+                        </div>
+                        <% }) %>
                 </div>
             </div>
         </div>

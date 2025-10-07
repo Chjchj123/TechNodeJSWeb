@@ -42,7 +42,8 @@ class homeController {
             const totalProduct = await product.countDocuments({ category: req.params.category, deleted: false });
             const totalPages = Math.ceil(totalProduct / limit);
             const getProductByCategory = await product.find({ category: req.params.category, deleted: false }).skip(skip).limit(limit);
-            res.render("shop", { getProductByCategory, totalProduct, currentPage: page, totalPages });
+            const categories = await product.find({ category: req.params.category, deleted: false }).distinct("brand");
+            res.render("shop", { getProductByCategory, totalProduct, currentPage: page, totalPages, categories });
         } catch (error) {
             next(error);
         }
@@ -203,17 +204,22 @@ class homeController {
 
     async searchProduct(req, res, next) {
         try {
-            const { keywords } = req.query;
+            const { keyword } = req.query;
 
-            if (!keywords || keywords.trim() === "") {
+            if (!keyword || keyword.trim() === "") {
                 return res.json([]);
             }
-            const products = await product.find({ name: { $regex: keywords, $options: "i" } });
+            const products = await product.find({ name: { $regex: keyword, $options: "i" } });
             res.json(products);
         } catch (error) {
             next(error)
         }
     }
+
+    // 404 site 
+    get404 = (req, res) => {
+        res.status(404).render("404");
+    };
 }
 
 module.exports = new homeController();

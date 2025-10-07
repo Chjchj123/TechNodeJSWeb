@@ -14,6 +14,7 @@ var methodOverride = require('method-override')
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
+const homeController = require('./Controllers/homeController')
 
 app.use(methodOverride('_method'))
 app.use(cookieParser());
@@ -51,8 +52,10 @@ passport.use(new FacebookStrategy({
 ));
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
+
 routes(app);
 
+app.use(homeController.get404)
 app.listen(PORT, () => {
     console.log('Connecting to Database...');
     connectDb();

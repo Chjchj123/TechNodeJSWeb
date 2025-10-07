@@ -208,6 +208,47 @@ header {
     color: #DB4444;
 }
 
+/* 404 Error Section */
+.error-section {
+    text-align: center;
+    padding: 80px 0;
+}
+
+.error-code {
+    font-size: 120px;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.error-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.back-home {
+    display: inline-block;
+    background-color: #DB4444;
+    color: rgb(255, 255, 255) !important;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.back-home:hover {
+    background-color: #0056b3;
+}
+
 /* Hero Section */
 .hero {
     background-color: #000;
