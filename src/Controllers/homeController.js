@@ -185,9 +185,12 @@ class homeController {
 
     async productFilter(req, res, next) {
         try {
+            const page = parseInt(req.query.page) || 1;
+            const limit = 18;
+            const skip = (page - 1) * limit;
             const { option } = req.body;
             const { category } = req.params;
-            let products = await product.find({ category: category });
+            let products = await product.find({ category: category, deleted: false }).skip(skip).limit(limit).sort({ createdAt: -1 });
 
             if (option === "lowToHigh") {
                 products.sort((a, b) => a.price - b.price);
@@ -199,6 +202,24 @@ class homeController {
         } catch (err) {
             console.error(err);
             res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+
+    async brandFilter(req, res, next) {
+        try {
+            const page = parseInt(req.query.page) || 1;
+            const limit = 18;
+            const skip = (page - 1) * limit;
+            let products;
+            if (req.body.brand.length > 0) {
+                products = await product.find({ category: req.params.category, brand: req.body.brand, deleted: false }).skip(skip).limit(limit);
+            } else {
+                products = await product.find({ category: req.params.category, deleted: false }).skip(skip).limit(limit);
+            }
+            res.json({ products })
+        }
+        catch (error) {
+            next(error)
         }
     }
 

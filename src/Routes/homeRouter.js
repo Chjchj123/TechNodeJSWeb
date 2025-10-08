@@ -14,6 +14,7 @@ routers.get('/user-orders/:id', homeController.showUsersOrders)
 routers.post('/orders-filter', homeController.ordersFilter);
 routers.post('/sort-product/:category', homeController.productFilter);
 routers.get('/search-product', homeController.searchProduct);
+routers.post('/brand-filter/:category', homeController.brandFilter);
 routers.get('/', homeController.homePage);
 
 module.exports = routers;

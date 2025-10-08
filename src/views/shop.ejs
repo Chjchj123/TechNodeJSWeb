@@ -29,7 +29,7 @@
                 <div class="filter-options">
                     <% categories.forEach(category=> { %>
                         <div class="filter-option">
-                            <input value="<%= category.category %>" type="checkbox" id="brand1">
+                            <input value="<%= category %>" type="checkbox" class="brand-select">
                             <label for="brand1">
                                 <%= category %>
                             </label>
@@ -142,6 +142,78 @@
         const productGrid = document.querySelector(".products-grid");
         let category = getCategory.length > 0 ? getCategory[0].getAttribute("data-category") : null;
 
+        const brandSelects = document.querySelectorAll('.brand-select');
+        //brand sort
+        let brand = [];
+        brandSelects.forEach(select => {
+            select.addEventListener("change", () => {
+                if (select.checked) {
+                    brand.push(select.value)
+                } else {
+                    brand = brand.filter(br => br !== select.value);
+                }
+                productGrid.innerHTML = "";
+                fetch('/brand-filter/' + category, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ brand: brand })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        productList.innerHTML = "";
+
+                        const html = data.products.map(prd => {
+                            const discount = prd.discountPercent || 0;
+                            const price = prd.price || 0;
+                            const finalPrice = (price * (1 - discount / 100)).toFixed(2);
+
+                            return `
+                        <a href="/shop/${encodeURIComponent(prd.category)}/${prd._id}"
+                            class="product-card">
+                            <div class="product-image">
+                                <div class="discount-badge">
+                                    ${prd.discountPercent}%
+                                </div>
+                                <img src="${prd.images[0].url}"
+                                    style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            </div>
+                            <div data-category="${prd.category}" class="product-info">
+                                <h3 class="product-title">
+                                    ${prd.name}
+                                </h3>
+                                <div class="product-price">
+                                        <span class="current-price">
+                                            ${finalPrice}$
+                                        </span>
+                                        <span class="original-price">
+                                            ${prd.price}$
+                                        </span>
+                                </div>
+                                <div style="margin-top:9px">
+                                    <span>Số Lượng: ${prd.stock}</span>
+                                </div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </a>`;
+                        }).join("");
+
+                        productGrid.innerHTML = html;
+                        console.log(brand)
+                    })
+                    .catch(err => {
+                        console.error("Error fetching sorted products:", err);
+                    });
+            });
+        })
+        //
+
+        //sort
         sortSelects.forEach(select => {
             select.addEventListener("change", function () {
                 const opt = this.value;
@@ -203,6 +275,9 @@
                     });
             });
         });
+        //
+
+
     });
 
 
