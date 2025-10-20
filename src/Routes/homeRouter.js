@@ -15,6 +15,7 @@ routers.post('/orders-filter', homeController.ordersFilter);
 routers.post('/sort-product/:category', homeController.productFilter);
 routers.get('/search-product', homeController.searchProduct);
 routers.post('/brand-filter/:category', homeController.brandFilter);
+routers.post('/sort-by-price-product/:category', homeController.sortByPriceProduct);
 routers.get('/', homeController.homePage);
 
 module.exports = routers;

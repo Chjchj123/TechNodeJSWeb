@@ -790,7 +790,7 @@
                         for (let item of getOrder.item) {
                             let discount = item.productId.discountPercent;
                             let price = item.productId.price;
-                            let finalPrice = (price - (price * discount) / 100).toFixed(2);
+                            let finalPrice = ((price - (price * discount) / 100) * item.quantity).toFixed(2);
                             html += `
         <div class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl p-3 shadow-md">
             <img class="h-10 w-10 rounded-full" src="${item.productId.images[0].url}" alt="Product Image"

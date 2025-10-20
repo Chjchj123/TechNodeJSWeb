@@ -41,7 +41,7 @@ class homeController {
             const skip = (page - 1) * limit;
             const totalProduct = await product.countDocuments({ category: req.params.category, deleted: false });
             const totalPages = Math.ceil(totalProduct / limit);
-            const getProductByCategory = await product.find({ category: req.params.category, deleted: false }).skip(skip).limit(limit);
+            const getProductByCategory = await product.find({ category: req.params.category, deleted: false }).skip(skip).limit(limit).sort({ createdAt: -1 });
             const categories = await product.find({ category: req.params.category, deleted: false }).distinct("brand");
             res.render("shop", { getProductByCategory, totalProduct, currentPage: page, totalPages, categories });
         } catch (error) {
@@ -234,6 +234,24 @@ class homeController {
             res.json(products);
         } catch (error) {
             next(error)
+        }
+    }
+
+    async sortByPriceProduct(req, res, next) {
+        try {
+            const page = parseInt(req.query.page) || 1;
+            const { minPrice, maxPrice } = req.body;
+            const limit = 18;
+            const skip = (page - 1) * limit;
+            const { category } = req.params;
+            let products = await product.find({
+                category: category,
+                price: { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) },
+                deleted: false
+            }).skip(skip).limit(limit).sort({ createdAt: -1 });
+            res.json({ products });
+        } catch (error) {
+            next(error);
         }
     }
 

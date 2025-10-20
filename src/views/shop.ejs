@@ -16,9 +16,9 @@
                 <div class="price-range">
                     <div class="price-inputs">
                         <input type="number" placeholder="Min" value="0">
-                        <input type="number" placeholder="Max" value="1000">
+                        <input type="number" placeholder="Max" value="9999">
                     </div>
-                    <button class="shop-now-btn" style="padding: 8px; font-size: 14px;">Apply</button>
+                    <button class="price-sort-btn shop-now-btn" style="padding: 8px; font-size: 14px;">Apply</button>
                 </div>
             </div>
 
@@ -140,6 +140,7 @@
         const productList = document.getElementById('product-list');
         const getCategory = document.querySelectorAll('.product-info');
         const productGrid = document.querySelector(".products-grid");
+        const priceSortBtn = document.querySelector(".price-sort-btn");
         let category = getCategory.length > 0 ? getCategory[0].getAttribute("data-category") : null;
 
         const brandSelects = document.querySelectorAll('.brand-select');
@@ -277,6 +278,67 @@
         });
         //
 
+        //price sort 
+        priceSortBtn.addEventListener("click", function () {
+            const minPrice = document.querySelector('.price-inputs input:nth-child(1)').value;
+            const maxPrice = document.querySelector('.price-inputs input:nth-child(2)').value
+            productGrid.innerHTML = "";
+            fetch("/sort-by-price-product/" + category, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ minPrice: minPrice, maxPrice: maxPrice })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    productList.innerHTML = "";
+
+                    const html = data.products.map(prd => {
+                        const discount = prd.discountPercent || 0;
+                        const price = prd.price || 0;
+                        const finalPrice = (price * (1 - discount / 100)).toFixed(2);
+
+                        return `
+                            <a href="/shop/${encodeURIComponent(prd.category)}/${prd._id}"
+                                class="product-card">
+                                <div class="product-image">
+                                    <div class="discount-badge">
+                                        ${prd.discountPercent}%
+                                    </div>
+                                    <img src="${prd.images[0].url}"
+                                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                </div>
+                                <div data-category="${prd.category}" class="product-info">
+                                    <h3 class="product-title">
+                                        ${prd.name}
+                                    </h3>
+                                    <div class="product-price">
+                                            <span class="current-price">
+                                                ${finalPrice}$
+                                            </span>
+                                            <span class="original-price">
+                                                ${prd.price}$
+                                            </span>
+                                    </div>
+                                    <div style="margin-top:9px">
+                                        <span>Số Lượng: ${prd.stock}</span>
+                                    </div>
+                                    <div class="product-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </a>`;
+                    }).join("");
+
+                    productGrid.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error("Error fetching sorted products:", err);
+                });
+        });
 
     });
 
