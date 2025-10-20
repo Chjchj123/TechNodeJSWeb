@@ -107,7 +107,7 @@ class Login {
         passport.authenticate("facebook", { failureRedirect: "/login" }, async (err, userProfile) => {
             if (err) return next(err);
             try {
-                const getUser = await user.findOne({ email: userProfile.emails[0].value });
+                let getUser = await user.findOne({ email: userProfile.emails[0].value });
                 if (!getUser) {
                     getUser = new user({
                         name: userProfile.displayName,
