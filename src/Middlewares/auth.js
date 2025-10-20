@@ -15,7 +15,8 @@ const authMiddleware = async (req, res, next) => {
         '/auth/google/callback',
         '/auth/facebook',
         '/auth/facebook/callback',
-        ...category.map(c => `/brand-filter/${c}`)
+        ...category.map(c => `/brand-filter/${c}`),
+        '/search-product'
     ];
 
     res.locals.existingUser = null;
@@ -57,10 +58,7 @@ const adminMiddleware = (req, res, next) => {
     next();
 }
 function isWhitelisted(path, whitelist) {
-    // check exact match
     if (whitelist.includes(path)) return true;
-
-    // check path động: /shop/:category/:id
     if (path.startsWith('/shop/')) return true;
 
     return false;

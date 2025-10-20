@@ -1,7 +1,3 @@
-<div class="top-bar">
-    <p>Summer Sale For All Mainboards Suits And Free Express Delivery - Up to 91%! <a href="/shop-page/Mainboards"
-            style="color: #fff; text-decoration: underline;">Shop Now</a></p>
-</div>
 <div class="container">
     <div class="nav-container">
         <div class="logo">QATECH</div>
@@ -90,5 +86,24 @@
 
 
         list.style.display = "block";
+
+        //
+        let lastScroll = 0;
+        const nav = document.querySelector('.nav-container');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > lastScroll && currentScroll > 50) {
+                // Lăn xuống → ẩn nav
+                nav.classList.add('nav-hidden');
+            } else {
+                // Lăn lên → hiện nav
+                nav.classList.remove('nav-hidden');
+            }
+
+            lastScroll = currentScroll;
+        });
+        //
     }
 </script>

@@ -601,6 +601,10 @@ footer {
         gap: 15px;
     }
 
+    header {
+        position: sticky;
+    }
+
     .search-bar {
         width: 100%;
         margin-top: 15px;
@@ -622,15 +626,16 @@ footer {
         margin-bottom: 30px;
     }
 
-    .features {
+    .features,
+    .footer-content {
         grid-template-columns: 1fr;
     }
 
     .footer-content {
-        grid-template-columns: 1fr;
         gap: 30px;
     }
 }
+
 
 @media (max-width: 576px) {
 

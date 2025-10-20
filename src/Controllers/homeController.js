@@ -5,7 +5,7 @@ const randomString = require('randomstring');
 
 class homeController {
     async homePage(req, res) {
-        const bestDiscountProducts = await product.find({ deleted: false }).sort({ discountPercent: -1 });
+        const bestDiscountProducts = await product.find({ deleted: false }).sort({ discountPercent: -1 }).limit(12);
         const bannerProducts = await product.findOne({ discountPercent: { $gt: 30 }, deleted: false });
         const newProduct = await product.findOne().sort({
             createdAt: -1
@@ -178,7 +178,7 @@ class homeController {
                 filter = { user: res.locals.existingUser._id };
             }
 
-            const orders = await order.find(filter).populate("item.productId");
+            const orders = await order.find(filter).populate("item.productId").sort({ createdAt: -1 });
             res.json({ orders });
         } catch (error) { next(error); }
     }
