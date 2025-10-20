@@ -151,7 +151,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a
+                                <a href="/admin/user-list"
                                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                     <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -562,6 +562,14 @@
                                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                                         placeholder="Development" readonly>
                                 </div>
+                                <!-- Product List -->
+                                <div class="col-span-6">
+                                    <h3 class="text-md font-semibold text-gray-900 mb-3 border-b pb-1">Sản phẩm trong
+                                        đơn hàng</h3>
+                                    <div id="product-item" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        <!-- Product Item -->
+                                    </div>
+                                </div>
                             </div>
                     </div>
                     <!-- Modal footer -->
@@ -761,6 +769,7 @@
                 const cityInput = document.getElementById("city");
                 const totalPrice = document.getElementById("totalPrice");
                 const email = document.getElementById('email');
+                const productItemContainers = document.getElementById("product-item");
                 infoOrder.forEach(btn => {
                     btn.addEventListener("click", async function () {
                         const orderId = this.getAttribute("data-_id");
@@ -776,6 +785,25 @@
                         cityInput.value = getOrder.billDetails.city;
                         totalPrice.value = getOrder.totalPrice;
                         email.value = getOrder.billDetails.email;
+
+                        let html = '';
+                        for (let item of getOrder.item) {
+                            let discount = item.productId.discountPercent;
+                            let price = item.productId.price;
+                            let finalPrice = (price - (price * discount) / 100).toFixed(2);
+                            html += `
+        <div class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl p-3 shadow-md">
+            <img class="h-10 w-10 rounded-full" src="${item.productId.images[0].url}" alt="Product Image"
+                class="w-16 h-16 object-cover rounded-md border">
+            <div>
+                <h4 class="text-base font-semibold text-gray-900">${item.productId.name}</h4>
+                <p class="text-sm text-gray-500">Quantity: ${item.quantity}</p>
+                <p class="text-sm text-gray-500">Price: $${finalPrice}</p>
+            </div>
+        </div>
+    `;
+                        }
+                        productItemContainers.innerHTML = html;
                     });
                 });
 

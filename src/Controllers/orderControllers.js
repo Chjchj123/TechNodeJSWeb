@@ -26,7 +26,7 @@ class orderController {
 
     async infoOrder(req, res, next) {
         try {
-            const ord = await order.findOne({ orderId: req.body.orderId });
+            const ord = await order.findOne({ orderId: req.body.orderId }).populate('item.productId');
             res.json(ord)
         } catch (error) {
             next(error)
