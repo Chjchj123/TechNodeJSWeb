@@ -121,8 +121,16 @@
                     <div class="discount-badge">
                         <%= product.discountPercent %>%
                     </div>
-                    <img src="<%= product.images[0].url %>"
+                    <img class="img-main" src="<%= product.images[0].url %>"
                         style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                    <% if (product.images[1]) { %>
+                        <% const randomIndex=Math.floor(Math.random() * product.images.length); %>
+                            <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                src="<%= product.images[randomIndex].url %>" class="img-hover">
+                            <% } else {%>
+                                <img class="img-hover" src="<%= product.images[0].url %>"
+                                    style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                <% } %>
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">
@@ -209,13 +217,19 @@
                     <!-- Product 1 -->
                     <a href="/shop/<%= VGA.category%>/<%= VGA._id %>" class="product-card">
                         <div class="product-image">
-                            <% if (VGA.discountPercent && VGA.discountPercent> 0) { %>
-                                <div class="discount-badge">
-                                    <%= VGA.discountPercent %>%
-                                </div>
-                                <% } %>
-                                    <img src="<%= VGA.images[0].url %>"
-                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <div class="discount-badge">
+                                <%= VGA.discountPercent %>%
+                            </div>
+                            <img class="img-main" src="<%= VGA.images[0].url %>"
+                                style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <% if (VGA.images[1]) { %>
+                                <% const randomIndex=Math.floor(Math.random() * VGA.images.length); %>
+                                    <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                        src="<%= VGA.images[randomIndex].url %>" class="img-hover">
+                                    <% } else {%>
+                                        <img class="img-hover" src="<%= VGA.images[0].url %>"
+                                            style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <% } %>
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">
@@ -271,13 +285,19 @@
                     <!-- Product 1 -->
                     <a href="/shop/<%= CPU.category%>/<%= CPU._id %>" class="product-card">
                         <div class="product-image">
-                            <% if (CPU.discountPercent && CPU.discountPercent> 0) { %>
-                                <div class="discount-badge">
-                                    <%= CPU.discountPercent %>%
-                                </div>
-                                <% } %>
-                                    <img src="<%= CPU.images[0].url %>"
-                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <div class="discount-badge">
+                                <%= CPU.discountPercent %>%
+                            </div>
+                            <img class="img-main" src="<%= CPU.images[0].url %>"
+                                style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <% if (CPU.images[1]) { %>
+                                <% const randomIndex=Math.floor(Math.random() * CPU.images.length); %>
+                                    <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                        src="<%= CPU.images[randomIndex].url %>" class="img-hover">
+                                    <% } else {%>
+                                        <img class="img-hover" src="<%= CPU.images[0].url %>"
+                                            style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <% } %>
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">
@@ -333,13 +353,19 @@
                     <!-- Product 1 -->
                     <a href="/shop/<%= main.category%>/<%= main._id %>" class="product-card">
                         <div class="product-image">
-                            <% if (main.discountPercent && main.discountPercent> 0) { %>
-                                <div class="discount-badge">
-                                    <%= main.discountPercent %>%
-                                </div>
-                                <% } %>
-                                    <img src="<%= main.images[0].url %>"
-                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <div class="discount-badge">
+                                <%= main.discountPercent %>%
+                            </div>
+                            <img class="img-main" src="<%= main.images[0].url %>"
+                                style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <% if (main.images[1]) { %>
+                                <% const randomIndex=Math.floor(Math.random() * main.images.length); %>
+                                    <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                        src="<%= main.images[randomIndex].url %>" class="img-hover">
+                                    <% } else {%>
+                                        <img class="img-hover" src="<%= main.images[0].url %>"
+                                            style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <% } %>
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">
@@ -395,13 +421,19 @@
                     <!-- Product 1 -->
                     <a href="/shop/<%= RAM.category%>/<%= RAM._id %>" class="product-card">
                         <div class="product-image">
-                            <% if (RAM.discountPercent && RAM.discountPercent> 0) { %>
-                                <div class="discount-badge">
-                                    <%= RAM.discountPercent %>%
-                                </div>
-                                <% } %>
-                                    <img src="<%= RAM.images[0].url %>"
-                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <div class="discount-badge">
+                                <%= RAM.discountPercent %>%
+                            </div>
+                            <img class="img-main" src="<%= RAM.images[0].url %>"
+                                style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <% if (RAM.images[1]) { %>
+                                <% const randomIndex=Math.floor(Math.random() * RAM.images.length); %>
+                                    <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                        src="<%= RAM.images[randomIndex].url %>" class="img-hover">
+                                    <% } else {%>
+                                        <img class="img-hover" src="<%= RAM.images[0].url %>"
+                                            style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <% } %>
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">
@@ -457,13 +489,19 @@
                     <!-- Product 1 -->
                     <a href="/shop/<%= HDD.category%>/<%= HDD._id %>" class="product-card">
                         <div class="product-image">
-                            <% if (HDD.discountPercent && HDD.discountPercent> 0) { %>
-                                <div class="discount-badge">
-                                    <%= HDD.discountPercent %>%
-                                </div>
-                                <% } %>
-                                    <img src="<%= HDD.images[0].url %>"
-                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <div class="discount-badge">
+                                <%= HDD.discountPercent %>%
+                            </div>
+                            <img class="img-main" src="<%= HDD.images[0].url %>"
+                                style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <% if (HDD.images[1]) { %>
+                                <% const randomIndex=Math.floor(Math.random() * HDD.images.length); %>
+                                    <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                        src="<%= HDD.images[randomIndex].url %>" class="img-hover">
+                                    <% } else {%>
+                                        <img class="img-hover" src="<%= HDD.images[0].url %>"
+                                            style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <% } %>
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">
@@ -519,13 +557,19 @@
                     <!-- Product 1 -->
                     <a href="/shop/<%= SSD.category%>/<%= SSD._id %>" class="product-card">
                         <div class="product-image">
-                            <% if (SSD.discountPercent && SSD.discountPercent> 0) { %>
-                                <div class="discount-badge">
-                                    <%= SSD.discountPercent %>%
-                                </div>
-                                <% } %>
-                                    <img src="<%= SSD.images[0].url %>"
-                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <div class="discount-badge">
+                                <%= SSD.discountPercent %>%
+                            </div>
+                            <img class="img-main" src="<%= SSD.images[0].url %>"
+                                style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <% if (SSD.images[1]) { %>
+                                <% const randomIndex=Math.floor(Math.random() * SSD.images.length); %>
+                                    <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                        src="<%= SSD.images[randomIndex].url %>" class="img-hover">
+                                    <% } else {%>
+                                        <img class="img-hover" src="<%= SSD.images[0].url %>"
+                                            style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <% } %>
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">
@@ -581,13 +625,19 @@
                     <!-- Product 1 -->
                     <a href="/shop/<%= CASE.category%>/<%= CASE._id %>" class="product-card">
                         <div class="product-image">
-                            <% if (CASE.discountPercent && CASE.discountPercent> 0) { %>
-                                <div class="discount-badge">
-                                    <%= CASE.discountPercent %>%
-                                </div>
-                                <% } %>
-                                    <img src="<%= CASE.images[0].url %>"
-                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <div class="discount-badge">
+                                <%= CASE.discountPercent %>%
+                            </div>
+                            <img class="img-main" src="<%= CASE.images[0].url %>"
+                                style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <% if (CASE.images[1]) { %>
+                                <% const randomIndex=Math.floor(Math.random() * CASE.images.length); %>
+                                    <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                        src="<%= CASE.images[randomIndex].url %>" class="img-hover">
+                                    <% } else {%>
+                                        <img class="img-hover" src="<%= CASE.images[0].url %>"
+                                            style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <% } %>
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">
@@ -643,13 +693,19 @@
                     <!-- Product 1 -->
                     <a href="/shop/<%= PSU.category%>/<%= PSU._id %>" class="product-card">
                         <div class="product-image">
-                            <% if (PSU.discountPercent && PSU.discountPercent> 0) { %>
-                                <div class="discount-badge">
-                                    <%= PSU.discountPercent %>%
-                                </div>
-                                <% } %>
-                                    <img src="<%= PSU.images[0].url %>"
-                                        style="width: 100%; height: auto; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <div class="discount-badge">
+                                <%= PSU.discountPercent %>%
+                            </div>
+                            <img class="img-main" src="<%= PSU.images[0].url %>"
+                                style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                            <% if (PSU.images[1]) { %>
+                                <% const randomIndex=Math.floor(Math.random() * PSU.images.length); %>
+                                    <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                        src="<%= PSU.images[randomIndex].url %>" class="img-hover">
+                                    <% } else {%>
+                                        <img class="img-hover" src="<%= PSU.images[0].url %>"
+                                            style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <% } %>
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">

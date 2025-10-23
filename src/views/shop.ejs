@@ -74,8 +74,11 @@
                                     <div class="discount-badge">
                                         <%= product.discountPercent %>%
                                     </div>
-                                    <img src="<%= product.images[0].url %>"
+                                    <img class="img-main" src="<%= product.images[0].url %>"
                                         style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                    <% const randomIndex=Math.floor(Math.random() * product.images.length); %>
+                                        <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                            src="<%= product.images[randomIndex].url %>" class="img-hover">
                                 </div>
                                 <div data-category="<%= product.category %>" class="product-info">
                                     <h3 class="product-title">
@@ -167,16 +170,18 @@
                             const discount = prd.discountPercent || 0;
                             const price = prd.price || 0;
                             const finalPrice = (price * (1 - discount / 100)).toFixed(2);
-
+                            const randomIndex = Math.floor(Math.random() * prd.images.length);
                             return `
                         <a href="/shop/${encodeURIComponent(prd.category)}/${prd._id}"
                             class="product-card">
                             <div class="product-image">
-                                <div class="discount-badge">
-                                    ${prd.discountPercent}%
-                                </div>
-                                <img src="${prd.images[0].url}"
-                                    style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                    <div class="discount-badge">
+                                        ${prd.discountPercent}%
+                                    </div>
+                                    <img class="img-main" src="${prd.images[0].url}"
+                                        style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                            src="${prd.images[randomIndex].url}" class="img-hover">
                             </div>
                             <div data-category="${prd.category}" class="product-info">
                                 <h3 class="product-title">
@@ -232,17 +237,20 @@
                             const discount = prd.discountPercent || 0;
                             const price = prd.price || 0;
                             const finalPrice = (price * (1 - discount / 100)).toFixed(2);
-
+                            const randomIndex = Math.floor(Math.random() * prd.images.length);
                             return `
                             <a href="/shop/${encodeURIComponent(prd.category)}/${prd._id}"
                                 class="product-card">
                                 <div class="product-image">
                                     <div class="discount-badge">
-                                        ${prd.discountPercent}%
+                                        ${prd.discountPercent}
                                     </div>
-                                    <img src="${prd.images[0].url}"
+                                    <img class="img-main" src="${prd.images[0].url}"
                                         style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                            src="${prd.images[randomIndex].url}" class="img-hover">
                                 </div>
+                                
                                 <div data-category="${prd.category}" class="product-info">
                                     <h3 class="product-title">
                                         ${prd.name}
@@ -296,7 +304,7 @@
                         const discount = prd.discountPercent || 0;
                         const price = prd.price || 0;
                         const finalPrice = (price * (1 - discount / 100)).toFixed(2);
-
+                        const randomIndex = Math.floor(Math.random() * prd.images.length);
                         return `
                             <a href="/shop/${encodeURIComponent(prd.category)}/${prd._id}"
                                 class="product-card">
@@ -304,9 +312,11 @@
                                     <div class="discount-badge">
                                         ${prd.discountPercent}%
                                     </div>
-                                    <img src="${prd.images[0].url}"
+                                    <img class="img-main" src="${prd.images[0].url}"
                                         style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
-                                </div>
+                                        <img style="width: 100%; height: 100%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;"
+                                            src="${prd.images[randomIndex].url}" class="img-hover">
+                            </div>
                                 <div data-category="${prd.category}" class="product-info">
                                     <h3 class="product-title">
                                         ${prd.name}
