@@ -153,7 +153,7 @@ class homeController {
             getUser.cart = [];
             await getUser.save();
             await newOrder.save();
-            res.redirect('user-orders/' + res.locals.existingUser._id);
+            res.status(200).json({ success: true });
         } catch (error) {
             next(error);
         }
@@ -250,7 +250,7 @@ class homeController {
                 price: { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) },
                 deleted: false
             }).skip(skip).limit(limit).sort({ createdAt: -1 });
-            res.json({ products, success: true });
+            res.json({ products });
         } catch (error) {
             next(error);
         }
@@ -265,6 +265,7 @@ class homeController {
     async paymentProcess(req, res, next) {
         try {
             await this.checkOutSubmit(req, res, next);
+            res.redirect('user-orders/' + res.locals.existingUser._id);
         } catch (error) {
             next(error);
         }
