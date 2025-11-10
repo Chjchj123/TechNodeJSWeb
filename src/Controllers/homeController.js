@@ -153,6 +153,10 @@ class homeController {
             getUser.cart = [];
             await getUser.save();
             await newOrder.save();
+            return res.status(201).json({
+                success: true,
+                message: 'Thanh Toán thành công!'
+            });
         } catch (error) {
             next(error);
         }
@@ -265,7 +269,11 @@ class homeController {
         try {
             return await this.checkOutSubmit(req, res, next, { success: true });
         } catch (error) {
-            next(error);
+            return res.status(500).json({
+                success: false,
+                message: 'Thanh toán thất bại do lỗi hệ thống.',
+                error: error.message
+            });
         }
     }
 }
