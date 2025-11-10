@@ -1,38 +1,32 @@
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>
-                    <%= bannerProducts.name %>
-                </h1>
-                <p style="font-size: 19px;">Up to <%= bannerProducts.discountPercent %>% off Voucher</p>
-                <a href="/shop/<%= bannerProducts.category%>/<%= bannerProducts._id %>" class="shop-now-btn">Shop Now <i
-                        class="fas fa-arrow-right"></i></a>
-                <div class="timer">
-                    <div class="timer-item">
-                        <div class="timer-value">03</div>
-                        <div class="timer-label">Days</div>
+        <div class="hero-slideshow">
+            <div class="slides-wrapper">
+                <% bannerProducts.forEach(function(product) { %>
+                    <div class="slide">
+                        <div class="hero-content">
+                            <div class="hero-text">
+                                <h1>
+                                    <%= product.name %>
+                                </h1>
+                                <p style="font-size: 19px;">Up to <%= product.discountPercent %>% off Voucher</p>
+                                <a href="/shop/<%= product.category %>/<%= product._id %>" class="shop-now-btn">
+                                    Shop Now <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="hero-image">
+                                <img src="<%= product.images[0].url %>"
+                                    style="width: 400px; height: 400px; background-color: #333; border-radius: 9%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+                            </div>
+                        </div>
                     </div>
-                    <div class="timer-item">
-                        <div class="timer-value">23</div>
-                        <div class="timer-label">Hours</div>
-                    </div>
-                    <div class="timer-item">
-                        <div class="timer-value">19</div>
-                        <div class="timer-label">Minutes</div>
-                    </div>
-                    <div class="timer-item">
-                        <div class="timer-value">56</div>
-                        <div class="timer-label">Seconds</div>
-                    </div>
-                </div>
+                    <% }) %>
             </div>
-            <div class="hero-image">
-                <!-- Placeholder for hero image -->
-                <img src="<%= bannerProducts.images[0].url %>"
-                    style="width: 400px; height: 400px; background-color: #333; border-radius: 9%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
-            </div>
+
+            <!-- Nút điều hướng -->
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
         </div>
     </div>
 </section>
@@ -740,3 +734,34 @@
             </div>
 </section>
 <!--  -->
+
+<script>
+    let slideIndex = 0;
+    const slidesWrapper = document.querySelector('.slides-wrapper');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const nextBtn = document.querySelector('.next');
+    const prevBtn = document.querySelector('.prev');
+
+    function showSlide(index) {
+        if (index >= totalSlides) slideIndex = 0;
+        else if (index < 0) slideIndex = totalSlides - 1;
+        else slideIndex = index;
+
+        slidesWrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
+    }
+
+    function nextSlide() {
+        showSlide(slideIndex + 1);
+    }
+
+    function prevSlide() {
+        showSlide(slideIndex - 1);
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    // Tự động chuyển slide sau 5 giây
+    setInterval(nextSlide, 5000);
+</script>

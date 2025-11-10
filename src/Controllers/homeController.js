@@ -6,7 +6,7 @@ const randomString = require('randomstring');
 class homeController {
     async homePage(req, res) {
         const bestDiscountProducts = await product.find({ deleted: false }).sort({ discountPercent: -1 }).limit(12);
-        const bannerProducts = await product.findOne({ discountPercent: { $gt: 30 }, deleted: false });
+        const bannerProducts = await product.find({ discountPercent: { $gt: 30 }, deleted: false }).limit(6);
         const newProduct = await product.findOne().sort({
             createdAt: -1
         });
@@ -249,7 +249,7 @@ class homeController {
                 price: { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) },
                 deleted: false
             }).skip(skip).limit(limit).sort({ createdAt: -1 });
-            res.json({ products });
+            res.json({ products, success: true });
         } catch (error) {
             next(error);
         }
@@ -259,6 +259,15 @@ class homeController {
     get404 = (req, res) => {
         res.status(404).render("404");
     };
+
+    //payment qr method 
+    async paymentProcess(req, res, next) {
+        try {
+            await this.checkOutSubmit(req, res, next);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new homeController();

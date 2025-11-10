@@ -123,7 +123,8 @@
                 </div>
             </div>
 
-            <button data-userId="<%= existingUser._id %>" class="btn btn-primary" id="place-order-btn">Place
+            <button onclick="openModal()" data-userId="<%= existingUser._id %>" class="btn btn-primary"
+                id="place-order-btn">Place
                 Order</button>
         </div>
     </div>
@@ -149,9 +150,30 @@
         </div>
     </div>
 </section>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+    </div>
+</div>
 <script>
     // Checkout functionality
+    function openModal() {
+        document.getElementById("myModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    // Cho phép bấm ra ngoài để đóng
+    window.onclick = function (event) {
+        const modal = document.getElementById("myModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
+        const getModalContent = document.querySelector('.modal-content');
         updateOrderTotals();
         // Payment method selection
         const paymentMethods = document.querySelectorAll('.payment-method');
@@ -232,21 +254,24 @@
                 };
                 placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
                 placeOrderBtn.disabled = true;
-
-                setTimeout(() => {
-                    alert('Order placed successfully! Thank you for your purchase.');
-                    fetch("/checkout-submit", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(data)
-                    })
-                    window.location.href = '/user-orders/' + userID;
-                }, 2000);
+                let html = `<h2>Thanh Toán Chuyển Khoản</h2>
+                <p>Vui lòng sử dụng mã QR bên dưới để hoàn tất thanh toán cho đơn hàng của bạn:</p>
+        <img src="https://qr.sepay.vn/img?acc=VQRQAFEYF2204&bank=MBBank&amount=${totalPrice}&des=${document.getElementById("email").value}">
+        <br><br>`;
+                getModalContent.innerHTML = html + `<button class="btn btn-close" onclick="closeModal()">Đóng</button>`;
+                // setTimeout(() => {
+                //     alert('Order placed successfully! Thank you for your purchase.');
+                //     fetch("/checkout-submit", {
+                //         method: "POST",
+                //         headers: { "Content-Type": "application/json" },
+                //         body: JSON.stringify(data)
+                //     })
+                //     window.location.href = '/user-orders/' + userID;
+                // }, 2000);
             } else {
                 alert('Please fill in all required fields');
             }
         });
-
 
         document.querySelectorAll('input[name="payment"]').forEach(radio => {
             radio.addEventListener('change', function () {
