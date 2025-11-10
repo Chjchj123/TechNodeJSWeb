@@ -153,6 +153,7 @@ class homeController {
             getUser.cart = [];
             await getUser.save();
             await newOrder.save();
+            res.redirect('user-orders/' + res.locals.existingUser._id);
         } catch (error) {
             next(error);
         }

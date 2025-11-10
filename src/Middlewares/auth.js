@@ -16,7 +16,8 @@ const authMiddleware = async (req, res, next) => {
         '/auth/facebook',
         '/auth/facebook/callback',
         ...category.map(c => `/brand-filter/${c}`),
-        '/search-product'
+        '/search-product',
+        '/payment-process'
     ];
 
     res.locals.existingUser = null;
