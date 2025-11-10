@@ -259,6 +259,7 @@
         <img src="https://qr.sepay.vn/img?acc=VQRQAFEYF2204&bank=MBBank&amount=${totalPrice}&des=${document.getElementById("email").value}">
         <button class="confirm-payment btn btn-primary">Xác Nhận Thanh Toán</button>
         <br><br>`;
+                getModalContent.innerHTML = html + `<button class="btn btn-close" onclick="closeModal()">Đóng</button>`;
                 const confirmPaymentBtn = document.querySelector('.confirm-payment');
                 confirmPaymentBtn.addEventListener('click', function () {
                     alert('Cảm ơn bạn đã xác nhận thanh toán. Đơn hàng của bạn sẽ được xử lý trong thời gian sớm nhất!');
@@ -272,16 +273,18 @@
                         window.location.href = '/user-orders/' + userID;
                     }, 2000);
                 });
-                getModalContent.innerHTML = html + `<button class="btn btn-close" onclick="closeModal()">Đóng</button>`;
-                setTimeout(() => {
-                    alert('Order placed successfully! Thank you for your purchase.');
-                    fetch("/checkout-submit", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(data)
-                    })
-                    window.location.href = '/user-orders/' + userID;
-                }, 2000);
+                if (getPaymentMethod != "Bank Transfer") {
+                    return
+                    setTimeout(() => {
+                        alert('Order placed successfully! Thank you for your purchase.');
+                        fetch("/checkout-submit", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(data)
+                        })
+                        window.location.href = '/user-orders/' + userID;
+                    }, 2000);
+                }
             } else {
                 alert('Please fill in all required fields');
             }
