@@ -153,7 +153,6 @@ class homeController {
             getUser.cart = [];
             await getUser.save();
             await newOrder.save();
-            res.status(200).json({ success: true });
         } catch (error) {
             next(error);
         }
@@ -264,8 +263,7 @@ class homeController {
     //payment qr method 
     async paymentProcess(req, res, next) {
         try {
-            await this.checkOutSubmit(req, res, next);
-            res.redirect('user-orders/' + res.locals.existingUser._id);
+            return await this.checkOutSubmit(req, res, next, { success: true });
         } catch (error) {
             next(error);
         }
