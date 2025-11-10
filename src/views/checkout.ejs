@@ -152,7 +152,6 @@
 </section>
 <div id="myModal" class="modal">
     <div class="modal-content">
-        <button class="confirm-payment btn btn-primary">Xác Nhận Thanh Toán</button>
     </div>
 </div>
 <script>
@@ -258,9 +257,9 @@
                 let html = `<h2>Thanh Toán Chuyển Khoản</h2>
                 <p>Vui lòng sử dụng mã QR bên dưới để hoàn tất thanh toán cho đơn hàng của bạn:</p>
         <img src="https://qr.sepay.vn/img?acc=VQRQAFEYF2204&bank=MBBank&amount=${totalPrice}&des=${document.getElementById("email").value}">
-        
+        <button class="confirm-payment btn btn-primary">Xác Nhận Thanh Toán</button>
         <br><br>`;
-                const confirmPaymentBtn = document.getElementsByClassName('confirm-payment')[0];
+                const confirmPaymentBtn = document.querySelector('.confirm-payment');
                 confirmPaymentBtn.addEventListener('click', function () {
                     alert('Cảm ơn bạn đã xác nhận thanh toán. Đơn hàng của bạn sẽ được xử lý trong thời gian sớm nhất!');
                     return setTimeout(() => {
