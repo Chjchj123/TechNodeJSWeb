@@ -136,6 +136,19 @@ class homeController {
                 totalPrice: req.body.finalPrice,
                 paymentMethod: req.body.paymentMethod
             });
+            if (req.body.paymentMethod === 'QR Code') {
+                try {
+                    return res.status(200).json({
+                        success: true,
+                        message: 'Thanh Toán Thành Công QR Code',
+                    });
+                } catch (error) {
+                    return res.status(500).json({
+                        success: false,
+                        message: 'Thanh Toán Thất Bại',
+                    });
+                }
+            }
             const products = await product.find({
                 _id: { $in: res.locals.existingUser.cart.map(item => item.productId) }
             });
@@ -153,10 +166,6 @@ class homeController {
             getUser.cart = [];
             await getUser.save();
             await newOrder.save();
-            return res.status(201).json({
-                success: true,
-                message: 'Thanh Toán thành công!'
-            });
         } catch (error) {
             next(error);
         }
@@ -263,19 +272,6 @@ class homeController {
     get404 = (req, res) => {
         res.status(404).render("404");
     };
-
-    //payment qr method 
-    async paymentProcess(req, res, next) {
-        try {
-            return await this.checkOutSubmit(req, res, next, { success: true });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'Thanh toán thất bại do lỗi hệ thống.',
-                error: error.message
-            });
-        }
-    }
 }
 
 module.exports = new homeController();
