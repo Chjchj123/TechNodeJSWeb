@@ -117,12 +117,6 @@ class homeController {
 
     async checkOutSubmit(req, res, next) {
         try {
-            if (req.body.paymentMethod === 'Bank Transfer') {
-                return res.status(200).json({
-                    success: true,
-                    message: 'Thanh Toán Thành Công QR Code'
-                });
-            }
             const newOrder = new order({
                 orderId: randomString.generate({ length: 9 }),
                 user: res.locals.existingUser._id,
@@ -160,8 +154,16 @@ class homeController {
             getUser.cart = [];
             await getUser.save();
             await newOrder.save();
+            return res.status(201).json({
+                success: true,
+                message: 'Đặt hàng thành công!',
+                orderId: newOrder.orderId
+            });
         } catch (error) {
-            next(error);
+            return res.status(400).json({
+                success: false,
+                message: error.message || 'Đã có lỗi xảy ra.'
+            });
         }
     }
 
