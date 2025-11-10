@@ -136,7 +136,7 @@ class homeController {
                 totalPrice: req.body.finalPrice,
                 paymentMethod: req.body.paymentMethod
             });
-            if (req.body.paymentMethod === 'QR Code') {
+            if (req.body.paymentMethod === 'Bank Transfer') {
                 try {
                     return res.status(200).json({
                         success: true,
