@@ -264,7 +264,7 @@
                 confirmPaymentBtn.addEventListener('click', function () {
                     alert('Cảm ơn bạn đã xác nhận thanh toán. Đơn hàng của bạn sẽ được xử lý trong thời gian sớm nhất!');
                     return setTimeout(() => {
-                        alert('Order placed successfully! Thank you for your purchase.');
+                        closeModal();
                         fetch("/checkout-submit", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
