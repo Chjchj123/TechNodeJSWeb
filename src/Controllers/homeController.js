@@ -117,10 +117,12 @@ class homeController {
 
     async checkOutSubmit(req, res, next) {
         try {
+            const decoded = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
+            const getuser = await user.findOne({ _id: decoded.id });
             const newOrder = new order({
                 orderId: randomString.generate({ length: 9 }),
-                user: res.locals.existingUser._id,
-                item: res.locals.existingUser.cart.map(product => ({
+                user: getuser._id,
+                item: getuser.cart.map(product => ({
                     productId: product.productId,
                     name: product.name,
                     price: product.price,
@@ -138,10 +140,10 @@ class homeController {
             });
 
             const products = await product.find({
-                _id: { $in: res.locals.existingUser.cart.map(item => item.productId) }
+                _id: { $in: getuser.cart.map(item => item.productId) }
             });
             for (let prd of products) {
-                const cartItem = res.locals.existingUser.cart.find(
+                const cartItem = getuser.cart.find(
                     c => c.productId.toString() === prd._id.toString()
                 );
                 if (cartItem) {
