@@ -117,6 +117,19 @@ class homeController {
 
     async checkOutSubmit(req, res, next) {
         try {
+            if (req.body.paymentMethod === 'Bank Transfer') {
+                try {
+                    return res.status(200).json({
+                        success: true,
+                        message: 'Thanh Toán Thành Công QR Code',
+                    });
+                } catch (error) {
+                    return res.status(500).json({
+                        success: false,
+                        message: 'Thanh Toán Thất Bại',
+                    });
+                }
+            }
             const newOrder = new order({
                 orderId: randomString.generate({ length: 9 }),
                 user: res.locals.existingUser._id,
@@ -136,19 +149,7 @@ class homeController {
                 totalPrice: req.body.finalPrice,
                 paymentMethod: req.body.paymentMethod
             });
-            if (req.body.paymentMethod === 'Bank Transfer') {
-                try {
-                    return res.status(200).json({
-                        success: true,
-                        message: 'Thanh Toán Thành Công QR Code',
-                    });
-                } catch (error) {
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Thanh Toán Thất Bại',
-                    });
-                }
-            }
+
             const products = await product.find({
                 _id: { $in: res.locals.existingUser.cart.map(item => item.productId) }
             });
