@@ -267,12 +267,15 @@ class homeController {
     async paymentProcess(req, res, next) {
         try {
             console.log("Payment processing for:", req.body);
+            webhooks.forEach((hook, index) => {
+                console.log(`Webhook ${index + 1}:`, hook);
+            });
             webhooks.push(req.body);
             if (webhooks.length > 100) webhooks.shift();
             return res.status(200).json({
                 success: true,
                 message: "Payment processed successfully.",
-                amount: req.body.transferAmount
+                amount: req.body.description
             });
         } catch (error) {
             return res.status(401).json({
