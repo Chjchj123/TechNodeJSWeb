@@ -261,7 +261,7 @@
         <button class="confirm-payment btn btn-primary">Xác Nhận Thanh Toán</button>
         <br><br>`;
                 getModalContent.innerHTML = html + `<button class="btn btn-close" onclick="closeModal()">Đóng</button>`;
-                if (getPaymentMethod !== "Bank Transfer") {
+                if (getPaymentMethod === "Bank Transfer") {
                     fetch("/payment-process", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -287,7 +287,6 @@
                             console.error(err);
                             alert("Đã có lỗi xảy ra. Vui lòng thử lại.");
                         });
-
                     return;
                 } else {
                     return fetch("/checkout-submit", {
