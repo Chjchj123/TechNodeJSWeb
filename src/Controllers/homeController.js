@@ -265,6 +265,7 @@ class homeController {
 
     async paymentProcess(req, res, next) {
         try {
+            console.log("Payment processing for:", req.body.email);
             return res.status(200).json({
                 success: true,
                 message: "Payment processed successfully.",

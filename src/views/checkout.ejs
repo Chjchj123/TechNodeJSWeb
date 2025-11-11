@@ -273,8 +273,6 @@
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify(data)
                             });
-                        })
-                        .then(() => {
                             alert('Order placed successfully! Thank you for your purchase.');
                             window.location.href = '/user-orders/' + userID;
                         })
