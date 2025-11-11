@@ -297,13 +297,13 @@
                                 }
 
                                 alert("Cảm ơn bạn đã thanh toán!");
-                                await fetch("/checkout-submit", {
+                                closeModal();
+                                window.location.href = "/user-orders/" + userID;
+                                return await fetch("/checkout-submit", {
                                     method: "POST",
                                     headers: { "Content-Type": "application/json" },
                                     body: JSON.stringify(data),
                                 });
-                                closeModal();
-                                window.location.href = "/user-orders/" + userID;
                             });
                         })
                         .catch(err => {
