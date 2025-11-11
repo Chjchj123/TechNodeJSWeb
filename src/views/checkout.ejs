@@ -267,14 +267,12 @@
                         body: JSON.stringify(data)
                     })
                         .then(res => {
-                            if (!res.ok) throw new Error("Payment failed");
+                            if (!res.ok && data.success !== true) throw new Error("Payment failed");
                             return fetch("/checkout-submit", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify(data)
                             });
-                            alert('Order placed successfully! Thank you for your purchase.');
-                            window.location.href = '/user-orders/' + userID;
                         })
                         .catch(err => {
                             console.error(err);
