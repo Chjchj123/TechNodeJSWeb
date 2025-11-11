@@ -268,6 +268,7 @@ class homeController {
             return res.status(200).json({
                 success: true,
                 message: "Payment processed successfully.",
+                orderId: req.body.email
             });
         } catch (error) {
             return res.status(401).json({

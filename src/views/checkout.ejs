@@ -162,7 +162,6 @@
 
     function closeModal() {
         document.getElementById("myModal").style.display = "none";
-        window.location.href = '/user-orders/' + userID;
     }
 
     // Cho phép bấm ra ngoài để đóng
@@ -274,10 +273,6 @@
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify(data)
                             });
-                        })
-                        .then(res => {
-                            if (!res.ok) throw new Error("Checkout failed");
-                            return new Promise(resolve => setTimeout(resolve, 2000));
                         })
                         .then(() => {
                             alert('Order placed successfully! Thank you for your purchase.');
