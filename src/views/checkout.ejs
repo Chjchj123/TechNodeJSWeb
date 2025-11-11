@@ -291,8 +291,8 @@
                                     );
 
                                     if (matched.length === 0) {
-                                        console.log("Chưa thanh toán, thử lại...");
-                                        await new Promise(r => setTimeout(r, 3000));
+                                        alert("Chưa thanh toán, thử lại...");
+                                        await new Promise(r => setTimeout(r, 10000));
                                     }
                                 }
 
