@@ -273,17 +273,28 @@
                         })
                         .then(webhooks => {
                             const matched = webhooks.filter(w =>
-                                w.desc?.includes(userID) || w.content?.includes(userID)
+                                w.description?.includes(userID) || w.content?.includes(userID)
                             );
                             return matched;
                         })
                         .then(matched => {
-                            confirmPaymentBtn.addEventListener('click', () => {
-                                if (!matched.length) {
-                                    throw new Error("Bạn Chưa Thanh Toán!");
+                            confirmPaymentBtn.addEventListener('click', async () => {
+                                while (matched.length === 0) {
+                                    const res = await fetch("/get-webhooks");
+                                    const webhooks = await res.json();
+
+                                    matched = webhooks.filter(w =>
+                                        w.description?.includes(userID) || w.content?.includes(userID)
+                                    );
+
+                                    if (matched.length === 0) {
+                                        console.log("Chưa thanh toán, thử lại...");
+                                        await new Promise(r => setTimeout(r, 3000));
+                                    }
                                 }
+
                                 alert("Cảm ơn bạn đã thanh toán!");
-                                return fetch("/checkout-submit", {
+                                await fetch("/checkout-submit", {
                                     method: "POST",
                                     headers: { "Content-Type": "application/json" },
                                     body: JSON.stringify(data),

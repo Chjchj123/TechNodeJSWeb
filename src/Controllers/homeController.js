@@ -275,7 +275,7 @@ class homeController {
             return res.status(200).json({
                 success: true,
                 message: "Payment processed successfully.",
-                amount: req.body.description
+                desc: req.body.description
             });
         } catch (error) {
             return res.status(401).json({
