@@ -17,6 +17,7 @@ routers.get('/search-product', homeController.searchProduct);
 routers.post('/brand-filter/:category', homeController.brandFilter);
 routers.post('/sort-by-price-product/:category', homeController.sortByPriceProduct);
 routers.post('/payment-process', homeController.paymentProcess);
+routers.post('/get-webhooks', homeController.getWebhooks);
 routers.get('/', homeController.homePage);
 
 module.exports = routers;

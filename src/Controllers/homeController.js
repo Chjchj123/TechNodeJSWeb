@@ -3,6 +3,7 @@ const user = require('../Models/user');
 const order = require('../Models/orders');
 const randomString = require('randomstring');
 const jwt = require('jsonwebtoken');
+const webhooks = [];
 
 class homeController {
     async homePage(req, res) {
@@ -265,17 +266,27 @@ class homeController {
 
     async paymentProcess(req, res, next) {
         try {
-            console.log("Payment processing for:", req.body.email);
+            console.log("Payment processing for:", req.body);
+            webhooks.push(req.body);
+            if (webhooks.length > 100) webhooks.shift();
             return res.status(200).json({
                 success: true,
                 message: "Payment processed successfully.",
-                orderId: req.body.email
+                amount: req.body.transferAmount
             });
         } catch (error) {
             return res.status(401).json({
                 success: false,
                 message: "Payment failed. Please try again.",
             });
+        }
+    }
+
+    async getWebhooks(req, res, next) {
+        try {
+            res.json(webhooks);
+        } catch (error) {
+            next(error);
         }
     }
 }

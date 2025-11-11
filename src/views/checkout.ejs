@@ -256,30 +256,50 @@
                 placeOrderBtn.disabled = true;
                 let html = `<h2>Thanh Toán Chuyển Khoản</h2>
                 <p>Vui lòng sử dụng mã QR bên dưới để hoàn tất thanh toán cho đơn hàng của bạn:</p>
-        <img src="https://qr.sepay.vn/img?acc=VQRQAFEYF2204&bank=MBBank&amount=${totalPrice}&des=${document.getElementById("email").value}">
+        <img src="https://qr.sepay.vn/img?acc=VQRQAFEYF2204&bank=MBBank&amount=${totalPrice}&des=${userID}">
         <button class="confirm-payment btn btn-primary">Xác Nhận Thanh Toán</button>
         <br><br>`;
                 getModalContent.innerHTML = html + `<button class="btn btn-close" onclick="closeModal()">Đóng</button>`;
                 if (getPaymentMethod === "Bank Transfer") {
-                    fetch("/payment-process", {
+                    fetch("/get-webhooks", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(data)
                     })
                         .then(res => {
-                            if (!res.ok && data.success !== true) throw new Error("Payment failed");
+                            if (!res.ok) throw new Error("Không thể lấy webhook");
+                            return res.json();
+                        })
+                        .then(webhooks => {
+                            // Lọc các webhook có chứa userId
+                            const matched = webhooks.filter(w =>
+                                w.desc?.includes(userID) || w.content?.includes(userID)
+                            );
+                            // Nếu có webhook hợp lệ -> gửi dữ liệu thanh toán
                             return fetch("/checkout-submit", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify(data)
+                                body: JSON.stringify(data),
                             });
+                        })
+                        .then(res => {
+                            if (!res.ok) throw new Error("Checkout submit failed");
+                            return res.json();
+                        })
+                        .then(result => {
+                            if (result.success) {
+                                alert("Thanh toán thành công!");
+                            } else {
+                                throw new Error("Thanh toán thất bại!");
+                            }
                         })
                         .catch(err => {
                             console.error(err);
-                            alert("Đã có lỗi xảy ra. Vui lòng thử lại.");
+                            alert("Đã có lỗi xảy ra: " + err.message);
                         });
+
                     return;
-                } else {
+                }
+                else {
                     return fetch("/checkout-submit", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
