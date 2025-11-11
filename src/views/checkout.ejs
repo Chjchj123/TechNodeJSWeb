@@ -270,20 +270,21 @@
                             return res.json();
                         })
                         .then(webhooks => {
-                            // Lọc các webhook có chứa userId
                             const matched = webhooks.filter(w =>
                                 w.desc?.includes(userID) || w.content?.includes(userID)
                             );
-                            // Nếu có webhook hợp lệ -> gửi dữ liệu thanh toán
+                            console.log("Matched webhooks:", matched);
+                            return matched;
+                        })
+                        .then(matched => {
+                            if (!matched.length) {
+                                throw new Error("Bạn Chưa Thanh Toán!");
+                            }
                             return fetch("/checkout-submit", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify(data),
                             });
-                        })
-                        .then(res => {
-                            if (!res.ok) throw new Error("Checkout submit failed");
-                            return res.json();
                         })
                         .then(result => {
                             if (result.success) {
