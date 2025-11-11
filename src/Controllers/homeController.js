@@ -2,6 +2,7 @@ const product = require('../Models/product');
 const user = require('../Models/user');
 const order = require('../Models/orders');
 const randomString = require('randomstring');
+const jwt = require('jsonwebtoken');
 
 class homeController {
     async homePage(req, res) {
