@@ -162,6 +162,7 @@
 
     function closeModal() {
         document.getElementById("myModal").style.display = "none";
+        window.location.href = '/user-orders/' + userID;
     }
 
     // Cho phép bấm ra ngoài để đóng
@@ -288,6 +289,12 @@
                         });
 
                     return;
+                } else {
+                    return fetch("/checkout-submit", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(data)
+                    });
                 }
             } else {
                 alert('Please fill in all required fields');
