@@ -152,20 +152,11 @@ class homeController {
                     await prd.save();
                 }
             }
-            const getUser = await user.findOne({ _id: newOrder.user });
-            getUser.cart = [];
-            await getUser.save();
+            getuser.cart = [];
+            await getuser.save();
             await newOrder.save();
-            return res.status(201).json({
-                success: true,
-                message: 'Đặt hàng thành công!',
-                orderId: newOrder.orderId
-            });
         } catch (error) {
-            return res.status(400).json({
-                success: false,
-                message: error.message || 'Đã có lỗi xảy ra.'
-            });
+            next(error);
         }
     }
 
@@ -270,6 +261,20 @@ class homeController {
     get404 = (req, res) => {
         res.status(404).render("404");
     };
+
+    async paymentProcess(req, res, next) {
+        try {
+            return res.status(200).json({
+                success: true,
+                message: "Payment processed successfully.",
+            });
+        } catch (error) {
+            return res.status(401).json({
+                success: false,
+                message: "Payment failed. Please try again.",
+            });
+        }
+    }
 }
 
 module.exports = new homeController();
