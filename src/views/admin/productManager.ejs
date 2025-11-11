@@ -219,14 +219,12 @@
                                     </svg>
                                     <span class="ml-3 flex-1">Pending
                                         Orders</span>
-                                    <% orders.forEach(function(odr) { %>
-                                        <% if(odr.isNew){ %>
-                                            <span style="color: rgb(255, 255, 255);"
-                                                class="bg-red-600 text-red-100 px-2 py-1 text-xs font-bold rounded-full -top-3 -right-3">
-                                                NEW
-                                            </span>
-                                            <% } %>
-                                                <%}) %>
+                                    <% if (orders.some(o=> o.isNew)) { %>
+                                        <span style="color: rgb(255, 255, 255);"
+                                            class="bg-red-600 text-red-100 px-2 py-1 text-xs font-bold rounded-full -top-3 -right-3">
+                                            NEW
+                                        </span>
+                                        <% } %>
                                 </a>
                             </li>
                             <li>

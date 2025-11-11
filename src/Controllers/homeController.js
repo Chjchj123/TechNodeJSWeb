@@ -155,9 +155,11 @@ class homeController {
                 }
             }
             getuser.cart = [];
-            webhooks = webhooks.filter(w =>
-                !(w.description?.includes(getuser._id.toString()) || w.content?.includes(getuser._id.toString()))
-            );
+            if (webhooks.length > 0) {
+                webhooks = webhooks.filter(w =>
+                    !(w.description?.includes(getuser._id.toString()) || w.content?.includes(getuser._id.toString()))
+                );
+            }
             await getuser.save();
             await newOrder.save();
         } catch (error) {

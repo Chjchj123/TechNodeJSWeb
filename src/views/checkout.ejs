@@ -123,8 +123,7 @@
                 </div>
             </div>
 
-            <button onclick="openModal()" data-userId="<%= existingUser._id %>" class="btn btn-primary"
-                id="place-order-btn">Place
+            <button data-userId="<%= existingUser._id %>" class="btn btn-primary" id="place-order-btn">Place
                 Order</button>
         </div>
     </div>
@@ -254,15 +253,17 @@
                 };
                 placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
                 placeOrderBtn.disabled = true;
-                let html = `<h2>Thanh Toán Chuyển Khoản</h2>
-                <p>Vui lòng sử dụng mã QR bên dưới để hoàn tất thanh toán cho đơn hàng của bạn</p>
-                <p>Sau Khi Thanh Toán Hãy Nhấn Vào Nút Xác Nhận, Không Được Tắt</p>
-        <img src="https://qr.sepay.vn/img?acc=VQRQAFEYF2204&bank=MBBank&amount=${totalPrice}&des=${userID}">
-        <button class="confirm-payment btn btn-primary">Xác Nhận Thanh Toán</button>
-        <br><br>`;
-                getModalContent.innerHTML = html + `<button class="btn btn-close" onclick="closeModal()">Đóng</button>`;
+
                 const confirmPaymentBtn = document.querySelector('.confirm-payment');
+                let html = `<h2>Thanh Toán Chuyển Khoản</h2>
+            <p>Vui lòng sử dụng mã QR bên dưới để hoàn tất thanh toán cho đơn hàng của bạn</p>
+            <p>Sau Khi Thanh Toán Hãy Nhấn Vào Nút Xác Nhận, Không Được Tắt</p>
+    <img src="https://qr.sepay.vn/img?acc=VQRQAFEYF2204&bank=MBBank&amount=${totalPrice}&des=${userID}">
+    <button class="confirm-payment btn btn-primary">Xác Nhận Thanh Toán</button>
+    <br><br>`;
+                getModalContent.innerHTML = html + `<button class="btn btn-close" onclick="closeModal()">Đóng</button>`;
                 if (getPaymentMethod === "Bank Transfer") {
+                    confirmPaymentBtn.onclick = openModal()
                     fetch("/get-webhooks", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -314,11 +315,13 @@
                     return;
                 }
                 else {
-                    return fetch("/checkout-submit", {
+                    alert("Cảm ơn bạn đã đặt hàng! Đơn hàng của bạn sẽ được xử lý sớm.");
+                    fetch("/checkout-submit", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(data)
                     });
+                    window.location.href = "/user-orders/" + userID;
                 }
             } else {
                 alert('Please fill in all required fields');
