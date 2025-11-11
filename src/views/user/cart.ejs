@@ -48,12 +48,16 @@
                                     <td>
                                         <div class="quantity-control">
                                             <button data-id="<%= product.productId._id %>"
-                                                data-quantity="<%= product.quantity %>" class="quantity-btn">-</button>
+                                                data-quantity="<%= product.quantity %>"
+                                                data-stock="<%= product.productId.stock %>"
+                                                class="quantity-btn">-</button>
                                             <span class="quantity-value" data-id="<%= product.productId._id %>">
                                                 <%= product.quantity %>
                                             </span>
                                             <button data-id="<%= product.productId._id %>"
-                                                data-quantity="<%= product.quantity %>" class="quantity-btn">+</button>
+                                                data-quantity="<%= product.quantity %>"
+                                                data-stock="<%= product.productId.stock %>"
+                                                class="quantity-btn">+</button>
                                         </div>
                                     </td>
                                     <td>$650</td>
@@ -135,10 +139,10 @@
         // Quantity controls
         const quantityBtns = document.querySelectorAll('.quantity-btn');
         const quantityValues = document.querySelectorAll('.quantity-value');
-
+        let totalPriceAll = 0;
         quantityBtns.forEach((btn, index) => {
             btn.addEventListener('click', function () {
-
+                let stock = parseInt(btn.dataset.stock);
                 let productId = btn.dataset.id;
                 const isMinus = this.textContent === '-';
                 const quantityValue = this.parentElement.querySelector('.quantity-value');
@@ -146,8 +150,12 @@
 
                 if (isMinus && value > 1) {
                     value--;
-                } else if (!isMinus) {
+                } else if (!isMinus && value <= stock) {
                     value++;
+                }
+                if (value > stock) {
+                    alert("Số Lượng Vượt Quá Số Lượng Trong Kho");
+                    return;
                 }
                 updateCartQuantity(productId, parseInt(value));
                 quantityValue.textContent = value.toString().padStart(2);
@@ -188,8 +196,8 @@
             });
             subtotalElement.textContent = '$' + subtotal.toFixed(2);
             totalElement.textContent = '$' + subtotal.toFixed(2);
+            totalPriceAll = subtotal.toFixed(2);
         }
-
         // remove cart api
         function removeCart(productId) {
             fetch(`/remove-cart/${productId}`, {
@@ -236,10 +244,13 @@
             }
         });
 
-        // Checkout button
         const checkoutBtn = document.querySelector('.checkout-btn');
         checkoutBtn.addEventListener('click', function () {
             // Redirect to checkout page would go here
+            if (totalPriceAll <= 0) {
+                alert("Giỏ Hàng Của Bạn Đang Trống");
+                return;
+            }
             window.location.href = '/checkout/' + checkoutBtn.getAttribute("data-userId");
         });
     });

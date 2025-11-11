@@ -155,9 +155,9 @@ class homeController {
                 }
             }
             getuser.cart = [];
-            webhooks.forEach((hook, index) => {
-                console.log(`Webhook ${index + 1}:`, hook);
-            });
+            webhooks = webhooks.filter(w =>
+                !(w.description?.includes(getuser._id.toString()) || w.content?.includes(getuser._id.toString()))
+            );
             await getuser.save();
             await newOrder.save();
         } catch (error) {
@@ -269,7 +269,6 @@ class homeController {
 
     async paymentProcess(req, res, next) {
         try {
-            console.log("Payment processing for:", req.body);
             webhooks.push(req.body);
             if (webhooks.length > 100) webhooks.shift();
             return res.status(200).json({
