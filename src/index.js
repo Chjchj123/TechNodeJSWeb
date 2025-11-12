@@ -57,6 +57,7 @@ passport.deserializeUser((user, done) => done(null, user));
 routes(app);
 
 app.use(homeController.get404)
+
 app.listen(PORT, () => {
     console.log('Connecting to Database...');
     connectDb();

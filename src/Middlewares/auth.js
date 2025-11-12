@@ -16,6 +16,7 @@ const authMiddleware = async (req, res, next) => {
         '/auth/facebook',
         '/auth/facebook/callback',
         ...category.map(c => `/brand-filter/${c}`),
+        ...category.map(c => `/sort-by-price-product/${c}`),
         '/search-product',
         '/payment-process'
     ];
