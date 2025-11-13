@@ -90,10 +90,7 @@ class Login {
                         url: userProfile.photos[0].value,
                     }
                 };
-                existingUser.avatar = {
-                    url: userProfile.photos[0].value,
-                };
-                await existingUser.save();
+
                 const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
                 res.cookie("token", token, { httpOnly: true });
 
@@ -106,7 +103,7 @@ class Login {
 
     loginWithFacebook(req, res, next) {
         try {
-            passport.authenticate('facebook', { scope: ["email", "public_profile"] })(req, res, next);
+            passport.authenticate('facebook', { scope: ["email", "user_photos"] })(req, res, next);
         } catch (error) {
             next(error)
         }
