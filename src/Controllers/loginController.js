@@ -103,7 +103,7 @@ class Login {
 
     loginWithFacebook(req, res, next) {
         try {
-            passport.authenticate('facebook', { scope: ["email", "user_photos"] })(req, res, next);
+            passport.authenticate('facebook', { scope: ["email"] })(req, res, next);
         } catch (error) {
             next(error)
         }
