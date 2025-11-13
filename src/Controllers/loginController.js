@@ -120,9 +120,6 @@ class Login {
                         name: userProfile.displayName,
                         email: userProfile.emails[0].value,
                         password: null,
-                        avatar: {
-                            url: userProfile.photos[0].value,
-                        },
                         provider: "facebook"
                     })
                     await getUser.save();
