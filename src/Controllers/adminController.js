@@ -4,13 +4,29 @@ const order = require("../Models/orders")
 class AdminController {
     async homepage(req, res) {
         const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+        const currentYear = new Date().getFullYear();
         let orders = await order.find({ status: "Pending" }).sort({ createdAt: -1 });
+        let ordersRecent = await order.find({ status: "Success" }).sort({ createdAt: -1 }).limit(7).populate('item.productId').populate('user');
+        let allOrders = await order.find({ status: "Success" });
+        let totalSales = allOrders.reduce((sum, odr) => sum + odr.totalPrice, 0);
+        const monthOrder = await order.find({
+            status: "Success",
+            createdAt: {
+                $gte: new Date(`${currentYear}-01-01`),
+                $lt: new Date(`${currentYear + 1}-01-01`)
+            }
+        }).select('totalPrice createdAt');
+        const monthly = Array(12).fill().map(() => ({ revenue: 0 }));
+        monthOrder.forEach(odr => {
+            const month = odr.createdAt.getMonth();
+            monthly[month].revenue += odr.totalPrice;
+        });
         orders = orders.map(odr => {
             odr = odr.toObject();
             odr.isNew = odr.createdAt >= thirtyMinutesAgo;
             return odr;
-        })
-        res.render('admin/index', { layout: false, orders });
+        });
+        res.render('admin/index', { layout: false, orders, ordersRecent, totalSales, monthly });
     }
 
     async userList(req, res, next) {

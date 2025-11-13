@@ -250,9 +250,10 @@
 
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex-shrink-0">
-                                    <span
-                                        class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$45,385</span>
-                                    <h3 class="text-base font-normal text-gray-500">Sales this week</h3>
+                                    <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
+                                        $<%= totalSales %>
+                                    </span>
+                                    <h3 class="text-base font-normal text-gray-500">Sales this years</h3>
                                 </div>
                                 <div class="flex items-center justify-end flex-1 text-green-500 text-base font-bold">
                                     12.5%
@@ -264,7 +265,10 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div id="main-chart"></div>
+                            <div class="h-96 md:h-96" style="min-height: 500px;">
+                                <canvas data-values="<%- JSON.stringify(monthly.map(m => m.revenue) || []) %>"
+                                    id="mainChartStatus"></canvas>
+                            </div>
 
                         </div>
 
@@ -278,7 +282,7 @@
                                         transactions</span>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    <a href="#"
+                                    <a href="/admin/orders-list"
                                         class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2">View
                                         all</a>
                                 </div>
@@ -306,107 +310,24 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="bg-white">
-                                                    <tr>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            Payment from <span class="font-semibold">Bonnie Green</span>
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                                            Apr 23 ,2021
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                                            $2300
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="bg-gray-50">
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                                            Payment refund to <span class="font-semibold">#00910</span>
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                                            Apr 23 ,2021
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                                            -$670
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            Payment failed from <span
-                                                                class="font-semibold">#087651</span>
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                                            Apr 18 ,2021
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                                            $234
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="bg-gray-50">
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                                            Payment from <span class="font-semibold">Lana Byrd</span>
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                                            Apr 15 ,2021
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                                            $5000
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            Payment from <span class="font-semibold">Jese Leos</span>
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                                            Apr 15 ,2021
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                                            $2300
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="bg-gray-50">
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                                            Payment from <span class="font-semibold">THEMESBERG
-                                                                LLC</span>
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                                            Apr 11 ,2021
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                                            $560
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                                            Payment from <span class="font-semibold">Lana Lysle</span>
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                                            Apr 6 ,2021
-                                                        </td>
-                                                        <td
-                                                            class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                                            $1437
-                                                        </td>
-                                                    </tr>
+                                                    <% ordersRecent.forEach(function(order) { %>
+                                                        <tr>
+                                                            <td
+                                                                class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                Payment from <span class="font-semibold">
+                                                                    <%= order.user.name %>
+                                                                </span>
+                                                            </td>
+                                                            <td
+                                                                class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                <%= order.createdAt.toLocaleDateString() %>
+                                                            </td>
+                                                            <td
+                                                                class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                $<%= order.totalPrice %>
+                                                            </td>
+                                                        </tr>
+                                                        <% }); %>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -490,114 +411,32 @@
                         <div class="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
                             <div class="flex items-center justify-between mb-4">
                                 <h3 class="text-xl font-bold leading-none text-gray-900">Latest Customers</h3>
-                                <a href="#"
-                                    class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">
-                                    View all
-                                </a>
                             </div>
                             <div class="flow-root">
-                                <ul role="list" class="divide-y divide-gray-200">
-                                    <li class="py-3 sm:py-4">
-                                        <div class="flex items-center space-x-4">
-                                            <div class="flex-shrink-0">
-                                                <img class="h-8 w-8 rounded-full"
-                                                    src="https://themewagon.github.io/windster/images/users/neil-sims.png"
-                                                    alt="Neil image">
+                                <% ordersRecent.forEach(function(order) { %>
+                                    <ul role="list" class="divide-y divide-gray-200">
+                                        <li class="py-3 sm:py-4">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="flex-shrink-0">
+                                                    <img class="h-8 w-8 rounded-full" src="<%= order.user.avatar.url %>"
+                                                        alt="Neil image">
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <p class="text-sm font-medium text-gray-900 truncate">
+                                                        <%= order.user.name %>
+                                                    </p>
+                                                    <p class="text-sm text-gray-500 truncate">
+                                                        <%= order.user.email %>
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    class="inline-flex items-center text-base font-semibold text-gray-900">
+                                                    $<%= order.totalPrice %>
+                                                </div>
                                             </div>
-                                            <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-gray-900 truncate">
-                                                    Neil Sims
-                                                </p>
-                                                <p class="text-sm text-gray-500 truncate">
-                                                    email@windster.com
-                                                </p>
-                                            </div>
-                                            <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                                $320
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="py-3 sm:py-4">
-                                        <div class="flex items-center space-x-4">
-                                            <div class="flex-shrink-0">
-                                                <img class="h-8 w-8 rounded-full"
-                                                    src="https://themewagon.github.io/windster/images/users/bonnie-green.png"
-                                                    alt="Neil image">
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-gray-900 truncate">
-                                                    Bonnie Green
-                                                </p>
-                                                <p class="text-sm text-gray-500 truncate">
-                                                    email@windster.com
-                                                </p>
-                                            </div>
-                                            <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                                $3467
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="py-3 sm:py-4">
-                                        <div class="flex items-center space-x-4">
-                                            <div class="flex-shrink-0">
-                                                <img class="h-8 w-8 rounded-full"
-                                                    src="https://themewagon.github.io/windster/images/users/michael-gough.png"
-                                                    alt="Neil image">
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-gray-900 truncate">
-                                                    Michael Gough
-                                                </p>
-                                                <p class="text-sm text-gray-500 truncate">
-                                                    email@windster.com
-                                                </p>
-                                            </div>
-                                            <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                                $67
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="py-3 sm:py-4">
-                                        <div class="flex items-center space-x-4">
-                                            <div class="flex-shrink-0">
-                                                <img class="h-8 w-8 rounded-full"
-                                                    src="https://themewagon.github.io/windster/images/users/thomas-lean.png"
-                                                    alt="Neil image">
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-gray-900 truncate">
-                                                    Thomes Lean
-                                                </p>
-                                                <p class="text-sm text-gray-500 truncate">
-                                                    email@windster.com
-                                                </p>
-                                            </div>
-                                            <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                                $2367
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="pt-3 sm:pt-4 pb-0">
-                                        <div class="flex items-center space-x-4">
-                                            <div class="flex-shrink-0">
-                                                <img class="h-8 w-8 rounded-full"
-                                                    src="https://themewagon.github.io/windster/images/users/lana-byrd.png"
-                                                    alt="Neil image">
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-gray-900 truncate">
-                                                    Lana Byrd
-                                                </p>
-                                                <p class="text-sm text-gray-500 truncate">
-                                                    email@windster.com
-                                                </p>
-                                            </div>
-                                            <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                                $367
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                                        </li>
+                                    </ul>
+                                    <% }); %>
                             </div>
                         </div>
                         <!-- Sessions by device Card -->
@@ -822,6 +661,91 @@
 
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://themewagon.github.io/windster/app.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const dates = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const jsonString = document.getElementById('mainChartStatus').getAttribute('data-values');
+
+        let values = [];
+        try {
+            const parsed = JSON.parse(jsonString || '[]');
+            if (Array.isArray(parsed)) {
+                values = parsed.map(v => isNaN(v) ? 0 : Number(v));
+            }
+        } catch (e) {
+            console.error('Failed to parse data-values:', e);
+            values = [];
+        }
+        const maxValue = Math.max(...values);
+
+        const ctx = document.getElementById('mainChartStatus').getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(14, 165, 233, 0.4)');
+        gradient.addColorStop(1, 'rgba(14, 165, 233, 0.05)');
+
+        // Cấu hình Chart.js
+        const config = {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Doanh thu',
+                    data: values,
+                    borderColor: '#0ea5e9',
+                    backgroundColor: gradient,
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#0ea5e9',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `$${context.parsed.y.toFixed(0)}`
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: {
+                            color: '#6b7280',
+                            font: { size: 12 }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: '#e5e7eb',
+                            drawBorder: false,
+                            borderDash: [4, 4]
+                        },
+                        ticks: {
+                            color: '#6b7280',
+                            font: { size: 12 },
+                            callback: (value) => `$${value}`
+                        },
+                        beginAtZero: false,
+                        min: 0,
+                        max: maxValue + 1000
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
+            }
+        };
+
+        // Render chart
+        new Chart(ctx, config);
+    </script>
 </body>
 
 </html>

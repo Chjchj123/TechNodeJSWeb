@@ -74,6 +74,9 @@ class Login {
                         name: userProfile.displayName,
                         email: userProfile.emails[0].value,
                         password: null,
+                        avatar: {
+                            url: userProfile.photos[0].value,
+                        },
                         provider: "google"
                     });
                     await existingUser.save();
@@ -82,9 +85,15 @@ class Login {
                 const payload = {
                     id: existingUser._id,
                     email: existingUser.email,
-                    name: existingUser.name
+                    name: existingUser.name,
+                    avatar: {
+                        url: userProfile.photos[0].value,
+                    }
                 };
-
+                existingUser.avatar = {
+                    url: userProfile.photos[0].value,
+                };
+                await existingUser.save();
                 const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
                 res.cookie("token", token, { httpOnly: true });
 
@@ -97,7 +106,7 @@ class Login {
 
     loginWithFacebook(req, res, next) {
         try {
-            passport.authenticate('facebook', { scope: ["email"] })(req, res, next);
+            passport.authenticate('facebook', { scope: ["email", "public_profile"] })(req, res, next);
         } catch (error) {
             next(error)
         }
@@ -106,6 +115,7 @@ class Login {
     loginWithFacebookCallBack(req, res, next) {
         passport.authenticate("facebook", { failureRedirect: "/login" }, async (err, userProfile) => {
             if (err) return next(err);
+            console.log(userProfile);
             try {
                 let getUser = await user.findOne({ email: userProfile.emails[0].value });
                 if (!getUser) {
@@ -113,6 +123,9 @@ class Login {
                         name: userProfile.displayName,
                         email: userProfile.emails[0].value,
                         password: null,
+                        avatar: {
+                            url: userProfile.photos[0].value,
+                        },
                         provider: "facebook"
                     })
                     await getUser.save();
