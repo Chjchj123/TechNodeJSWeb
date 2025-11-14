@@ -1,45 +1,61 @@
+<!-- HERO SECTION -->
 <!-- Hero Section -->
-<section class="hero">
-    <div class="container">
-        <div class="hero-slideshow">
-            <div class="slides-wrapper">
-                <% bannerProducts.forEach(function(product) { %>
-                    <div class="slide">
-                        <div class="hero-content">
-                            <div class="hero-text">
-                                <h1 class="product-title">
-                                    <%= product.name %>
-                                </h1>
-                                <h2 style="font-size:24px; color: #fff;" class="original-price">
-                                    <%= product.price %>$
-                                </h2>
-                                <h2 style="color: tomato;">
-                                    <% let discount=product.discountPercent || 0; let originalPrice=product.price || 0;
-                                        let finalPrice=originalPrice * (1 - discount / 100);
-                                        finalPrice=finalPrice.toFixed(2); %>
-                                        Chỉ Còn <%= finalPrice %>$
-                                </h2>
-
-                                <p style="font-size: 22px;">Giảm Giá Tới <%= product.discountPercent %>%</p>
-                                <a href="/shop/<%= product.category %>/<%= product._id %>" class="shop-now-btn">
-                                    Shop Now <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                            <div class="hero-image">
-                                <img src="<%= product.images[0].url %>"
-                                    style="width: 400px; height: 400px; background-color: #333; border-radius: 9%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+<div class="hero-wrapper">
+    <section class="hero">
+        <div class="container">
+            <div class="hero-slideshow">
+                <div class="slides-wrapper">
+                    <% bannerProducts.forEach(function(product, index) { %>
+                        <div class="slide <%= index === 0 ? 'active' : '' %>">
+                            <div class="hero-content">
+                                <div class="hero-text">
+                                    <h1 class="banner-title product-title">
+                                        <%= product.name %>
+                                    </h1>
+                                    <div class="price-container">
+                                        <h2 class="original-price">
+                                            <%= product.price %>$
+                                        </h2>
+                                        <h2 class="final-price">
+                                            <% let discount=product.discountPercent || 0; let
+                                                originalPrice=product.price || 0; let finalPrice=originalPrice * (1 -
+                                                discount / 100); finalPrice=finalPrice.toFixed(2); %>
+                                                Chỉ Còn <%= finalPrice %>$
+                                        </h2>
+                                    </div>
+                                    <div class="discount-badge">
+                                        Giảm Giá Tới <%= product.discountPercent %>%
+                                    </div>
+                                    <p class="product-description">
+                                        <%= product.description || 'Sản phẩm chất lượng cao' %>
+                                    </p>
+                                    <a href="/shop/<%= product.category %>/<%= product._id %>" class="shop-now-btn">
+                                        Mua Ngay <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                                <div class="hero-image">
+                                    <img src="<%= product.images[0].url %>" alt="<%= product.name %>">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <% }) %>
-            </div>
+                        <% }) %>
+                </div>
 
-            <!-- Nút điều hướng -->
-            <button class="prev">&#10094;</button>
-            <button class="next">&#10095;</button>
+                <!-- Nút điều hướng -->
+                <button class="prev">&#10094;</button>
+                <button class="next">&#10095;</button>
+
+                <!-- Indicators -->
+                <div class="slide-indicators">
+                    <% bannerProducts.forEach(function(product, index) { %>
+                        <div class="indicator <%= index === 0 ? 'active' : '' %>"></div>
+                        <% }) %>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
+
 
 <!-- Categories Section -->
 <section class="container">
@@ -737,31 +753,66 @@
 <!--  -->
 
 <script>
-    let slideIndex = 0;
-    const slidesWrapper = document.querySelector('.slides-wrapper');
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
-    const nextBtn = document.querySelector('.next');
-    const prevBtn = document.querySelector('.prev');
+    document.addEventListener('DOMContentLoaded', function () {
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+        let currentSlide = 0;
+        let slideInterval;
 
-    function showSlide(index) {
-        if (index >= totalSlides) slideIndex = 0;
-        else if (index < 0) slideIndex = totalSlides - 1;
-        else slideIndex = index;
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
 
-        slidesWrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
-    }
+            if (n >= slides.length) currentSlide = 0;
+            else if (n < 0) currentSlide = slides.length - 1;
+            else currentSlide = n;
 
-    function nextSlide() {
-        showSlide(slideIndex + 1);
-    }
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+        }
 
-    function prevSlide() {
-        showSlide(slideIndex - 1);
-    }
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
 
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
 
-    setInterval(nextSlide, 5000);
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function stopSlideShow() {
+            clearInterval(slideInterval);
+        }
+
+        nextBtn.addEventListener('click', () => {
+            stopSlideShow();
+            nextSlide();
+            startSlideShow();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            stopSlideShow();
+            prevSlide();
+            startSlideShow();
+        });
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                stopSlideShow();
+                showSlide(index);
+                startSlideShow();
+            });
+        });
+
+        const heroSlideshow = document.querySelector('.hero-slideshow');
+        heroSlideshow.addEventListener('mouseenter', stopSlideShow);
+        heroSlideshow.addEventListener('mouseleave', startSlideShow);
+
+        startSlideShow();
+    });
 </script>
