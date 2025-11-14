@@ -17,7 +17,7 @@ class ProductsController {
             const page = parseInt(req.query.page) || 1;
             const limit = 20;
             const skip = (page - 1) * limit;
-            const products = await product.find({ deleted: false }).skip(skip).limit(limit);
+            const products = await product.find({ deleted: false }).skip(skip).limit(limit).sort({ createdAt: -1 });
             const countProducts = await product.countDocuments({ deleted: false });
             const totalPages = Math.ceil(countProducts / limit);
             const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
@@ -36,12 +36,13 @@ class ProductsController {
     async addProduct(req, res, next) {
         try {
             let result = [];
+            const folderName = req.body.name.trim();
             if (req.files && req.files.length > 0) {
                 const uploadResults = await Promise.all(
                     req.files.map(file => {
                         return new Promise((resolve, reject) => {
                             const stream = cloudinary.uploader.upload_stream(
-                                { folder: "products/" + req.body.name, resource_type: "image" },
+                                { folder: "products/" + folderName, resource_type: "image" },
                                 (error, result) => {
                                     if (error) return reject(error);
                                     resolve({
@@ -72,6 +73,7 @@ class ProductsController {
             }
             res.redirect('/admin/product-list');
         } catch (error) {
+            console.error("addProduct ERROR:", error);
             next(error);
         }
     }
@@ -156,7 +158,14 @@ class ProductsController {
         const products = await product.find({ deleted: true }).skip(skip).limit(limit);
         const countProducts = await product.countDocuments({ deleted: true });
         const totalPages = Math.ceil(countProducts / limit);
-        res.render('admin/productDeleted', { layout: false, currentPage: page, products, countProducts, totalPages });
+        const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+        let orders = await order.find({ status: "Pending" }).sort({ createdAt: -1 }).skip(skip).limit(limit).populate('item.productId').populate('user');
+        orders = orders.map(odr => {
+            odr = odr.toObject();
+            odr.isNew = odr.createdAt >= thirtyMinutesAgo;
+            return odr;
+        })
+        res.render('admin/productDeleted', { layout: false, currentPage: page, products, countProducts, totalPages, orders });
     }
 
     async deleteProduct(req, res, next) {

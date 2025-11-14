@@ -90,9 +90,12 @@
                                             <span class="current-price">
                                                 <%= finalPrice %>$
                                             </span>
-                                            <span class="original-price">
-                                                <%= product.price %>$
-                                            </span>
+                                            <% if (discount> 0) { %>
+                                                <span class="original-price">
+                                                    <%= product.price %>$
+                                                </span>
+                                                <% } %>
+
                                     </div>
                                     <div style="margin-top:9px">
                                         <span>Số Lượng: <%= product.stock %></span>

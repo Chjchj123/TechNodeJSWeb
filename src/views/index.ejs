@@ -7,10 +7,20 @@
                     <div class="slide">
                         <div class="hero-content">
                             <div class="hero-text">
-                                <h1>
+                                <h1 class="product-title">
                                     <%= product.name %>
                                 </h1>
-                                <p style="font-size: 19px;">Up to <%= product.discountPercent %>% off Voucher</p>
+                                <h2 style="font-size:24px; color: #fff;" class="original-price">
+                                    <%= product.price %>$
+                                </h2>
+                                <h2 style="color: tomato;">
+                                    <% let discount=product.discountPercent || 0; let originalPrice=product.price || 0;
+                                        let finalPrice=originalPrice * (1 - discount / 100);
+                                        finalPrice=finalPrice.toFixed(2); %>
+                                        Chỉ Còn <%= finalPrice %>$
+                                </h2>
+
+                                <p style="font-size: 22px;">Giảm Giá Tới <%= product.discountPercent %>%</p>
                                 <a href="/shop/<%= product.category %>/<%= product._id %>" class="shop-now-btn">
                                     Shop Now <i class="fas fa-arrow-right"></i>
                                 </a>
@@ -146,7 +156,6 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
-                        <span>(65)</span>
                     </div>
                 </div>
             </a>
@@ -248,7 +257,6 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <span>(65)</span>
                             </div>
                         </div>
                     </a>
@@ -316,7 +324,6 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <span>(65)</span>
                             </div>
                         </div>
                     </a>
@@ -384,7 +391,6 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <span>(65)</span>
                             </div>
                         </div>
                     </a>
@@ -452,7 +458,6 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <span>(65)</span>
                             </div>
                         </div>
                     </a>
@@ -520,7 +525,6 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <span>(65)</span>
                             </div>
                         </div>
                     </a>
@@ -588,7 +592,6 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <span>(65)</span>
                             </div>
                         </div>
                     </a>
@@ -656,7 +659,6 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <span>(65)</span>
                             </div>
                         </div>
                     </a>
@@ -724,7 +726,6 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
-                                <span>(65)</span>
                             </div>
                         </div>
                     </a>
@@ -762,6 +763,5 @@
     nextBtn.addEventListener('click', nextSlide);
     prevBtn.addEventListener('click', prevSlide);
 
-    // Tự động chuyển slide sau 5 giây
     setInterval(nextSlide, 5000);
 </script>

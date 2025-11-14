@@ -508,7 +508,7 @@
 
                                 <% for (let i=1; i <=totalPages; i++) { %>
                                     <a href="?page=<%= i %>"
-                                        class="px-3 py-2 rounded-lg <%= i === currentPage ? 'bg-cyan-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' %>">
+                                        class="px-3 py-2 rounded-lg transition-colors <%= i === currentPage ? 'bg-cyan-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'%>">
                                         <%= i %>
                                     </a>
                                     <% } %>

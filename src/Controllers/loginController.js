@@ -112,7 +112,6 @@ class Login {
     loginWithFacebookCallBack(req, res, next) {
         passport.authenticate("facebook", { failureRedirect: "/login" }, async (err, userProfile) => {
             if (err) return next(err);
-            console.log(userProfile);
             try {
                 let getUser = await user.findOne({ email: userProfile.emails[0].value });
                 if (!getUser) {

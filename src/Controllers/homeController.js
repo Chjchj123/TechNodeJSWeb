@@ -7,19 +7,19 @@ const webhooks = [];
 
 class homeController {
     async homePage(req, res) {
-        const bestDiscountProducts = await product.find({ deleted: false }).sort({ discountPercent: -1 }).limit(12);
-        const bannerProducts = await product.find({ discountPercent: { $gt: 30 }, deleted: false }).limit(6);
+        const bestDiscountProducts = await product.find({ deleted: false }).sort({ discountPercent: -1 }).limit(12).sort({ createdAt: -1 });
+        const bannerProducts = await product.find({ discountPercent: { $gt: 29 }, deleted: false }).limit(6).sort({ createdAt: -1 });
         const newProduct = await product.findOne().sort({
             createdAt: -1
         });
-        const vga = await product.find({ category: "GPU" }).limit(12);
-        const cpu = await product.find({ category: "CPU" }).limit(12);
-        const mainboards = await product.find({ category: "Mainboards" }).limit(12);
-        const ram = await product.find({ category: "RAM" }).limit(12);
-        const hdd = await product.find({ category: "HDD" }).limit(12);
-        const ssd = await product.find({ category: "SSD" }).limit(12);
-        const casePC = await product.find({ category: "Case" }).limit(12);
-        const psu = await product.find({ category: "PSU" }).limit(12);
+        const vga = await product.find({ category: "GPU" }).limit(12).sort({ createdAt: -1 });
+        const cpu = await product.find({ category: "CPU" }).limit(12).sort({ createdAt: -1 });
+        const mainboards = await product.find({ category: "Mainboards" }).limit(12).sort({ createdAt: -1 });
+        const ram = await product.find({ category: "RAM" }).limit(12).sort({ createdAt: -1 });
+        const hdd = await product.find({ category: "HDD" }).limit(12).sort({ createdAt: -1 });
+        const ssd = await product.find({ category: "SSD" }).limit(12).sort({ createdAt: -1 });
+        const casePC = await product.find({ category: "Case" }).limit(12).sort({ createdAt: -1 });
+        const psu = await product.find({ category: "PSU" }).limit(12).sort({ createdAt: -1 });
 
         res.render('index', {
             bannerProducts,
