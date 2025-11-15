@@ -51,6 +51,7 @@
                     <p class="product-description">
                         <%= getProducts.description %>
                     </p>
+
                     <% if(getProducts.stock===0) { %>
                         <h2>Sold Out!</h2>
                         <% } else { %>
@@ -97,7 +98,6 @@
             <p class="product-specifications">
                 <%= getProducts.details.specifications %>
             </p>
-
             <!-- Delivery info -->
             <div class="delivery-info">
                 <div class="delivery-item">
@@ -168,6 +168,7 @@
     </div>
 </main>
 <script>
+
     const thumbnails = document.querySelectorAll('.thumbnail');
     const mainImage = document.getElementById('mainProductImage');
 
@@ -203,6 +204,5 @@
         document.querySelector(".quantityInput").value =
             document.getElementById("qty").innerText;
     }
-
 
 </script>

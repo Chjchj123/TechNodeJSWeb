@@ -276,7 +276,7 @@
     <br><br>`;
                 getModalContent.innerHTML = html + `<button class="btn btn-close" onclick="closeModal()">Đóng</button>`;
                 if (getPaymentMethod === "Bank Transfer") {
-                    confirmPaymentBtn.onclick = openModal()
+                    confirmPaymentBtn.onclick = closeModal()
                     fetch("/get-webhooks", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
