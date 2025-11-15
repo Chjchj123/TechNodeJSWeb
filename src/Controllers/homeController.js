@@ -162,6 +162,7 @@ class homeController {
             }
             await getuser.save();
             await newOrder.save();
+            res.redirect('/user-orders/' + getuser._id);
         } catch (error) {
             next(error);
         }

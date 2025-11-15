@@ -313,7 +313,7 @@
 
                                 alert("Cảm ơn bạn đã thanh toán!");
                                 closeModal();
-                                window.location.href = "/user-orders/" + userID;
+
                                 return await fetch("/checkout-submit", {
                                     method: "POST",
                                     headers: { "Content-Type": "application/json" },
