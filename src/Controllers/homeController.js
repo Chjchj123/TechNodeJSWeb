@@ -155,10 +155,15 @@ class homeController {
                 }
             }
             getuser.cart = [];
-            if (webhooks.length > 0) {
-                webhooks = webhooks.filter(w =>
-                    !(w.description?.includes(getuser._id.toString()) || w.content?.includes(getuser._id.toString()))
-                );
+            if (Array.isArray(webhooks) && webhooks.length > 0) {
+                webhooks = webhooks.filter(w => {
+                    const userIdStr = getuser._id.toString();
+
+                    const inDescription = w.description?.includes(userIdStr);
+                    const inContent = w.content?.includes(userIdStr);
+
+                    return !(inDescription || inContent);
+                });
             }
             await getuser.save();
             await newOrder.save();
