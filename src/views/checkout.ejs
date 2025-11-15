@@ -310,15 +310,14 @@
                                         await new Promise(r => setTimeout(r, 10000));
                                     }
                                 }
-
-                                alert("Cảm ơn bạn đã thanh toán!");
-                                closeModal();
-
-                                return await fetch("/checkout-submit", {
-                                    method: "POST",
-                                    headers: { "Content-Type": "application/json" },
-                                    body: JSON.stringify(data),
-                                });
+                            });
+                        }).then(async () => {
+                            alert("Cảm ơn bạn đã thanh toán!");
+                            closeModal();
+                            return await fetch("/checkout-submit", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(data),
                             });
                         })
                         .catch(err => {
