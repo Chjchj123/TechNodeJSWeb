@@ -267,16 +267,17 @@
                 placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
                 placeOrderBtn.disabled = true;
 
-                const confirmPaymentBtn = document.querySelector('.confirm-payment');
-                let html = `<h2>Thanh Toán Chuyển Khoản</h2>
-            <p>Vui lòng sử dụng mã QR bên dưới để hoàn tất thanh toán cho đơn hàng của bạn</p>
-            <p>Sau Khi Thanh Toán Hãy Nhấn Vào Nút Xác Nhận, Không Được Tắt</p>
-    <img src="https://qr.sepay.vn/img?acc=VQRQAFEYF2204&bank=MBBank&amount=${vndPrice}&des=${userID}">
-    <button class="confirm-payment btn btn-primary">Xác Nhận Thanh Toán</button>
-    <br><br>`;
-                getModalContent.innerHTML = html + `<button class="btn btn-close" onclick="closeModal()">Đóng</button>`;
+
                 if (getPaymentMethod === "Bank Transfer") {
-                    confirmPaymentBtn.onclick = closeModal()
+                    let html = `<h2>Thanh Toán Chuyển Khoản</h2>
+                <p>Vui lòng sử dụng mã QR bên dưới để hoàn tất thanh toán cho đơn hàng của bạn</p>
+                <p>Sau Khi Thanh Toán Hãy Nhấn Vào Nút Xác Nhận, Không Được Tắt</p>
+                <img src="https://qr.sepay.vn/img?acc=VQRQAFEYF2204&bank=MBBank&amount=${vndPrice}&des=${userID}">
+                <button class="confirm-payment btn btn-primary">Xác Nhận Thanh Toán</button>
+                <br><br>`;
+                    getModalContent.innerHTML = html + `<button class="btn btn-close" onclick="closeModal()">Đóng</button>`;
+                    const confirmPaymentBtn = document.querySelector('.confirm-payment');
+                    openModal();
                     fetch("/get-webhooks", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -289,6 +290,7 @@
                             const matched = webhooks.filter(w =>
                                 w.description?.includes(userID) || w.content?.includes(userID)
                             );
+
                             return matched;
                         })
                         .then(matched => {
@@ -303,7 +305,6 @@
                                     matched = webhooks.filter(w =>
                                         w.description?.includes(userID) || w.content?.includes(userID)
                                     );
-
                                     if (matched.length === 0) {
                                         alert("Chưa thanh toán, thử lại...");
                                         await new Promise(r => setTimeout(r, 10000));
