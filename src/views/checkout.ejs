@@ -306,19 +306,17 @@
                                 );
                                 if (matched.length === 0) {
                                     await new Promise(r => setTimeout(r, 1000));
+                                } else {
+                                    alert("Cảm ơn bạn đã thanh toán!");
+                                    closeModal();
+                                    return await fetch("/checkout-submit", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify(data),
+                                    });
                                 }
+
                             }
-
-                            confirmPaymentBtn.addEventListener('click', async () => {
-                                alert("Cảm ơn bạn đã thanh toán!");
-                                closeModal();
-
-                                return await fetch("/checkout-submit", {
-                                    method: "POST",
-                                    headers: { "Content-Type": "application/json" },
-                                    body: JSON.stringify(data),
-                                });
-                            });
                         })
                         .catch(err => {
                             console.error(err);
