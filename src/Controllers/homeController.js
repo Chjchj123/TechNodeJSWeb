@@ -163,6 +163,7 @@ class homeController {
             await getuser.save();
             await newOrder.save();
         } catch (error) {
+            console.log(error);
             next(error);
         }
     }
