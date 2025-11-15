@@ -293,24 +293,23 @@
 
                             return matched;
                         })
-                        .then(matched => {
-                            confirmPaymentBtn.addEventListener('click', async () => {
-                                while (matched.length === 0) {
-                                    const res = await fetch("/get-webhooks", {
-                                        method: "POST",
-                                        headers: { "Content-Type": "application/json" },
-                                    });
-                                    const webhooks = await res.json();
+                        .then(matched => async () => {
+                            while (matched.length === 0) {
+                                const res = await fetch("/get-webhooks", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                });
+                                const webhooks = await res.json();
 
-                                    matched = webhooks.filter(w =>
-                                        w.description?.includes(userID) || w.content?.includes(userID)
-                                    );
-                                    if (matched.length === 0) {
-                                        alert("Chưa thanh toán, thử lại...");
-                                        await new Promise(r => setTimeout(r, 10000));
-                                    }
+                                matched = webhooks.filter(w =>
+                                    w.description?.includes(userID) || w.content?.includes(userID)
+                                );
+                                if (matched.length === 0) {
+                                    await new Promise(r => setTimeout(r, 1000));
                                 }
+                            }
 
+                            confirmPaymentBtn.addEventListener('click', async () => {
                                 alert("Cảm ơn bạn đã thanh toán!");
                                 closeModal();
 
