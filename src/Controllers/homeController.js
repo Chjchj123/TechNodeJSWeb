@@ -167,6 +167,8 @@ class homeController {
             }
             await getuser.save();
             await newOrder.save();
+            console.log(webhooks);
+            res.redirect('/user-orders/' + getuser._id);
         } catch (error) {
             console.log(error);
             next(error);
