@@ -1,5 +1,6 @@
 const user = require("../Models/user");
 const order = require("../Models/orders")
+const product = require("../Models/product");
 
 class AdminController {
     async homepage(req, res) {
@@ -9,6 +10,7 @@ class AdminController {
         let ordersRecent = await order.find({ status: "Success" }).sort({ createdAt: -1 }).limit(7).populate('item.productId').populate('user');
         let allOrders = await order.find({ status: "Success" });
         let totalSales = allOrders.reduce((sum, odr) => sum + odr.totalPrice, 0);
+        const allproducts = await product.countDocuments({ deleted: false });
         const monthOrder = await order.find({
             status: "Success",
             createdAt: {
@@ -21,12 +23,26 @@ class AdminController {
             const month = odr.createdAt.getMonth();
             monthly[month].revenue += odr.totalPrice;
         });
+        const thisMonthIndex = new Date().getMonth();
+
+        let percentChange = 0;
+        if (thisMonthIndex > 0) {
+            const curr = monthly[thisMonthIndex].revenue;
+            const prev = monthly[thisMonthIndex - 1].revenue;
+
+            if (prev === 0) {
+                percentChange = curr > 0 ? 100 : 0;
+            } else {
+                percentChange = ((curr - prev) / prev) * 100;
+            }
+        }
+        percentChange = Number(percentChange.toFixed(2));
         orders = orders.map(odr => {
             odr = odr.toObject();
             odr.isNew = odr.createdAt >= thirtyMinutesAgo;
             return odr;
         });
-        res.render('admin/index', { layout: false, orders, ordersRecent, totalSales, monthly });
+        res.render('admin/index', { layout: false, orders, ordersRecent, totalSales, monthly, allproducts, percentChange, monthOrder });
     }
 
     async userList(req, res, next) {

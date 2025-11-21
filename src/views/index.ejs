@@ -1,4 +1,3 @@
-<!-- HERO SECTION -->
 <!-- Hero Section -->
 <div class="hero-wrapper">
     <section class="hero">
@@ -26,8 +25,8 @@
                                     <div class="discount-badge">
                                         Giảm Giá Tới <%= product.discountPercent %>%
                                     </div>
-                                    <p class="product-description">
-                                        <%= product.description || 'Sản phẩm chất lượng cao' %>
+                                    <p class="product-description product-title ">
+                                        <%= product.details.description || 'Sản phẩm chất lượng cao' %>
                                     </p>
                                     <a href="/shop/<%= product.category %>/<%= product._id %>" class="shop-now-btn">
                                         Mua Ngay <i class="fas fa-arrow-right"></i>
