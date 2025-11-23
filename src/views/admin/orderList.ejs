@@ -378,7 +378,8 @@
                                                     <td
                                                         class="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                                                         <div class="flex items-center">
-                                                            <% if(odr.status==="Pending" ){ %>
+                                                            <% if(odr.status==="Pending" || odr.status==="Cancelled" ){
+                                                                %>
                                                                 <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2">
                                                                 </div>
                                                                 <% }else{ %>

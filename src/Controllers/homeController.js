@@ -1,8 +1,10 @@
+const { Resend } = require('resend');
 const product = require('../Models/product');
 const user = require('../Models/user');
 const order = require('../Models/orders');
 const randomString = require('randomstring');
 const jwt = require('jsonwebtoken');
+
 let webhooks = [];
 
 class homeController {
@@ -119,8 +121,9 @@ class homeController {
 
     async checkOutSubmit(req, res, next) {
         try {
+            const resendEmail = new Resend(process.env.RESEND_API_KEY);
             const decoded = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
-            const getuser = await user.findOne({ _id: decoded.id });
+            const getuser = await user.findOne({ _id: decoded.id }).populate('cart.productId');
             const newOrder = new order({
                 orderId: randomString.generate({ length: 9 }),
                 user: getuser._id,
@@ -145,14 +148,10 @@ class homeController {
                 _id: { $in: getuser.cart.map(item => item.productId) }
             });
             for (let prd of products) {
-                const cartItem = getuser.cart.find(
-                    c => c.productId.toString() === prd._id.toString()
-                );
-                if (cartItem) {
-                    prd.stock -= cartItem.quantity;
-                    if (prd.stock < 0) prd.stock = 0;
-                    await prd.save();
-                }
+                const cartItem = getuser.cart.find(item => item.productId._id.toString() === prd._id.toString());
+                prd.stock -= cartItem.quantity;
+                if (prd.stock < 0) prd.stock = 0;
+                await prd.save();
             }
             getuser.cart = [];
             if (Array.isArray(webhooks) && webhooks.length > 0) {
@@ -167,7 +166,22 @@ class homeController {
             }
             await getuser.save();
             await newOrder.save();
-            res.redirect('/user-orders/' + getuser._id);
+            resendEmail.emails.send({
+                from: 'onboarding@resend.dev',
+                to: req.body.email,
+                subject: 'Confirmation Orders',
+                html: newOrder.item.map(it => `
+                    <div>
+                        <h2>${it.productId.name}</h2>
+                        <h4>Price: $${it.productId.price}</h4>
+                        <img src="${it.productId.images[0].url}" alt="${it.productId.name}" width="100"/>
+                        <h4>Quantity: ${it.quantity}</h4>
+                        <h3>Total Price: $${newOrder.totalPrice}</h3>
+                    <h4>We will deliver your order to the following address:</h4>
+                    <h4>${newOrder.billDetails.address}, ${newOrder.billDetails.city}</h4>
+                    </div>
+                `)
+            });
         } catch (error) {
             console.log(error);
             next(error);
